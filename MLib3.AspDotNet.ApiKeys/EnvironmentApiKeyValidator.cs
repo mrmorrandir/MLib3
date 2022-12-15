@@ -5,17 +5,21 @@ namespace MLib3.AspDotNet.ApiKeys;
 
 public class EnvironmentApiKeyValidator : IApiKeyValidator
 {
-    private readonly string? _apiKey;
+    private readonly string _environmentVariableName;
 
-    public EnvironmentApiKeyValidator(string environmentVariable)
+    public EnvironmentApiKeyValidator(string environmentVariableName)
     {
-        _apiKey = Environment.GetEnvironmentVariable(environmentVariable);
+        if (string.IsNullOrWhiteSpace(environmentVariableName))
+            throw new ArgumentException("Value cannot be null or whitespace.", nameof(environmentVariableName));
+        _environmentVariableName = environmentVariableName;
     }
     
     public Task<Result> ValidateAsync(string apiKey)
     {
-        if (_apiKey is null) return Task.FromResult(Result.Ok());
-        return apiKey == _apiKey
+        var environmentApiKey = Environment.GetEnvironmentVariable(_environmentVariableName);
+        if (string.IsNullOrWhiteSpace(environmentApiKey)) 
+            return Task.FromResult(Result.Fail("ApiKey environment variable not set."));
+        return apiKey == environmentApiKey
             ? Task.FromResult(Result.Ok())
             : Task.FromResult(Result.Fail("ApiKey is invalid"));
     }

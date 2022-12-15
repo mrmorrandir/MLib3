@@ -9,6 +9,8 @@ public class StringApiKeyValidator : IApiKeyValidator
 
     public StringApiKeyValidator(string apiKey)
     {
+        if (string.IsNullOrWhiteSpace(apiKey))
+            throw new ArgumentException("Value cannot be empty or whitespace only string.", nameof(apiKey));
         _apiKey = apiKey;
     }
     
