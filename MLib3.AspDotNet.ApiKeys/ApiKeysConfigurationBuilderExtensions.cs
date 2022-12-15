@@ -5,6 +5,13 @@ namespace MLib3.AspDotNet.ApiKeys;
 
 public static class ApiKeysConfigurationBuilderExtensions
 {
+    public static ApiKeysConfigurationBuilder UseApiKeyGenerator(this ApiKeysConfigurationBuilder builder)
+    {
+        return builder.ConfigureServices(services => {
+            services.AddSingleton<IApiKeyGenerator, ApiKeyGenerator>();
+        });
+    }
+    
     public static void UseApiKey(this ApiKeysConfigurationBuilder builder, string apiKey)
     {
         builder.ConfigureServices(services =>
