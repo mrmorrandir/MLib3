@@ -4,6 +4,11 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Title>MLib3.Communication.MessageBroker</Title>
+        <Authors>Andreas Naumann</Authors>
+        <Copyright>2022 @ Andreas Naumann</Copyright>
+        <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
     </PropertyGroup>
 
     <ItemGroup>

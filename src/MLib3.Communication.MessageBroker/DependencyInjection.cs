@@ -5,7 +5,6 @@ namespace MLib3.Communication.MessageBroker;
 
 public static class DependencyInjection
 {
-     
     public static IServiceCollection AddMessageBroker(this IServiceCollection services)
     {
         services.AddSingleton<IMessageBroker, MessageBroker>();

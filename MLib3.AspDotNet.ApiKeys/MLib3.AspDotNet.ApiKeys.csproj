@@ -4,6 +4,15 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Title>MLib3.AspDotNet.ApiKeys</Title>
+        <Authors>Andreas Naumann</Authors>
+        <Copyright>2022 @ Andreas Naumann</Copyright>
+        <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\MLib3.AspDotNet.ApiKeys.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
