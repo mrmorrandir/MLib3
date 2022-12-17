@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace MLib3.AspDotNet.ApiKeys.Abstractions;
+namespace MLib3.AspDotNet.ApiKeys;
 
 public static class DependencyInjection
 {
