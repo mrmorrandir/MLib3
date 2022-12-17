@@ -2,26 +2,10 @@
 
 namespace MLib3.AspDotNet.ApiKeys;
 
-public class ApiKeysConfigurationBuilder
+public class ApiKeysConfigurationBuilder : ConfigurationBuilder<ApiKeysConfigurationBuilder>
 {
-    private readonly IServiceCollection _services;
-    private readonly List<Action<IServiceCollection>> _configureServices = new();
-
-    public ApiKeysConfigurationBuilder(IServiceCollection services) 
+    public ApiKeysConfigurationBuilder(IServiceCollection services) : base(services)
     {
-        _services = services;
-    }
 
-    public ApiKeysConfigurationBuilder ConfigureServices(Action<IServiceCollection> configureServices)
-    {
-        _configureServices.Add(configureServices);
-        return this;
-    }
-
-    public IServiceCollection Build()
-    {
-        foreach (var configureService in _configureServices)
-            configureService(_services);
-        return _services;
     }
 }

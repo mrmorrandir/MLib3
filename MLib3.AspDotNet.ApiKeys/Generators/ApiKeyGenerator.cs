@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using MLib3.AspDotNet.ApiKeys.Abstractions;
 
-namespace MLib3.AspDotNet.ApiKeys;
+namespace MLib3.AspDotNet.ApiKeys.Generators;
 
 public class ApiKeyGenerator : IApiKeyGenerator
 {

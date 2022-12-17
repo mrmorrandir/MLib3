@@ -1,5 +1,6 @@
 ﻿using System;
 using FluentAssertions;
+using MLib3.AspDotNet.ApiKeys.Generators;
 using Xunit;
 
 namespace MLib3.AspDotNet.ApiKeys.UnitTests;

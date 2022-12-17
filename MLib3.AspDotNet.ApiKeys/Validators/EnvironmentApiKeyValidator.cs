@@ -1,7 +1,7 @@
 using FluentResults;
 using MLib3.AspDotNet.ApiKeys.Abstractions;
 
-namespace MLib3.AspDotNet.ApiKeys;
+namespace MLib3.AspDotNet.ApiKeys.Validators;
 
 public class EnvironmentApiKeyValidator : IApiKeyValidator
 {

@@ -4,11 +4,10 @@ namespace MLib3.AspDotNet.ApiKeys;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddApiKeys(this IServiceCollection services, Action<ApiKeysConfigurationBuilder> options)
+    public static IServiceCollection AddApiKeys(this IServiceCollection services, Action<ApiKeysConfigurationBuilder> config)
     {
-        var optionsBuilder = new ApiKeysConfigurationBuilder(services);
-        options.Invoke(optionsBuilder);
-        optionsBuilder.Build();
-        return services;
+        var builder = new ApiKeysConfigurationBuilder(services);
+        config(builder);
+        return builder.Build();
     }
 }
