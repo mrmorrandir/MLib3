@@ -9,6 +9,9 @@
         <Copyright>2022 @ Andreas Naumann</Copyright>
         <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Description>Allows you to add API keys to your ASP.NET API</Description>
+        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -21,6 +24,14 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\assets\icon.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+        <Link>icon.png</Link>
+      </None>
     </ItemGroup>
 
 </Project>

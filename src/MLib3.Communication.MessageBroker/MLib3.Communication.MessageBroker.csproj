@@ -9,10 +9,20 @@
         <Copyright>2022 @ Andreas Naumann</Copyright>
         <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\MLib3.Communication.MessageBroker.Abstractions\MLib3.Communication.MessageBroker.Abstractions.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\assets\icon.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+        <Link>icon.png</Link>
+      </None>
     </ItemGroup>
 
 </Project>

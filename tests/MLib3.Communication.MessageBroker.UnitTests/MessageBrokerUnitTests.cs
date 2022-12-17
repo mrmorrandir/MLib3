@@ -165,6 +165,6 @@ public class MessageBrokerUnitTests
 public class MockBaseMessage : IMessage
 {
     public Guid Id { get; } = Guid.NewGuid();
-    public DateTime Timestamp { get; }
-    public string Text { get; }
+    public DateTime Timestamp { get; } = DateTime.Now;
+    public string Text { get; } = string.Empty;
 }

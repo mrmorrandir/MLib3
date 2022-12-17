@@ -4,11 +4,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DCE20467-195
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{7D70D635-7644-447C-A7FB-58293833BB8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.AspDotNet.ApiKeys.Abstractions", "MLib3.AspDotNet.ApiKeys.Abstractions\MLib3.AspDotNet.ApiKeys.Abstractions.csproj", "{FC79F919-ACE3-4D14-BEE4-2D95F6499915}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.AspDotNet.ApiKeys.Abstractions", "src\MLib3.AspDotNet.ApiKeys.Abstractions\MLib3.AspDotNet.ApiKeys.Abstractions.csproj", "{FC79F919-ACE3-4D14-BEE4-2D95F6499915}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.AspDotNet.ApiKeys", "MLib3.AspDotNet.ApiKeys\MLib3.AspDotNet.ApiKeys.csproj", "{665A3031-0235-4974-A2EA-64B832317D78}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.AspDotNet.ApiKeys", "src\MLib3.AspDotNet.ApiKeys\MLib3.AspDotNet.ApiKeys.csproj", "{665A3031-0235-4974-A2EA-64B832317D78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.AspDotNet.ApiKeys.UnitTests", "MLib3.AspDotNet.ApiKeys.UnitTests\MLib3.AspDotNet.ApiKeys.UnitTests.csproj", "{ACD2EBA1-6818-41FA-8FE1-4865D7559BB0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.AspDotNet.ApiKeys.UnitTests", "tests\MLib3.AspDotNet.ApiKeys.UnitTests\MLib3.AspDotNet.ApiKeys.UnitTests.csproj", "{ACD2EBA1-6818-41FA-8FE1-4865D7559BB0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.Communication.MessageBroker.Abstractions", "src\MLib3.Communication.MessageBroker.Abstractions\MLib3.Communication.MessageBroker.Abstractions.csproj", "{A2EF698A-20DE-4DC0-8C07-D5E261B031F9}"
 EndProject
