@@ -6,6 +6,7 @@ name: Publish Packages (main)
 on:
   push:
     branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   build:
