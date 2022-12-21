@@ -7,13 +7,11 @@ public interface IResults : IExtendable, IEvaluated
 
     IResults Add(IElement element);
     IResults AddRange(IEnumerable<IElement> elements);
-    IResults AddRange(params IElement[] elements);
     IResults AddRange(IResults results);
-    
+
     IResults Remove(IElement element);
     IResults RemoveRange(IEnumerable<IElement> elements);
-    IResults RemoveRange(params IElement[] elements);
     IResults RemoveRange(IResults results);
-    
+
     IResults Clear();
 }

@@ -1,6 +1,3 @@
 namespace MLib3.Protocols.Measurements.Abstractions;
 
-public interface ICommentSetting : IElement
-{
-    
-}
+public interface ICommentSetting : IElement { }

@@ -14,5 +14,6 @@ public class Comment : IComment
         Name = commentSetting.Name;
         Description = commentSetting.Description;
         Text = text;
+        Extensions = null;
     }
 }

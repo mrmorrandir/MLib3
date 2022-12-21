@@ -10,6 +10,8 @@ public class Results : IResults
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(name));
+            if (Data.All(x => x.Name != name))
+                throw new ArgumentException($"No element with name '{name}' found.", nameof(name));
             return Data.Single(e => e.Name == name);
         }
     }
@@ -21,6 +23,7 @@ public class Results : IResults
     {
         OK = ok;
         Data = elements?.ToList() ?? new List<IElement>();
+        Extensions = null;
     }
 
     public IResults Add(IElement element)
@@ -35,58 +38,55 @@ public class Results : IResults
 
     public IResults AddRange(IEnumerable<IElement> elements)
     {
-        if (elements == null)
+        if (elements is null)
             throw new ArgumentNullException(nameof(elements));
-        Data = Data.Concat(elements);
-        return this;
-    }
-
-    public IResults AddRange(params IElement[] elements)
-    {
-        if (elements == null)
-            throw new ArgumentNullException(nameof(elements));
-        Data = Data.Concat(elements);
+        var list = elements.ToList();
+        if (list.Any(e => e is null))
+            throw new ArgumentException("One or more elements are null.", nameof(elements));
+        if (list.Select(e => e.Name).Distinct().Count() != list.Count)
+            throw new ArgumentException("Elements must have unique names.", nameof(elements));
+        if (list.Any(e => Data.Any(d => d.Name == e.Name)))
+            throw new ArgumentException("One or more elements already exist.", nameof(elements));
+        Data = Data.Concat(list);
         return this;
     }
 
     public IResults AddRange(IResults results)
     {
-        if (results == null)
+        if (results is null)
             throw new ArgumentNullException(nameof(results));
-        Data = Data.Concat(results.Data);
-        return this;
+        return AddRange(results.Data.ToArray());
     }
 
     public IResults Remove(IElement element)
     {
-        if (element == null)
+        if (element is null)
             throw new ArgumentNullException(nameof(element));
+        if (Data.All(e => e.Name != element.Name))
+            throw new ArgumentException($"Element with name {element.Name} does not exist.");
         Data = Data.Where(e => e.Name != element.Name);
         return this;
     }
 
     public IResults RemoveRange(IEnumerable<IElement> elements)
     {
-        if (elements == null)
+        if (elements is null)
             throw new ArgumentNullException(nameof(elements));
-        Data = Data.Where(e => !elements.Any(el => el.Name == e.Name));
-        return this;
-    }
+        var list = elements.ToList();
+        if (list.Any(e => e is null))
+            throw new ArgumentException("One or more elements are null.", nameof(elements));
+        if (list.Any(e => Data.All(d => d.Name != e.Name)))
+            throw new ArgumentException("One or more elements do not exist.", nameof(elements));
 
-    public IResults RemoveRange(params IElement[] elements)
-    {
-        if (elements == null)
-            throw new ArgumentNullException(nameof(elements));
-        Data = Data.Where(e => !elements.Any(el => el.Name == e.Name));
+        Data = Data.Where(e => !list.Contains(e));
         return this;
     }
 
     public IResults RemoveRange(IResults results)
     {
-        if (results == null)
+        if (results is null)
             throw new ArgumentNullException(nameof(results));
-        Data = Data.Where(e => !results.Data.Any(el => el.Name == e.Name));
-        return this;
+        return RemoveRange(results.Data.ToArray());
     }
 
     public IResults Clear()

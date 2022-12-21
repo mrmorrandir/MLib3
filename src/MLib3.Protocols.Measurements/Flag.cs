@@ -14,5 +14,6 @@ public class Flag : IFlag, IElement, IEvaluated
         Name = flagSetting.Name;
         Description = flagSetting.Description;
         OK = ok;
+        Extensions = null;
     }
 }

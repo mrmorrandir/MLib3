@@ -4,11 +4,11 @@ public interface IMeta : IExtendable
 {
     string? DeviceId { get; }
     string? DeviceName { get; }
-    string? Program { get; }
-    string? ProgramVersion { get; }
+    string? Software { get; }
+    string? SoftwareVersion { get; }
     string? TestRoutine { get; }
     string? TestRoutineVersion { get; }
     DateTime Timestamp { get; }
     string Type { get; }
-    string? Worker { get; }
+    string? Operator { get; }
 }

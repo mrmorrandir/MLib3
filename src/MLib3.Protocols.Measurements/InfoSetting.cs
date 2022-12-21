@@ -6,19 +6,16 @@ public class InfoSetting : IInfoSetting
     public string? Name { get; set; }
     public string? Description { get; set; }
     public double? Precision { get; set; }
-    public string Unit { get; set; }
+    public string? Unit { get; set; }
 
     public InfoSetting() { }
 
-    public InfoSetting(string? name, string unit, string? hint = null, double? precision = null)
+    public InfoSetting(string name, string? description = null, string? unit = null, double? precision = null)
     {
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Value cannot be null or whitespace.", nameof(name));
-        if (string.IsNullOrWhiteSpace(unit))
-            throw new ArgumentException("Value cannot be null or whitespace.", nameof(unit));
-        Name = name;
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Description = description;
         Unit = unit;
-        Description = hint;
         Precision = precision;
+        Extensions = null;
     }
 }

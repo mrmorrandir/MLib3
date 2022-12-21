@@ -2,12 +2,11 @@
 
 public interface IValueSetting : IElement
 {
-    double? Precision { get; }
     string? Unit { get; }
-
-    double? Maximum { get; }
-    double? Nominal { get; }
-    double? Minimum { get; }
-    ValueLimitType? MinimumLimitType { get; }
-    ValueLimitType? MaximumLimitType { get; }
+    double? Precision { get; }
+    double? Min { get; }
+    double? Nom { get; }
+    double? Max { get; }
+    ValueLimitType? MinLimitType { get; }
+    ValueLimitType? MaxLimitType { get; }
 }

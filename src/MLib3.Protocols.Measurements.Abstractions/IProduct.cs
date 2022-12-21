@@ -6,5 +6,4 @@ public interface IProduct : IExtendable
     string? Material { get; }
     string? MaterialText { get; }
     string? Order { get; }
-    
 }

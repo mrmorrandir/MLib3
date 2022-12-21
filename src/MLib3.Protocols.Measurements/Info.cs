@@ -19,5 +19,6 @@ public class Info : IInfo
         Precision = infoSetting.Precision;
         Unit = infoSetting.Unit;
         Value = value;
+        Extensions = null;
     }
 }

@@ -1,5 +1,3 @@
 ﻿namespace MLib3.Protocols.Measurements.Abstractions;
 
-public interface IFlag : IElement, IEvaluated
-{
-}
+public interface IFlag : IElement, IEvaluated { }

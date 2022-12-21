@@ -7,11 +7,12 @@ public class SectionSetting : ISectionSetting
     public string? Description { get; set; }
     public SectionSetting() { }
 
-    public SectionSetting(string? name, string? hint = null)
+    public SectionSetting(string name, string? description = null)
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Value cannot be null or whitespace.", nameof(name));
         Name = name;
-        Description = hint;
+        Description = description;
+        Extensions = null;
     }
 }

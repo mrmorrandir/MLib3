@@ -5,6 +5,8 @@ public class Section : Results, ISection
     public string? Name { get; set; }
     public string? Description { get; set; }
 
+    public Section() { }
+
     public Section(ISectionSetting sectionSetting, IEnumerable<IElement>? elements = null, bool ok = false)
     {
         if (sectionSetting == null)

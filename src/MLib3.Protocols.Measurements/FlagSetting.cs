@@ -7,11 +7,10 @@ public class FlagSetting : IFlagSetting
     public string? Description { get; set; }
     public FlagSetting() { }
 
-    public FlagSetting(string? name, string? hint = null)
+    public FlagSetting(string name, string? description = null)
     {
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Value cannot be null or whitespace.", nameof(name));
-        Name = name;
-        Description = hint;
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Description = description;
+        Extensions = null;
     }
 }

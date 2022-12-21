@@ -11,13 +11,14 @@ public class Product : IProduct
 
     public Product() { }
 
-    public Product(string serial, string? material = null, string? orderKey = null, string? order = null)
+    public Product(string equipment, string? material = null, string? materialText = null, string? order = null)
     {
-        if (string.IsNullOrWhiteSpace(serial))
-            throw new ArgumentException("Value cannot be null or whitespace.", nameof(serial));
-        Equipment = serial;
+        if (string.IsNullOrWhiteSpace(equipment))
+            throw new ArgumentException("Value cannot be null or whitespace.", nameof(equipment));
+        Equipment = equipment;
         Material = material;
-        MaterialText = orderKey;
+        MaterialText = materialText;
         Order = order;
+        Extensions = null;
     }
 }

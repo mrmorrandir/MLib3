@@ -5,15 +5,15 @@ public class Value : IValue
     public IExtensions? Extensions { get; set; }
     public string? Name { get; set; }
     public string? Description { get; set; }
-    public double? Precision { get; set; }
     public string? Unit { get; set; }
-    public double? Maximum { get; set; }
-    public double? Nominal { get; set; }
-    public double? Minimum { get; set; }
-    public ValueLimitType? MinimumLimitType { get; set; }
-    public ValueLimitType? MaximumLimitType { get; set; }
-    public bool OK { get; set; }
+    public double? Precision { get; set; }
+    public double? Min { get; set; }
+    public double? Nom { get; set; }
+    public double? Max { get; set; }
+    public ValueLimitType? MinLimitType { get; set; }
+    public ValueLimitType? MaxLimitType { get; set; }
     public double Result { get; set; }
+    public bool OK { get; set; }
 
     public Value() { }
 
@@ -22,14 +22,15 @@ public class Value : IValue
         if (valueSetting == null) throw new ArgumentNullException(nameof(valueSetting));
         Name = valueSetting.Name;
         Description = valueSetting.Description;
-        Precision = valueSetting.Precision;
         Unit = valueSetting.Unit;
-        Maximum = valueSetting.Maximum;
-        Nominal = valueSetting.Nominal;
-        Minimum = valueSetting.Minimum;
-        MinimumLimitType = valueSetting.MinimumLimitType;
-        MaximumLimitType = valueSetting.MaximumLimitType;
+        Precision = valueSetting.Precision;
+        Min = valueSetting.Min;
+        Nom = valueSetting.Nom;
+        Max = valueSetting.Max;
+        MinLimitType = valueSetting.MinLimitType;
+        MaxLimitType = valueSetting.MaxLimitType;
         Result = result;
         OK = ok;
+        Extensions = null;
     }
 }

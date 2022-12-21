@@ -1,24 +1,19 @@
 ﻿using System.Reflection;
-using System.Text.RegularExpressions;
 
 namespace MLib3.Protocols.Measurements;
 
 public class Meta : IMeta
 {
-    private static readonly Regex _versionRegex =
-        new(@"^((?<Major>\d*)|(?<MajorMinor>(\d*\.\d*))|(?<Semantic>(\d*\.\d*\.\d*))|(?<AssemblyVersion>(\d*\.\d*\.\d*\.\d*))|(?<OldSchool>[vV]\d*))$",
-            RegexOptions.Compiled);
-
     public IExtensions? Extensions { get; set; }
     public string? DeviceId { get; set; }
     public string? DeviceName { get; set; }
-    public string? Program { get; set; }
-    public string? ProgramVersion { get; set; }
+    public string? Software { get; set; }
+    public string? SoftwareVersion { get; set; }
     public string? TestRoutine { get; set; }
     public string? TestRoutineVersion { get; set; }
     public DateTime Timestamp { get; set; }
     public string Type { get; set; }
-    public string? Worker { get; set; }
+    public string? Operator { get; set; }
 
     public Meta()
     {
@@ -26,35 +21,37 @@ public class Meta : IMeta
         Type = null!;
         DeviceId = Environment.MachineName;
         DeviceName = Environment.MachineName;
-        Program = Assembly.GetEntryAssembly()?.GetName().FullName ?? string.Empty;
-        ProgramVersion = Assembly.GetEntryAssembly()?.GetName().Version?.ToString() ?? string.Empty;
+        Software = Assembly.GetEntryAssembly()?.GetName().Name ?? string.Empty;
+        SoftwareVersion = Assembly.GetEntryAssembly()?.GetName().Version?.ToString() ?? string.Empty;
         TestRoutine = null!;
         TestRoutineVersion = null!;
-        Worker = Environment.UserName;
+        Operator = Environment.UserName;
+        Extensions = null;
     }
 
-    public Meta(string type, DateTime timestamp, string? deviceId = null, string? deviceName = null, string? program = null, string? programVersion = null, string? testRoutine = null, string? testRoutineVersion = null, string? worker = null)
+    public Meta(string type, DateTime timestamp, string? deviceId = null, string? deviceName = null, string? software = null, string? softwareVersion = null, string? testRoutine = null, string? testRoutineVersion = null, string? @operator = null)
     {
         if (string.IsNullOrWhiteSpace(type))
             throw new ArgumentException("Value cannot be null or whitespace.", nameof(type));
         if (DateTime.Now < timestamp)
             throw new ArgumentException("Value cannot be in the future.", nameof(timestamp));
-        if (programVersion != null && !_versionRegex.IsMatch(programVersion))
-            throw new ArgumentException("Value is in the wrong format. (Allowed Formats '1', '1.0', '1.0.0', 'v1', 'V1')", nameof(programVersion));
-        if (testRoutineVersion != null && !_versionRegex.IsMatch(testRoutineVersion))
-            throw new ArgumentException("Value is in the wrong format. (Allowed Formats '1', '1.0', '1.0.0', 'v1', 'V1')", nameof(testRoutineVersion));
-        if (program is null && programVersion is not null)
-            throw new ArgumentException($"Value of {nameof(programVersion)} cannot be used without a {nameof(program)}.", nameof(programVersion));
+        if (software is null && softwareVersion is not null)
+            throw new ArgumentException($"Value of {nameof(softwareVersion)} cannot be used without a {nameof(software)}.", nameof(softwareVersion));
+        if (softwareVersion is null && software is not null)
+            throw new ArgumentException($"Value of {nameof(software)} cannot be used without a {nameof(softwareVersion)}.", nameof(software));
         if (testRoutine is null && testRoutineVersion is not null)
             throw new ArgumentException($"Value of {nameof(testRoutineVersion)} cannot be used without a {nameof(testRoutine)}.", nameof(testRoutineVersion));
+        if (testRoutineVersion is null && testRoutine is not null)
+            throw new ArgumentException($"Value of {nameof(testRoutine)} cannot be used without a {nameof(testRoutineVersion)}.", nameof(testRoutine));
         Type = type;
         Timestamp = timestamp;
         DeviceId = deviceId ?? Environment.MachineName;
         DeviceName = deviceName ?? Environment.MachineName;
-        Program = program ?? Assembly.GetEntryAssembly()?.GetName().FullName ?? string.Empty;
-        ProgramVersion = programVersion ?? Assembly.GetEntryAssembly()?.GetName().Version?.ToString() ?? string.Empty;
+        Software = software ?? Assembly.GetEntryAssembly()?.GetName().Name ?? string.Empty;
+        SoftwareVersion = softwareVersion ?? Assembly.GetEntryAssembly()?.GetName().Version?.ToString() ?? string.Empty;
         TestRoutine = testRoutine;
         TestRoutineVersion = testRoutineVersion;
-        Worker = worker;
+        Operator = @operator;
+        Extensions = null;
     }
 }
