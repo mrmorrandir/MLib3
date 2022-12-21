@@ -30,9 +30,6 @@ jobs:
     - name: Test
       run: dotnet test --configuration Release --no-build --verbosity normal
       
-    - name: Pack 
-      run: dotnet pack --configuration Release
-      
     - name: Prepare Packages
       run: dotnet nuget add source --username mrmorrandir --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/mrmorrandir/index.json"
       
