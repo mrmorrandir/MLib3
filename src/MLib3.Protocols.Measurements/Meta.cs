@@ -10,15 +10,15 @@ public class Meta : IMeta
             RegexOptions.Compiled);
 
     public IExtensions? Extensions { get; set; }
-    public string? DeviceId { get; init; }
-    public string? DeviceName { get; init; }
-    public string? Program { get; init; }
-    public string? ProgramVersion { get; init; }
-    public string? TestRoutine { get; init; }
-    public string? TestRoutineVersion { get; init; }
-    public DateTime Timestamp { get; init; } 
-    public string Type { get; init; }
-    public string? Worker { get; init; }
+    public string? DeviceId { get; set; }
+    public string? DeviceName { get; set; }
+    public string? Program { get; set; }
+    public string? ProgramVersion { get; set; }
+    public string? TestRoutine { get; set; }
+    public string? TestRoutineVersion { get; set; }
+    public DateTime Timestamp { get; set; }
+    public string Type { get; set; }
+    public string? Worker { get; set; }
 
     public Meta()
     {

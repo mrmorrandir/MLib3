@@ -3,14 +3,14 @@
 namespace MLib3.Protocols.Measurements;
 
 public class Protocol : IProtocol
-{  
-    public IProduct Product { get; init; }
-    public IMeta Meta { get; init; }
-    public IResults Results { get; init; }
+{
+    public IProduct Product { get; set; }
+    public IMeta Meta { get; set; }
+    public IResults Results { get; set; }
 
-    public string Specification { get; init; }
-    public string Version { get; init; }
-    
+    public string Specification { get; set; }
+    public string Version { get; set; }
+
     public Protocol()
     {
         Specification = GetType().Assembly.GetName().Name!;
@@ -19,7 +19,7 @@ public class Protocol : IProtocol
         Meta = new Meta();
         Results = new Results();
     }
-    
+
     public Protocol(string type, string equipment)
     {
         Specification = GetType().Assembly.GetName().Name!;
@@ -28,7 +28,7 @@ public class Protocol : IProtocol
         Meta = new Meta(type, DateTime.Now);
         Results = new Results();
     }
-    
+
     public Protocol(IProduct product, IMeta meta, IResults results)
     {
         Product = product ?? throw new ArgumentNullException(nameof(product));
@@ -37,6 +37,4 @@ public class Protocol : IProtocol
         Specification = Assembly.GetEntryAssembly()?.GetName().FullName ?? string.Empty;
         Version = Assembly.GetEntryAssembly()?.GetName().Version?.ToString() ?? string.Empty;
     }
-
-  
 }

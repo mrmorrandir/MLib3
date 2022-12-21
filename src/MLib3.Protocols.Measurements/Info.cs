@@ -2,19 +2,22 @@
 
 public class Info : IInfo
 {
+    public IExtensions? Extensions { get; set; }
+    public string? Name { get; set; }
+    public string? Description { get; set; }
+    public double? Precision { get; set; }
+    public string Unit { get; set; }
+    public double Value { get; set; }
+
+    public Info() { }
+
     public Info(IInfoSetting infoSetting, double value = 0)
     {
         if (infoSetting == null) throw new ArgumentNullException(nameof(infoSetting));
         Name = infoSetting.Name;
-        Hint = infoSetting.Hint;
+        Description = infoSetting.Description;
         Precision = infoSetting.Precision;
         Unit = infoSetting.Unit;
         Value = value;
     }
-    public IExtensions? Extensions { get; set; }
-    public string Name { get; }
-    public string? Hint { get; }
-    public double? Precision { get; }
-    public string Unit { get; }
-    public double Value { get; set; }
 }

@@ -2,6 +2,6 @@
 
 public interface IElement : IExtendable
 {
-    string Name { get; }
-    string? Hint { get; }
+    string? Name { get; }
+    string? Description { get; }
 }

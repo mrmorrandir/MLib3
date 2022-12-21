@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MLib3.Protocols.Measurements.Abstractions\MLib3.Protocols.Measurements.Abstractions.csproj" />
+        <ProjectReference Include="..\MLib3.Protocols.Measurements.Abstractions\MLib3.Protocols.Measurements.Abstractions.csproj"/>
     </ItemGroup>
 
 </Project>

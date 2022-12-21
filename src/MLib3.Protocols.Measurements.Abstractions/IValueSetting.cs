@@ -3,7 +3,7 @@
 public interface IValueSetting : IElement
 {
     double? Precision { get; }
-    string Unit { get; }
+    string? Unit { get; }
 
     double? Maximum { get; }
     double? Nominal { get; }

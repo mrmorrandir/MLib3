@@ -3,6 +3,7 @@
 public class Results : IResults
 {
     public bool OK { get; set; }
+
     public IElement this[string name]
     {
         get
@@ -12,15 +13,16 @@ public class Results : IResults
             return Data.Single(e => e.Name == name);
         }
     }
-    public IExtensions? Extensions { get; set; }    
+
+    public IExtensions? Extensions { get; set; }
     public IEnumerable<IElement> Data { get; set; }
-    
+
     public Results(IEnumerable<IElement>? elements = null, bool ok = false)
     {
         OK = ok;
         Data = elements?.ToList() ?? new List<IElement>();
     }
-    
+
     public IResults Add(IElement element)
     {
         if (element == null)

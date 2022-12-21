@@ -1,6 +1,7 @@
 # FluentMeasurements
 
 ## Introduction
+
 ```mermaid
 flowchart LR
     10[create]-->20[ForEquipment]

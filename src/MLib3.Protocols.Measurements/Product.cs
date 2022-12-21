@@ -2,18 +2,15 @@
 
 public class Product : IProduct
 {
-    public string? Material { get; init; }
-    public string? MaterialText { get; init; }
-    public string? Order { get; init; }
-    public string Equipment { get; init; }
+    public string? Material { get; set; }
+    public string? MaterialText { get; set; }
+    public string? Order { get; set; }
+    public string Equipment { get; set; }
 
     public IExtensions? Extensions { get; set; }
 
-    public Product()
-    {
-        
-    }
-    
+    public Product() { }
+
     public Product(string serial, string? material = null, string? orderKey = null, string? order = null)
     {
         if (string.IsNullOrWhiteSpace(serial))

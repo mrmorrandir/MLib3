@@ -2,15 +2,16 @@
 
 public class FlagSetting : IFlagSetting
 {
-    public FlagSetting(string name, string? hint = null)
+    public IExtensions? Extensions { get; set; }
+    public string? Name { get; set; }
+    public string? Description { get; set; }
+    public FlagSetting() { }
+
+    public FlagSetting(string? name, string? hint = null)
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Value cannot be null or whitespace.", nameof(name));
         Name = name;
-        Hint = hint;
+        Description = hint;
     }
-    
-    public IExtensions? Extensions { get; set; }
-    public string Name { get; }
-    public string? Hint { get; set; }
 }

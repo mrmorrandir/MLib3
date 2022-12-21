@@ -2,7 +2,18 @@
 
 public class ValueSetting : IValueSetting
 {
-    public ValueSetting(string name, string unit, string? hint = null, double? precision = null, double? minimum = null, double? nominal = null,
+    public IExtensions? Extensions { get; set; }
+    public string? Name { get; set; }
+    public string? Description { get; set; }
+    public double? Precision { get; set; }
+    public string? Unit { get; set; }
+    public double? Maximum { get; set; }
+    public double? Nominal { get; set; }
+    public double? Minimum { get; set; }
+    public ValueLimitType? MinimumLimitType { get; set; }
+    public ValueLimitType? MaximumLimitType { get; set; }
+
+    public ValueSetting(string? name, string? unit, string? hint = null, double? precision = null, double? minimum = null, double? nominal = null,
         double? maximum = null, ValueLimitType? minimumLimitType = null, ValueLimitType? maximumLimitType = null)
     {
         if (string.IsNullOrWhiteSpace(name))
@@ -10,7 +21,7 @@ public class ValueSetting : IValueSetting
         if (string.IsNullOrWhiteSpace(unit))
             throw new ArgumentException("Value cannot be null or whitespace.", nameof(unit));
         Name = name;
-        Hint = hint;
+        Description = hint;
         Precision = precision;
         Unit = unit;
         Maximum = maximum;
@@ -19,14 +30,4 @@ public class ValueSetting : IValueSetting
         MinimumLimitType = minimumLimitType;
         MaximumLimitType = maximumLimitType;
     }
-    public IExtensions? Extensions { get; set; }
-    public string Name { get; }
-    public string? Hint { get; }
-    public double? Precision { get; }
-    public string Unit { get; }
-    public double? Maximum { get; }
-    public double? Nominal { get; }
-    public double? Minimum { get; }
-    public ValueLimitType? MinimumLimitType { get; }
-    public ValueLimitType? MaximumLimitType { get; }
 }
