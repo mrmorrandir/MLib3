@@ -19,7 +19,7 @@ public class Value : IValue
 
     public Value(IValueSetting valueSetting, double result = 0.0, bool ok = false)
     {
-        if (valueSetting == null) throw new ArgumentNullException(nameof(valueSetting));
+        if (valueSetting is null) throw new ArgumentNullException(nameof(valueSetting));
         Name = valueSetting.Name;
         Description = valueSetting.Description;
         Unit = valueSetting.Unit;
