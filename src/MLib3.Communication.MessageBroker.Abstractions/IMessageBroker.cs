@@ -1,4 +1,4 @@
-﻿namespace MLib3.Communication.MessageBroker.Abstractions;
+﻿namespace MLib3.Communication.MessageBroker;
 
 public interface IMessageBroker
 {

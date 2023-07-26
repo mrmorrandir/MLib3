@@ -1,5 +1,4 @@
-﻿using MLib3.Communication.MessageBroker.Abstractions;
-using MLib3.Communication.MessageBroker.Messages;
+﻿using MLib3.Communication.MessageBroker.Messages;
 
 namespace MLib3.Communication.MessageBroker;
 
