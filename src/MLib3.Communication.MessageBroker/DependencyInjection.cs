@@ -1,7 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
-using MLib3.Communication.MessageBroker.Abstractions;
+using MLib3.Communication.MessageBroker;
 
-namespace MLib3.Communication.MessageBroker;
+// ReSharper disable once CheckNamespace
+namespace Microsoft.Extensions.DependencyInjection;
 
 public static class DependencyInjection
 {

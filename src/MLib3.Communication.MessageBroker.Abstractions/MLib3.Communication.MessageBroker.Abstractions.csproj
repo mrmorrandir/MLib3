@@ -6,12 +6,14 @@
         <Nullable>enable</Nullable>
         <Title>MLib3.Communication.MessageBroker.Abstractions</Title>
         <Authors>Andreas Naumann</Authors>
-        <Copyright>2022 @ Andreas Naumann</Copyright>
+        <Copyright>2023 @ Andreas Naumann</Copyright>
         <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageIcon>icon.png</PackageIcon>
         <PackageProjectUrl>https://github.com/mrmorrandir/MLib3</PackageProjectUrl>
+        <RootNamespace>MLib3.Communication.MessageBroker</RootNamespace>
+        <Version>1.0.1</Version>
     </PropertyGroup>
 
     <ItemGroup>

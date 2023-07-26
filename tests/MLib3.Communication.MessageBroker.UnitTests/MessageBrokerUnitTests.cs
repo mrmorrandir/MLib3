@@ -1,5 +1,4 @@
 using FluentAssertions;
-using MLib3.Communication.MessageBroker.Abstractions;
 using MLib3.Communication.MessageBroker.Messages;
 using Xunit;
 

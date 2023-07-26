@@ -1,7 +1,4 @@
-﻿using MLib3.Communication.MessageBroker.Abstractions;
-using MLib3.Communication.MessageBroker.Messages;
-
-namespace MLib3.Communication.MessageBroker;
+﻿namespace MLib3.Communication.MessageBroker.Messages;
 
 public sealed class ErrorMessageResolver : IDisposable
 {
