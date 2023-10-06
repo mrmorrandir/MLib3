@@ -1,0 +1,17 @@
+{
+  "Cultures": [
+    {
+      "Name": "de-DE",
+      "Strings": [
+        {
+          "Key": "error-1",
+          "Value": "Fehler 1"
+        },
+        {
+          "Key": "error-2",
+          "Value": "Fehler 2: {0}, {1}"
+        }
+      ]
+    }
+  ]
+}
