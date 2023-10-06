@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using MLib3.Localization.Interfaces;
 using MLib3.Localization.Localizers.Json;
 using MLib3.Localization.Localizers.Resx;

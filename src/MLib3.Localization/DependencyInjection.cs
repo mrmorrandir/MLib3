@@ -1,11 +1,8 @@
-﻿using System.Dynamic;
-using System.Globalization;
-using System.Text.Json;
+﻿using System.Globalization;
 using Microsoft.Extensions.DependencyInjection;
 using MLib3.Localization.Interfaces;
 using MLib3.Localization.Localizers.Json;
 using MLib3.Localization.Localizers.Resx;
-using Microsoft.Extensions.Logging;
 
 namespace MLib3.Localization;
 
