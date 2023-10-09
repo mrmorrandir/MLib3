@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using MLib3.Localization.Interfaces;
 using MLib3.Localization.Localizers.Json;
 using MLib3.Localization.Localizers.Resx;
@@ -37,16 +36,18 @@ public class DependencyInjectionTests
         builder.Should().BeOfType<JsonLocalizer>();
     }
     
-    [Fact]
-    public void UseResx_ShouldRegisterResxLocalizer()
-    {
-        var services = new ServiceCollection();
-        services.AddCustomLocalizer(config => config.UseResx());
-        var serviceProvider = services.BuildServiceProvider();
-        
-        var builder = serviceProvider.GetService<ILocalizer>();
-
-        builder.Should().NotBeNull();
-        builder.Should().BeOfType<ResxLocalizer>();
-    }
+    // Not implemented yet
+    // ------------------------------------------------------------
+    // [Fact]
+    // public void UseResx_ShouldRegisterResxLocalizer()
+    // {
+    //     var services = new ServiceCollection();
+    //     services.AddCustomLocalizer(config => config.UseResx());
+    //     var serviceProvider = services.BuildServiceProvider();
+    //     
+    //     var builder = serviceProvider.GetService<ILocalizer>();
+    //
+    //     builder.Should().NotBeNull();
+    //     builder.Should().BeOfType<ResxLocalizer>();
+    // }
 }

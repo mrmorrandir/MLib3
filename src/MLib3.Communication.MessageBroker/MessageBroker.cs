@@ -1,6 +1,4 @@
-﻿using MLib3.Communication.MessageBroker.Abstractions;
-
-namespace MLib3.Communication.MessageBroker;
+﻿namespace MLib3.Communication.MessageBroker;
 
 public class MessageBroker : IMessageBroker
 {

@@ -1,6 +1,4 @@
-﻿using MLib3.Communication.MessageBroker.Abstractions;
-
-namespace MLib3.Communication.MessageBroker.Messages;
+﻿namespace MLib3.Communication.MessageBroker.Messages;
 
 public class TempInfoMessage : InfoMessage, IMessage
 {

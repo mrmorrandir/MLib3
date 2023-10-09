@@ -1,7 +1,5 @@
 ﻿// ReSharper disable ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
 
-using MLib3.Protocols.Measurements.FluentMeasurements.Abstractions;
-
 namespace MLib3.Protocols.Measurements.FluentMeasurements;
 
 public class ProtocolBuilder : IProtocolBuilder

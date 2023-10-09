@@ -1,6 +1,4 @@
-﻿using MLib3.Protocols.Measurements.FluentMeasurements.Abstractions;
-
-namespace MLib3.Protocols.Measurements.FluentMeasurements;
+﻿namespace MLib3.Protocols.Measurements.FluentMeasurements;
 
 public class FlagBuilder : IFlagBuilder
 {
