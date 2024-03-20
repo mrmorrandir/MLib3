@@ -44,6 +44,38 @@ public static class MessageBrokerExtensions
         messageBroker.Publish(errorMessage);
         return new ErrorMessageResolver(messageBroker, errorMessage.Id);
     }
+    
+    /// <summary>
+    /// Publishes a temporary error message. The message handler must handle the wish for the timeout.
+    /// </summary>
+    /// <param name="messageBroker">The <see cref="MessageBroker"/> to use</param>
+    /// <param name="errorMessage">The error message to be shown by the message handler </param>
+    /// <param name="milliseconds">The timeout for the message</param>
+    public static void PublishTempError(this IMessageBroker messageBroker, string errorMessage, int milliseconds = 5000)
+    {
+        messageBroker.Publish(new TempErrorMessage(errorMessage, milliseconds));
+    }
+    
+    /// <summary>
+    /// Publishes a warning message. This message is not an error (it is less severe).
+    /// </summary>
+    /// <param name="messageBroker">The <see cref="MessageBroker"/> to use</param>
+    /// <param name="warning">The warning message to be shown by the message handler</param>
+    public static void PublishWarning(this IMessageBroker messageBroker, string warning)
+    {
+        messageBroker.Publish(new WarningMessage { Text = warning });
+    }
+    
+    /// <summary>
+    /// Publishes a warning message. This message is not an error (it is less severe).
+    /// </summary>
+    /// <param name="messageBroker">The <see cref="MessageBroker"/> to use</param>
+    /// <param name="warning">The warning message to be shown by the message handler</param>
+    /// <param name="milliseconds">The timeout for the message</param>
+    public static void PublishTempWarning(this IMessageBroker messageBroker, string warning, int milliseconds = 5000)
+    {
+        messageBroker.Publish(new TempWarningMessage(warning, milliseconds));
+    }
 
     /// <summary>
     /// Publishes a temporary info message. The message handler must handle the wish for the timeout.
