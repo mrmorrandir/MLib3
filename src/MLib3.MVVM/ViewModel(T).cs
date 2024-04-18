@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace MLib3.MVVM;
 
-public class ViewModel<TModel> : ViewModel, IViewModel<TModel> where TModel : class 
+public abstract class ViewModel<TModel> : ViewModel, IViewModel<TModel> where TModel : class 
 {
     public TModel Model { get; }
 
@@ -22,10 +22,5 @@ public class ViewModel<TModel> : ViewModel, IViewModel<TModel> where TModel : cl
         propertyInfo.SetValue(Model, value, null);
         callback?.Invoke(oldValue, value);
         OnPropertyChanged(property);
-    }
-
-    public virtual object GetModel()
-    {
-        return Model;
     }
 }

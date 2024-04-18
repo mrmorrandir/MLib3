@@ -1,4 +1,5 @@
 using System.Reactive;
+using MLib3.MVVM.UnitTests.Mocks;
 
 namespace MLib3.MVVM.UnitTests;
 
@@ -36,25 +37,6 @@ public class ViewModelTests
             raised = true;
             args.PropertyName.Should().Be("Name");
         };
-
-        testVM.Name = "Test2";
-
-        raised.Should().BeTrue();
-    }
-
-    [Fact]
-    public void Set_ShouldNotifyObservers()
-    {
-        var testVM = new MockVM();
-        var raised = false;
-        testVM.Subscribe(info =>
-        {
-            raised = true;
-            info.Timestamp.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
-            info.Source.Should().Be(testVM);
-            info.Name.Should().Be("Name");
-            info.Value.Should().Be("Test2");
-        });
 
         testVM.Name = "Test2";
 

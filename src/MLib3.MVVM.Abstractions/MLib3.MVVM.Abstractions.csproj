@@ -5,6 +5,13 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <RootNamespace>MLib3.MVVM</RootNamespace>
+        <Version>1.0.0-beta-001</Version>
+        <Title>MLib3.MVVM.Abstractions</Title>
+        <Authors>Andreas Naumann</Authors>
+        <Copyright>2024 @ Andreas Naumann</Copyright>
+        <PackageProjectUrl>https://github.com/mrmorrandir/MLib3</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
     </PropertyGroup>
 
 </Project>

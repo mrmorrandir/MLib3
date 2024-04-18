@@ -1,4 +1,4 @@
-namespace MLib3.MVVM.UnitTests;
+namespace MLib3.MVVM.UnitTests.Mocks;
 
 public class MockVM : ViewModel
 {
