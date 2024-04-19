@@ -2,7 +2,7 @@ namespace MLib3.MVVM.UnitTests.Mocks;
 
 public class MockVM : ViewModel
 {
-    private string _name = "Test";
+    private string _name = nameof(MockVM);
     public bool CalledBack { get; set; } = false;
     public string? OldValue { get; set; } = null;
     public string? NewValue { get; set; } = null;

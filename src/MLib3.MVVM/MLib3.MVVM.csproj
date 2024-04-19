@@ -17,4 +17,8 @@
       <ProjectReference Include="..\MLib3.MVVM.Abstractions\MLib3.MVVM.Abstractions.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="System.Reactive" Version="6.0.0" />
+    </ItemGroup>
+
 </Project>
