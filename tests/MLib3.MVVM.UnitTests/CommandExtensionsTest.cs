@@ -11,16 +11,14 @@ public class CommandExtensionsTest
         var viewModel = new MockVM();
         var command = new DelegateCommand(_ => {}, _ => true);
         var canExecuteChanged = false;
-        var newName = string.Empty;
         command.CanExecuteChanged += (s, e) => canExecuteChanged = true;
     
         // Act
-        command.ReactTo(viewModel).Property(x => x.Name).Subscribe(s => newName = s);
+        command.React(viewModel).To(x => x.Name).Start();
         viewModel.Name = "Test";
 
         // Assert
         canExecuteChanged.Should().BeTrue();
-        newName.Should().Be("Test");
     }
     
     [Fact]
@@ -33,8 +31,26 @@ public class CommandExtensionsTest
         command.CanExecuteChanged += (s, e) => canExecuteChanged = true;
     
         // Act
-        command.ReactTo(viewModel).AllProperties().Subscribe();
+        command.React(viewModel).ToAll().Start();
         viewModel.Name = "Test";
+
+        // Assert
+        canExecuteChanged.Should().BeTrue();
+    }
+    
+    [Fact]
+    public void ShouldRaiseCanExecute_WhenChildPropertyChanges()
+    {
+        // Arrange
+        var viewModel = new MockVM();
+        var command = new DelegateCommand(_ => {}, _ => true);
+        var canExecuteChanged = false;
+        command.CanExecuteChanged += (s, e) => canExecuteChanged = true;
+    
+        // Act
+        viewModel.Child = new SubMockVM();
+        command.React(viewModel).To(x => x.Child).ThenTo(x => x.SomeThing).Start();
+        viewModel.Child.SomeThing = "Test";
 
         // Assert
         canExecuteChanged.Should().BeTrue();
