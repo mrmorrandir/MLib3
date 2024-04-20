@@ -2,6 +2,7 @@
 using System.ComponentModel.Design;
 using System.Linq.Expressions;
 using System.Reactive;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Windows.Input;
@@ -154,6 +155,13 @@ public class PropertyChangedObserver<TCommand, TSource, TProperty> :
         _subscription = observable.Subscribe(OnNext, OnError, OnCompleted);
     }
     
+    public PropertyChangedObserver(IObservable<PropertyChanged<TCommand, TSource, TProperty>> observable, Expression<Func<TSource, TProperty>> propertySelector)
+    {
+        _propertyName = ((MemberExpression)propertySelector.Body).Member.Name;
+        _propertyGetter = propertySelector.Compile();
+        _subscription = observable.Subscribe(OnNext, OnError, OnCompleted);
+    }
+    
     private void OnCompleted()
     {
         _subject.OnCompleted();
@@ -165,6 +173,17 @@ public class PropertyChangedObserver<TCommand, TSource, TProperty> :
     }
 
     private void OnNext(AnyPropertyChanged<TCommand, TSource> value)
+    {
+        if (value.PropertyName != _propertyName) return;
+        
+        var propertyValue = _propertyGetter(value.Source);
+        if (!_subject.HasObservers || propertyValue is null) 
+            value.TargetCommand.RaiseCanExecuteChanged();
+        
+        _subject.OnNext(new PropertyChanged<TCommand, TSource, TProperty>(value.TargetCommand, value.Source, value.PropertyName, propertyValue));
+    }
+    
+    private void OnNext(PropertyChanged<TCommand, TSource, TProperty> value)
     {
         if (value.PropertyName != _propertyName) return;
         
@@ -192,16 +211,19 @@ public class ThenToPropertyChangedObserver<TCommand, TSource, TProperty, TSubPro
     IDisposable
     where TCommand : ICommandBase
 {
+    private readonly Expression<Func<TProperty, TSubProperty>> _propertySelector;
     private readonly Subject<PropertyChanged<TCommand, TProperty, TSubProperty>> _subject = new();
     private readonly Func<TProperty, TSubProperty> _subPropertyGetter;
     private readonly string _subPropertyName;
     private readonly IDisposable _subscription;
+    private IDisposable? _subSubscription;
 
     public ThenToPropertyChangedObserver(IObservable<PropertyChanged<TCommand, TSource, TProperty>> observable, Expression<Func<TProperty, TSubProperty>> propertySelector)
     {
+        _propertySelector = propertySelector;
         _subPropertyName = ((MemberExpression)propertySelector.Body).Member.Name;
         _subPropertyGetter = propertySelector.Compile();
-        _subscription = observable.Subscribe(OnNext, OnError, OnCompleted);
+        _subscription = observable.Subscribe(OnNextProperty, OnError, OnCompleted);
     }
     
     private void OnCompleted()
@@ -214,25 +236,36 @@ public class ThenToPropertyChangedObserver<TCommand, TSource, TProperty, TSubPro
         _subject.OnError(error);
     }
 
-    private void OnNext(PropertyChanged<TCommand, TSource, TProperty> value)
+    private void OnNextProperty(PropertyChanged<TCommand, TSource, TProperty> value)
     {
-        if (value.PropertyName != _subPropertyName) return;
+        _subSubscription?.Dispose();
         if (value.PropertyValue is null)
         {
             value.TargetCommand.RaiseCanExecuteChanged();
             return;
         }
-        
-        var subPropertyValue = _subPropertyGetter(value.PropertyValue);
-        if (!_subject.HasObservers || subPropertyValue is null)
+        if (value.PropertyValue is INotifyPropertyChanged propertyChanged)
         {
-            value.TargetCommand.RaiseCanExecuteChanged();
-            return;
+            var disposables = new CompositeDisposable();
+            var propertyChangedObserver = Observable.FromEventPattern<PropertyChangedEventHandler, PropertyChangedEventArgs>(
+                h => propertyChanged.PropertyChanged += h,
+                h => propertyChanged.PropertyChanged -= h).Select(x => new AnyPropertyChanged<TCommand, TProperty>(value.TargetCommand, value.PropertyValue, _subPropertyName));
+            var propertyChangedObserver2 = new PropertyChangedObserver<TCommand, TProperty, TSubProperty>(propertyChangedObserver, _propertySelector);
+            disposables.Add(propertyChangedObserver2);
+            disposables.Add(propertyChangedObserver2.Subscribe(OnNext, OnError, OnCompleted));
+            _subSubscription = disposables;
         }
-
-        _subject.OnNext(new PropertyChanged<TCommand, TProperty, TSubProperty>(value.TargetCommand, value.PropertyValue, _subPropertyName, subPropertyValue));
     }
-    
+
+    private void OnNext(PropertyChanged<TCommand, TProperty, TSubProperty> obj)
+    {
+        if (!_subject.HasObservers || obj.PropertyValue is null)
+        {
+            obj.TargetCommand.RaiseCanExecuteChanged();
+        }
+        _subject.OnNext(obj);
+    }
+
     public IDisposable Subscribe(IObserver<PropertyChanged<TCommand, TProperty, TSubProperty>> observer)
     {
         return _subject.Subscribe(observer);
@@ -242,6 +275,7 @@ public class ThenToPropertyChangedObserver<TCommand, TSource, TProperty, TSubPro
     {
         _subject.Dispose();
         _subscription.Dispose();
+        _subSubscription?.Dispose();
     }
 }
 
