@@ -51,12 +51,18 @@ public class CommandExtensions2Tests
         command.CanExecuteChanged += (s, e) => canExecuteChangedHitCounter++;
         
         // Act
-        command.ReactTo(viewModel, x => x.A).ThenTo(x => x.B).ThenTo(x => x.C).ThenTo(x => x.Name);
+        command
+            .ReactTo(viewModel, x => x.A).ThenTo(x => x.B).ThenTo(x => x.C).ThenTo(x => x.Name)
+            .ReactTo(x => x.B).ThenTo(x => x.C).ThenTo(x => x.Name);
+        viewModel.A = new A();
+        viewModel.A.B = new B();
+        viewModel.A.B.C = new C();
+        viewModel.A.B.C.Name = "Test";
         viewModel.B = new B();
         viewModel.B.C = new C();
         viewModel.B.C.Name = "Test";
 
         // Assert
-        canExecuteChangedHitCounter.Should().Be(3);
+        canExecuteChangedHitCounter.Should().Be(7);
     }
 }
