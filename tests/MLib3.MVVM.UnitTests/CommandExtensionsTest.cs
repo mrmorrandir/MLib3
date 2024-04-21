@@ -14,7 +14,7 @@ public class CommandExtensionsTest
         command.CanExecuteChanged += (s, e) => canExecuteChanged = true;
     
         // Act
-        command.React(viewModel).To(x => x.Name).Start();
+        CommandExtensions.React(command, viewModel).To(x => x.Name).Start();
         viewModel.Name = "Test";
 
         // Assert
@@ -31,7 +31,7 @@ public class CommandExtensionsTest
         command.CanExecuteChanged += (s, e) => canExecuteChanged = true;
     
         // Act
-        command.React(viewModel).ToAll().Start();
+        CommandExtensions.React(command, viewModel).ToAll().Start();
         viewModel.Name = "Test";
 
         // Assert
@@ -49,7 +49,7 @@ public class CommandExtensionsTest
     
         // Act
         viewModel.Child = new SubMockVM();
-        command.React(viewModel).To(x => x.Child).ThenTo(x => x.SomeThing).Start();
+        CommandExtensions.React(command, viewModel).To(x => x.Child).ThenTo(x => x.SomeThing).Start();
         viewModel.Child.SomeThing = "Test";
 
         // Assert
