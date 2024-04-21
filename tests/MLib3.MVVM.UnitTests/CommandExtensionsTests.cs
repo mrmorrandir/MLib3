@@ -3,10 +3,10 @@ using MLib3.MVVM.UnitTests.Mocks;
 
 namespace MLib3.MVVM.UnitTests;
 
-public class CommandExtensions2Tests
+public class CommandExtensionsTests
 {
     [Fact]
-    public void ShouldRaiseCanExecute_WhenPropertyChanges()
+    public void ShouldRaiseCanExecute_WhenLastPropertyInPathChanges()
     {
         // Arrange
         var viewModel = new A();
@@ -23,7 +23,7 @@ public class CommandExtensions2Tests
     }
     
     [Fact]
-    public void ShouldRaiseCanExecute_WhenPropertyChanges2()
+    public void ShouldRaiseCanExecute_WhenSomePropertyInThePathChanges()
     {
         // Arrange
         var viewModel = new A();
@@ -42,7 +42,7 @@ public class CommandExtensions2Tests
     }
     
     [Fact]
-    public void ShouldRaiseCanExecute_WhenPropertyChanges3()
+    public void ShouldRaiseCanExecute_WhenSomePropertyInMultiplePathsChange()
     {
         // Arrange
         var viewModel = new TestVM();
@@ -67,7 +67,7 @@ public class CommandExtensions2Tests
     }
     
     [Fact]
-    public void ShouldRaiseCanExecute_WhenPropertyChanges4()
+    public void ShouldRaiseCanExecute_WhenAnyPropertyInSourceChanges()
     {
         // Arrange
         var viewModel = new TestVM();
@@ -90,7 +90,7 @@ public class CommandExtensions2Tests
     }
     
     [Fact]
-    public void ShouldRaiseCanExecute_WhenPropertyChanges5()
+    public void ShouldRaiseCanExecute_WhenAnyPropertyInSubPathChanges()
     {
         // Arrange
         var viewModel = new TestVM();
@@ -115,7 +115,7 @@ public class CommandExtensions2Tests
     }
     
     [Fact]
-    public void ShouldRaiseCanExecute_WhenPropertyChanges6()
+    public void ShouldRaiseCanExecute_OnlyWhenReactionIsNotDisposed()
     {
         // Arrange
         var viewModel = new TestVM();

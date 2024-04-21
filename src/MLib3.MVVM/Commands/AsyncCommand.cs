@@ -7,7 +7,10 @@ namespace MLib3.MVVM
     /// </summary>
     public class AsyncCommand : AsyncCommand<object>
     {
-        public AsyncCommand(Func<object, Task> execute, Func<object, bool> canExecute = null, Action<Exception> errorCallback = null) : base(execute, canExecute, errorCallback)
+        public AsyncCommand(Func<object, Task> execute, Action<Exception> errorCallback) : base(execute, errorCallback)
+        {
+        }
+        public AsyncCommand(Func<object, Task> execute, Func<object, bool> canExecute, Action<Exception> errorCallback) : base(execute, canExecute, errorCallback)
         {
         }
     }
