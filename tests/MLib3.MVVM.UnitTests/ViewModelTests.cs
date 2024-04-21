@@ -23,7 +23,7 @@ public class ViewModelTests
         testVM.Name = "Test2";
 
         testVM.CalledBack.Should().BeTrue();
-        testVM.OldValue.Should().Be("Test");
+        testVM.OldValue.Should().Be(nameof(MockVM));
         testVM.NewValue.Should().Be("Test2");
     }
 
