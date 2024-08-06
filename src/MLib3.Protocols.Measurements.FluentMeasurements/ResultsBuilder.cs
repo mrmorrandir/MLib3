@@ -2,129 +2,66 @@
 
 public class ResultsBuilder : IResultsBuilder
 {
+    private readonly ISectionBuilderFactory _sectionBuilderFactory;
+    private readonly IValueBuilderFactory _valueBuilderFactory;
+    private readonly ICommentBuilderFactory _commentBuilderFactory;
+    private readonly IInfoBuilderFactory _infoBuilderFactory;
+    private readonly IFlagBuilderFactory _flagBuilderFactory;
     private readonly Results _results;
     private readonly List<Func<IElement>> _builders = new();
     private bool _isResultSet;
     private bool _evaluate;
 
-    private ResultsBuilder()
+    public ResultsBuilder(ISectionBuilderFactory sectionBuilderFactory, IValueBuilderFactory valueBuilderFactory, ICommentBuilderFactory commentBuilderFactory, IInfoBuilderFactory infoBuilderFactory, IFlagBuilderFactory flagBuilderFactory)
     {
+        _sectionBuilderFactory = sectionBuilderFactory;
+        _valueBuilderFactory = valueBuilderFactory;
+        _commentBuilderFactory = commentBuilderFactory;
+        _infoBuilderFactory = infoBuilderFactory;
+        _flagBuilderFactory = flagBuilderFactory;
         _results = new Results();
     }
     
-    public static IResultsBuilder Create()
-    {
-        return new ResultsBuilder();
-    }
-
     public IResultsBuilder AddValue(Action<IValueBuilder> valueBuilder)
     {
-        var builder = ValueBuilder.Create();
+        var builder = _valueBuilderFactory.Create();
         valueBuilder(builder);
         _builders.Add(() => builder.Build());
-        return this;
-    }
-    
-    public IResultsBuilder AddValue(string name, Action<IValueBuilder> valueBuilder)
-    {
-        var builder = ValueBuilder.Create().Name(name);
-        valueBuilder(builder);
-        _builders.Add(() => builder.Build());
-        return this;
-    }
-
-    public IResultsBuilder AddValue(IValue value)
-    {
-        _builders.Add(() => value);
         return this;
     }
     
     public IResultsBuilder AddComment(Action<ICommentBuilder> commentBuilder)
     {
-        var builder = CommentBuilder.Create();
+        var builder = _commentBuilderFactory.Create();
         commentBuilder(builder);
         _builders.Add(() => builder.Build());
-        return this;
-    }
-    public IResultsBuilder AddComment(string name, Action<ICommentBuilder> commentBuilder)
-    {
-        var builder = CommentBuilder.Create().Name(name);
-        commentBuilder(builder);
-        _builders.Add(() => builder.Build());
-        return this;
-    }
-    
-    public IResultsBuilder AddComment(IComment comment)
-    {
-        _builders.Add(() => comment);
         return this;
     }
     
     public IResultsBuilder AddFlag(Action<IFlagBuilder> flagBuilder)
     {
-        var builder = FlagBuilder.Create();
+        var builder = _flagBuilderFactory.Create();
         flagBuilder(builder);
         _builders.Add(() => builder.Build());
-        return this;
-    }
-    
-    public IResultsBuilder AddFlag(string name, Action<IFlagBuilder> flagBuilder)
-    {
-        var builder = FlagBuilder.Create().Name(name);
-        flagBuilder(builder);
-        _builders.Add(() => builder.Build());
-        return this;
-    }
-    
-    public IResultsBuilder AddFlag(IFlag flag)
-    {
-        _builders.Add(() => flag);
         return this;
     }
     
     public IResultsBuilder AddInfo(Action<IInfoBuilder> infoBuilder)
     {
-        var builder = InfoBuilder.Create();
+        var builder = _infoBuilderFactory.Create();
         infoBuilder(builder);
         _builders.Add(() => builder.Build());
         return this;
     }
     
-    public IResultsBuilder AddInfo(string name, Action<IInfoBuilder> infoBuilder)
-    {
-        var builder = InfoBuilder.Create().Name(name);
-        infoBuilder(builder);
-        _builders.Add(() => builder.Build());
-        return this;
-    }
-    
-    public IResultsBuilder AddInfo(IInfo info)
-    {
-        _builders.Add(() => info);
-        return this;
-    }
     public IResultsBuilder AddSection(Action<ISectionBuilder> sectionBuilder)
     {
-        var builder = SectionBuilder.Create();
+        var builder = _sectionBuilderFactory.Create();
         sectionBuilder(builder);
         _builders.Add(() => builder.Build());
         return this;
     }
     
-    public IResultsBuilder AddSection(string name, Action<ISectionBuilder> sectionBuilder)
-    {
-        var builder = SectionBuilder.Create().Name(name);
-        sectionBuilder(builder);
-        _builders.Add(() => builder.Build());
-        return this;
-    }
-    
-    public IResultsBuilder AddSection(ISection section)
-    {
-        _builders.Add(() => section);
-        return this;
-    }
-
     public IResultsBuilder OK()
     {
         _results.OK = true;

@@ -5,16 +5,11 @@ public class MetaBuilder : IMetaBuilder
     private readonly Meta _meta;
     private readonly List<Action> _builders = new();
     
-    private MetaBuilder()
+    public MetaBuilder()
     {
         _meta = new Meta();
     }
     
-    public static IMetaBuilder Create()
-    {
-        return new MetaBuilder();
-    }
-
     public IMetaBuilder DeviceId(string deviceId)
     {
         _builders.Add(() => _meta.DeviceId = deviceId);

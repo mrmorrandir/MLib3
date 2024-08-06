@@ -5,7 +5,7 @@ public class ValueSettingBuilderTests
     [Fact]
     public void ShouldBuildValueSetting_WithAllOptions()
     {
-        var setting = ValueSettingBuilder.Create()
+        var setting = new ValueSettingBuilder()
             .Name("Test")
             .Description("Test description")
             .Unit("Test unit")
@@ -27,7 +27,7 @@ public class ValueSettingBuilderTests
     [Fact]
     public void ShouldBuildValueSetting_WithOnlyRequiredOptions()
     {
-        var setting = ValueSettingBuilder.Create()
+        var setting = new ValueSettingBuilder()
             .Name("Test")
             .Unit("Test unit")
             .Build();
@@ -44,7 +44,7 @@ public class ValueSettingBuilderTests
     [Fact]
     public void ShouldThrowInvalidOperationException_WhenNameWasNotSet()
     {
-        Action action = () => ValueSettingBuilder.Create()
+        Action action = () => new ValueSettingBuilder()
             .Build();
         
         action.Should().Throw<InvalidOperationException>().WithMessage("*Name*");
@@ -53,7 +53,7 @@ public class ValueSettingBuilderTests
     [Fact]
     public void ShouldThrowInvalidOperationException_WhenNomIsOutsideLimits()
     {
-        Action action = () => ValueSettingBuilder.Create()
+        Action action = () => new ValueSettingBuilder()
             .Name("Test")
             .Min(0)
             .Max(100)
@@ -66,7 +66,7 @@ public class ValueSettingBuilderTests
     [Fact]
     public void ShouldThrowInvalidOperationException_WhenUnitWasNotSet()
     {
-        Action action = () => ValueSettingBuilder.Create()
+        Action action = () => new ValueSettingBuilder()
             .Name("Test")
             .Build();
         
@@ -77,7 +77,7 @@ public class ValueSettingBuilderTests
     public void ShouldBuildValueSetting_WhenCreatedFromSetting()
     {
         IValueSetting setting = new ValueSetting("Test", description: "Test description", unit: "Test unit", precision: 0.001, minimum: 0, nominal: 500, maximum: 999);
-        var value = ValueSettingBuilder.CreateFromSetting(setting)
+        var value = new ValueSettingBuilder(setting)
             .Build();
         
         value.Name.Should().Be("Test");
@@ -87,14 +87,6 @@ public class ValueSettingBuilderTests
         value.Max.Should().Be(999);
         value.Min.Should().Be(0);
         value.Nom.Should().Be(500);
-    }
-
-    [Fact]
-    public void ShouldThrowArgumentException_WhenCreatedFromSetting_AndSettingIsNull()
-    {
-        Action action = () => ValueSettingBuilder.CreateFromSetting(null!);
-        
-        action.Should().Throw<ArgumentException>().WithMessage("*setting*");
     }
 }
 

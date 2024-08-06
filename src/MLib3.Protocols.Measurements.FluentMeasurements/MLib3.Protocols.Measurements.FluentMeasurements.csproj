@@ -14,6 +14,7 @@
         <RepositoryUrl>MLib3.Protocols.Measurements.FluentMeasurements</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>Protocols, Measurements, Fluent</PackageTags>
+        <Version>1.1.0-preview-20240805.1</Version>
     </PropertyGroup>
 
     <ItemGroup>
@@ -28,6 +29,10 @@
         <PackagePath></PackagePath>
         <Link>icon.png</Link>
       </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
     </ItemGroup>
 
 </Project>

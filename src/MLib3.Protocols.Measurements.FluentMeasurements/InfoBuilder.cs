@@ -5,20 +5,9 @@ public class InfoBuilder : IInfoBuilder
     private readonly Info _info;
     private bool _isValueSet;
 
-    private InfoBuilder(IInfoSetting? infoSetting = null)
+    public InfoBuilder(IInfoSetting? infoSetting = null)
     {
         _info = infoSetting is null ? new Info() : new Info(infoSetting);
-    }
-
-    public static IInfoBuilder Create()
-    {
-        return new InfoBuilder();
-    }
-    
-    public static IInfoBuilder CreateFromSetting(IInfoSetting infoSetting)
-    {
-        if (infoSetting == null) throw new ArgumentNullException(nameof(infoSetting));
-        return new InfoBuilder(infoSetting);
     }
     
     public IInfoBuilder Name(string name)

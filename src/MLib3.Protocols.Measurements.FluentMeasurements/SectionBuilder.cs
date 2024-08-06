@@ -2,27 +2,26 @@
 
 public class SectionBuilder : ISectionBuilder
 {
+    private readonly ISectionBuilderFactory _sectionBuilderFactory;
+    private readonly IValueBuilderFactory _valueBuilderFactory;
+    private readonly ICommentBuilderFactory _commentBuilderFactory;
+    private readonly IFlagBuilderFactory _flagBuilderFactory;
+    private readonly IInfoBuilderFactory _infoBuilderFactory;
     private readonly Section _section;
     private readonly List<Func<IElement>> _builders = new();
     private bool _isResultSet;
     private bool _evaluate;
     
-    private SectionBuilder(ISectionSetting? setting = null)
+    public SectionBuilder(ISectionBuilderFactory sectionBuilderFactory, IValueBuilderFactory valueBuilderFactory, ICommentBuilderFactory commentBuilderFactory, IFlagBuilderFactory flagBuilderFactory, IInfoBuilderFactory infoBuilderFactory, ISectionSetting? setting = null)
     {
+        _sectionBuilderFactory = sectionBuilderFactory;
+        _valueBuilderFactory = valueBuilderFactory;
+        _commentBuilderFactory = commentBuilderFactory;
+        _flagBuilderFactory = flagBuilderFactory;
+        _infoBuilderFactory = infoBuilderFactory;
         _section = setting is null ? new Section() : new Section(setting);
     }
     
-    public static ISectionBuilder Create()
-    {
-        return new SectionBuilder();
-    }
-
-    public static ISectionBuilder CreateFromSetting(ISectionSetting setting)
-    {
-        if (setting == null) throw new ArgumentNullException(nameof(setting));
-        return new SectionBuilder(setting);
-    }
-
     public ISectionBuilder Name(string name)
     {
         _section.Name = name;
@@ -37,110 +36,41 @@ public class SectionBuilder : ISectionBuilder
 
     public ISectionBuilder AddValue(Action<IValueBuilder> valueBuilder)
     {
-        var builder = ValueBuilder.Create();
+        var builder = _valueBuilderFactory.Create();
         valueBuilder(builder);
         _builders.Add(() => builder.Build());
-        return this;
-    }
-    
-    public ISectionBuilder AddValue(string name, Action<IValueBuilder> valueBuilder)
-    {
-        var builder = ValueBuilder.Create().Name(name);
-        valueBuilder(builder);
-        _builders.Add(() => builder.Build());
-        return this;
-    }
-
-    public ISectionBuilder AddValue(IValue value)
-    {
-        _builders.Add(() => value);
         return this;
     }
     
     public ISectionBuilder AddComment(Action<ICommentBuilder> commentBuilder)
     {
-        var builder = CommentBuilder.Create();
+        var builder = _commentBuilderFactory.Create();
         commentBuilder(builder);
         _builders.Add(() => builder.Build());
-        return this;
-    }
-    public ISectionBuilder AddComment(string name, Action<ICommentBuilder> commentBuilder)
-    {
-        var builder = CommentBuilder.Create().Name(name);
-        commentBuilder(builder);
-        _builders.Add(() => builder.Build());
-        return this;
-    }
-    
-    public ISectionBuilder AddComment(IComment comment)
-    {
-        _builders.Add(() => comment);
         return this;
     }
     
     public ISectionBuilder AddFlag(Action<IFlagBuilder> flagBuilder)
     {
-        var builder = FlagBuilder.Create();
+        var builder = _flagBuilderFactory.Create();
         flagBuilder(builder);
         _builders.Add(() => builder.Build());
-        return this;
-    }
-    
-    public ISectionBuilder AddFlag(string name, Action<IFlagBuilder> flagBuilder)
-    {
-        var builder = FlagBuilder.Create().Name(name);
-        flagBuilder(builder);
-        _builders.Add(() => builder.Build());
-        return this;
-    }
-    
-    public ISectionBuilder AddFlag(IFlag flag)
-    {
-        _builders.Add(() => flag);
         return this;
     }
     
     public ISectionBuilder AddInfo(Action<IInfoBuilder> infoBuilder)
     {
-        var builder = InfoBuilder.Create();
+        var builder = _infoBuilderFactory.Create();
         infoBuilder(builder);
         _builders.Add(() => builder.Build());
-        return this;
-    }
-    
-    public ISectionBuilder AddInfo(string name, Action<IInfoBuilder> infoBuilder)
-    {
-        var builder = InfoBuilder.Create().Name(name);
-        infoBuilder(builder);
-        _builders.Add(() => builder.Build());
-        return this;
-    }
-    
-    public ISectionBuilder AddInfo(IInfo info)
-    {
-        _builders.Add(() => info);
         return this;
     }
     
     public ISectionBuilder AddSection(Action<ISectionBuilder> sectionBuilder)
     {
-        var builder = SectionBuilder.Create();
+        var builder = _sectionBuilderFactory.Create();
         sectionBuilder(builder);
         _builders.Add(() => builder.Build());
-        return this;
-    }
-    
-    public ISectionBuilder AddSection(string name, Action<ISectionBuilder> sectionBuilder)
-    {
-        var builder = SectionBuilder.Create().Name(name);
-        sectionBuilder(builder);
-        _builders.Add(() => builder.Build());
-        return this;
-    }
-    
-    public ISectionBuilder AddSection(ISection section)
-    {
-        _builders.Add(() => section);
         return this;
     }
 

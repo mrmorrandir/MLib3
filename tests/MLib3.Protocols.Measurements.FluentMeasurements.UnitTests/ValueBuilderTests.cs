@@ -5,7 +5,7 @@ public class ValueBuilderTests
     [Fact]
     public void ShouldBuildValue_WithAllOptions()
     {
-        var value = ValueBuilder.Create()
+        var value = new ValueBuilder()
             .Name("Test")
             .Description("Test description")
             .Unit("Test unit")
@@ -30,7 +30,7 @@ public class ValueBuilderTests
     [Fact]
     public void ShouldBuildValue_WithAllOptions_AndNOK()
     {
-        var value = ValueBuilder.Create()
+        var value = new ValueBuilder()
             .Name("Test")
             .Description("Test description")
             .Unit("Test unit")
@@ -56,7 +56,7 @@ public class ValueBuilderTests
     [Fact]
     public void ShouldBuildValue_WithOnlyRequiredOptions()
     {
-        var value = ValueBuilder.Create()
+        var value = new ValueBuilder()
             .Name("Test")
             .Unit("Test unit")
             .Result(234)
@@ -76,7 +76,7 @@ public class ValueBuilderTests
     [Fact]
     public void ShouldBuildValue_WithEvaluateWhenNoLimitsGiven()
     {
-        var value = ValueBuilder.Create()
+        var value = new ValueBuilder()
             .Name("Test")
             .Unit("Test unit")
             .Result(234)
@@ -89,7 +89,7 @@ public class ValueBuilderTests
     [Fact]
     public void ShouldBuildValue_WithEvaluateWhenLimitsGiven()
     {
-        var value = ValueBuilder.Create()
+        var value = new ValueBuilder()
             .Name("Test")
             .Unit("Test unit")
             .Result(234)
@@ -104,7 +104,7 @@ public class ValueBuilderTests
     [Fact]
     public void ShouldBuildValue_WithEvaluateWhenLimitsGivenAndResultIsOutsideLimits()
     {
-        var value = ValueBuilder.Create()
+        var value = new ValueBuilder()
             .Name("Test")
             .Unit("Test unit")
             .Result(234)
@@ -120,7 +120,7 @@ public class ValueBuilderTests
     public void ShouldBuildValue_WhenCreatedFromSetting()
     {
         IValueSetting setting = new ValueSetting("Test", description: "Test description", unit: "Test unit", precision: 0.001, minimum: 0, nominal: 500, maximum: 999);
-        var value = ValueBuilder.CreateFromSetting(setting)
+        var value = new ValueBuilder(setting)
             .Result(1000)
             .Evaluate()
             .Build();
@@ -139,7 +139,7 @@ public class ValueBuilderTests
     [Fact]
     public void ShouldThrowInvalidOperationException_WhenNameWasNotSet()
     {
-        Action action = () => ValueBuilder.Create()
+        Action action = () => new ValueBuilder()
             .Result(234)
             .OK()
             .Build();
@@ -150,7 +150,7 @@ public class ValueBuilderTests
     [Fact]
     public void ShouldThrowInvalidOperationException_WhenUnitWasNotSet()
     {
-        Action action = () => ValueBuilder.Create()
+        Action action = () => new ValueBuilder()
             .Name("Test")
             .Result(234)
             .OK()
@@ -162,7 +162,7 @@ public class ValueBuilderTests
     [Fact]
     public void ShouldThrowInvalidOperationException_WhenNomIsOutsideLimits()
     {
-        Action action = () => ValueBuilder.Create()
+        Action action = () => new ValueBuilder()
             .Name("Test")
             .Unit("Test unit")
             .Result(234)
@@ -178,7 +178,7 @@ public class ValueBuilderTests
     [Fact]
     public void ShouldThrowInvalidOperationException_WhenResultValueWasNotSet()
     {
-        Action action = () => ValueBuilder.Create()
+        Action action = () => new ValueBuilder()
             .Name("Test")
             .Unit("Test unit")
             .OK()
@@ -190,21 +190,12 @@ public class ValueBuilderTests
     [Fact]
     public void ShouldThrowInvalidOperationException_WhenResultWasNotSet()
     {
-        Action action = () => ValueBuilder.Create()
+        Action action = () => new ValueBuilder()
             .Name("Test")
             .Unit("Test unit")
             .Result(123.4)
             .Build();
         
         action.Should().Throw<InvalidOperationException>().WithMessage("*Result*OK*NOK*Evaluate*");
-    }
-   
-
-    [Fact]
-    public void ShouldThrowArgumentException_WhenCreatedFromSetting_AndSettingIsNull()
-    {
-        Action action = () => ValueBuilder.CreateFromSetting(null!);
-        
-        action.Should().Throw<ArgumentException>();
     }
 }
