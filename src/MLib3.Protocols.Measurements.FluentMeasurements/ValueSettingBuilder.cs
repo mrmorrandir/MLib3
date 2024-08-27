@@ -4,22 +4,11 @@ public class ValueSettingBuilder : IValueSettingBuilder
 {
     private readonly ValueSetting _valueSetting;
     
-    private ValueSettingBuilder(IValueSetting? valueSetting = null)
+    public ValueSettingBuilder(IValueSetting? valueSetting = null)
     {
         _valueSetting = valueSetting is null ? new ValueSetting() : new ValueSetting(valueSetting);
     }
     
-    public static IValueSettingBuilder Create()
-    {
-        return new ValueSettingBuilder();
-    }
-
-    public static IValueSettingBuilder CreateFromSetting(IValueSetting valueSetting)
-    {
-        if (valueSetting == null) throw new ArgumentNullException(nameof(valueSetting));
-        return new ValueSettingBuilder(valueSetting);
-    }
-
     public IValueSettingBuilder Name(string name)
     {
         _valueSetting.Name = name;

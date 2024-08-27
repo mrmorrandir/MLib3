@@ -5,7 +5,7 @@ public class InfoBuilderTests
     [Fact]
     public void ShouldBuildInfo_WithAllOptions()
     {
-        var info = InfoBuilder.Create()
+        var info = new InfoBuilder()
             .Name("Test")
             .Description("Test description")
             .Unit("Test unit")
@@ -23,7 +23,7 @@ public class InfoBuilderTests
     [Fact]
     public void ShouldBuildInfo_WithOnlyRequiredOptions()
     {
-        var info = InfoBuilder.Create()
+        var info = new InfoBuilder()
             .Name("Test")
             .Unit("Test unit")
             .Value(123.456)
@@ -40,7 +40,7 @@ public class InfoBuilderTests
     public void ShouldBuildInfo_WhenInfoSettingIsGiven()
     {
         IInfoSetting setting = new InfoSetting("Test", "Test description", "Test unit", 0.001);
-        var info = InfoBuilder.CreateFromSetting(setting)
+        var info = new InfoBuilder(setting)
             .Value(123.456)
             .Build();
         
@@ -54,7 +54,7 @@ public class InfoBuilderTests
     [Fact]
     public void ShouldThrowInvalidOperationException_WhenNameWasNotSet()
     {
-        Action action = () => InfoBuilder.Create()
+        Action action = () => new InfoBuilder()
             .Unit("Test unit")
             .Value(123.456)
             .Build();
@@ -65,7 +65,7 @@ public class InfoBuilderTests
     [Fact]
     public void ShouldThrowInvalidOperationException_WhenUnitWasNotSet()
     {
-        Action action = () => InfoBuilder.Create()
+        Action action = () => new InfoBuilder()
             .Name("Test")
             .Value(123.456)
             .Build();
@@ -76,19 +76,11 @@ public class InfoBuilderTests
     [Fact]
     public void ShouldThrowInvalidOperationException_WhenValueWasNotSet()
     {
-        Action action = () => InfoBuilder.Create()
+        Action action = () => new InfoBuilder()
             .Name("Test")
             .Unit("Test unit")
             .Build();
         
         action.Should().Throw<InvalidOperationException>().WithMessage("*Value*");
-    }
-    
-    [Fact]
-    public void ShouldThrowArgumentException_WhenCreatedFromSetting_AndSettingIsNull()
-    {
-        Action action = () => InfoBuilder.CreateFromSetting(null!);
-        
-        action.Should().Throw<ArgumentException>();
     }
 }

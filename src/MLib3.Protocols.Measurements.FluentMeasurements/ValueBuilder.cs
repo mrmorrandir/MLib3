@@ -6,20 +6,9 @@ public class ValueBuilder : IValueBuilder
     private bool _isResultSet;
     private bool _isResultValueSet;
 
-    private ValueBuilder(IValueSetting? valueSetting = null)
+    public ValueBuilder(IValueSetting? valueSetting = null)
     {
         _value = valueSetting is null ? new Value() : new Value(valueSetting);
-    }
-    
-    public static IValueBuilder Create()
-    {
-        return new ValueBuilder();
-    }
-
-    public static IValueBuilder CreateFromSetting(IValueSetting valueSetting)
-    {
-        if (valueSetting == null) throw new ArgumentNullException(nameof(valueSetting));
-        return new ValueBuilder(valueSetting);
     }
 
     public IValueBuilder Name(string name)

@@ -5,14 +5,9 @@ public class ProductBuilder : IProductBuilder
     private readonly Product _product;
     private readonly List<Action> _builders = new();
     
-    private ProductBuilder()
+    public ProductBuilder()
     {
         _product = new Product();
-    }
-    
-    public static IProductBuilder Create()
-    {
-        return new ProductBuilder();
     }
 
     public IProductBuilder Equipment(string equipment)

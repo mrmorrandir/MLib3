@@ -4,22 +4,28 @@ namespace MLib3.Protocols.Measurements.FluentMeasurements;
 
 public class ProtocolBuilder : IProtocolBuilder
 {
+    private readonly IMetaBuilderFactory _metaBuilderFactory;
+    private readonly IProductBuilderFactory _productBuilderFactory;
+    private readonly IResultsBuilderFactory _resultsBuilderFactory;
     private readonly Protocol _protocol;
-    private readonly List<Action> _builders = new List<Action>();
+    private readonly List<Action> _builders = new();
     private bool _isMetaSet;
     private bool _isProductSet;
     private bool _isResultsSet;
 
-    private ProtocolBuilder()
+    public ProtocolBuilder(IMetaBuilderFactory metaBuilderFactory, IProductBuilderFactory productBuilderFactory, IResultsBuilderFactory resultsBuilderFactory)
     {
+        _metaBuilderFactory = metaBuilderFactory;
+        _productBuilderFactory = productBuilderFactory;
+        _resultsBuilderFactory = resultsBuilderFactory;
         _protocol = new Protocol();
     }
     
-    public static IProtocolBuilder Create() => new ProtocolBuilder();
-    
     public IProtocolBuilder Product(Action<IProductBuilder> productBuilder)
     {
-        var builder = ProductBuilder.Create();
+        if (_isProductSet)
+            throw new InvalidOperationException($"{nameof(_protocol.Product)} is already set");
+        var builder = _productBuilderFactory.Create();
         productBuilder(builder);
         _builders.Add(() =>
         {
@@ -29,19 +35,11 @@ public class ProtocolBuilder : IProtocolBuilder
         return this;
     }
     
-    public IProtocolBuilder Product(IProduct product)
-    {
-        _builders.Add(() =>
-        {
-            _protocol.Product = product;
-        });
-        _isProductSet = true;
-        return this;
-    }
-    
     public IProtocolBuilder Meta(Action<IMetaBuilder> metaBuilder)
     {
-        var builder = MetaBuilder.Create();
+        if (_isMetaSet)
+            throw new InvalidOperationException($"{nameof(_protocol.Meta)} is already set");
+        var builder = _metaBuilderFactory.Create();
         metaBuilder(builder);
         _builders.Add(() =>
         {
@@ -51,33 +49,15 @@ public class ProtocolBuilder : IProtocolBuilder
         return this;
     }
     
-    public IProtocolBuilder Meta(IMeta meta)
-    {
-        _builders.Add(() =>
-        {
-            _protocol.Meta = meta;
-        });
-        _isMetaSet = true;
-        return this;
-    }
-    
     public IProtocolBuilder Results(Action<IResultsBuilder> resultsBuilder)
     {
-        var builder = ResultsBuilder.Create();
+        if (_isResultsSet)
+            throw new InvalidOperationException($"{nameof(_protocol.Results)} is already set");
+        var builder = _resultsBuilderFactory.Create();
         resultsBuilder(builder);
         _builders.Add(() =>
         {
             _protocol.Results = builder.Build();
-        });
-        _isResultsSet = true;
-        return this;
-    }
-    
-    public IProtocolBuilder Results(IResults results)
-    {
-        _builders.Add(() =>
-        {
-            _protocol.Results = results;
         });
         _isResultsSet = true;
         return this;

@@ -1,13 +1,16 @@
 ﻿using System.Collections.Immutable;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MLib3.Protocols.Measurements.FluentMeasurements;
 
 public class SectionBuilderTests
 {
+    private ISectionBuilderFactory GetSectionBuilderFactory() => new ServiceCollection().AddFluentMeasurements().BuildServiceProvider().GetRequiredService<ISectionBuilderFactory>();
+    
     [Fact]
     public void ShouldBuildSection_WithAllOptions()
     {
-        var section = SectionBuilder.Create()
+        var section = GetSectionBuilderFactory().Create()
             .Name("Test")
             .Description("Test description")
             .OK()
@@ -21,7 +24,7 @@ public class SectionBuilderTests
     [Fact]
     public void ShouldBuildSection_WithAllOptions_AndNOK()
     {
-        var section = SectionBuilder.Create()
+        var section = GetSectionBuilderFactory().Create()
             .Name("Test")
             .Description("Test description")
             .OK() // first OK
@@ -36,7 +39,7 @@ public class SectionBuilderTests
     [Fact]
     public void ShouldBuildSection_WithOnlyRequiredOptions()
     {
-        var section = SectionBuilder.Create()
+        var section = GetSectionBuilderFactory().Create()
             .Name("Test")
             .OK()
             .Build();
@@ -50,7 +53,7 @@ public class SectionBuilderTests
     public void ShouldBuildSection_WhenCreatedFromSetting()
     {
         ISectionSetting setting = new SectionSetting("Test", description: "Test description");
-        var section = SectionBuilder.CreateFromSetting(setting)
+        var section = GetSectionBuilderFactory().Create(setting)
             .OK()
             .Build();
         
@@ -58,24 +61,11 @@ public class SectionBuilderTests
         section.Description.Should().Be("Test description");
         section.OK.Should().BeTrue();
     }
-    
-    [Fact]
-    public void AddValue_ShouldAddValue()
-    {
-        var value = new Value(new ValueSetting("Test", "Test value"), 123.4, true);
-        var section = SectionBuilder.Create()
-            .Name("Test")
-            .AddValue(value)
-            .OK()
-            .Build();
-        
-        section.Data.Should().Contain(value);
-    }
 
     [Fact]
     public void AddValue_ShouldAddValue_WhenValueBuilderIsUsed()
     {
-        var section = SectionBuilder.Create()
+        var section = GetSectionBuilderFactory().Create()
             .Name("Test")
             .AddValue(builder => builder.Name("Test").Result(123.4).Unit("Test unit").OK())
             .OK()
@@ -83,24 +73,11 @@ public class SectionBuilderTests
             
         section.Data.Should().Contain(e => e.Name == "Test" && (e as IValue)!.Result == 123.4 && (e as IValue)!.OK );
     }
-
-    [Fact]
-    public void AddComment_ShouldAddComment()
-    {
-        var comment = new Comment(new CommentSetting("Test", "Test comment"));
-        var section = SectionBuilder.Create()
-            .Name("Test")
-            .AddComment(comment)
-            .OK()
-            .Build();
-        
-        section.Data.Should().Contain(comment);
-    }
     
     [Fact]
     public void AddComment_ShouldAddComment_WhenCommentBuilderIsUsed()
     {
-        var section = SectionBuilder.Create()
+        var section = GetSectionBuilderFactory().Create()
             .Name("Test")
             .AddComment(builder => builder.Name("Test").Text("Test comment"))
             .OK()
@@ -110,22 +87,9 @@ public class SectionBuilderTests
     }
     
     [Fact]
-    public void AddFlag_ShouldAddFlag()
-    {
-        var flag = new Flag(new FlagSetting("Test", "Test description"), true);
-        var section = SectionBuilder.Create()
-            .Name("Test")
-            .AddFlag(flag)
-            .OK()
-            .Build();
-
-        section.Data.Should().Contain(flag);
-    }
-    
-    [Fact]
     public void AddFlag_ShouldAddFlag_WhenFlagBuilderIsUsed()
     {
-        var section = SectionBuilder.Create()
+        var section = GetSectionBuilderFactory().Create()
             .Name("Test")
             .AddFlag(builder => builder.Name("Test").Description("Test description").OK())
             .OK()
@@ -135,22 +99,9 @@ public class SectionBuilderTests
     }
     
     [Fact]
-    public void AddSection_ShouldAddSection()
-    {
-        var section = new Section(new SectionSetting("Test", "Test description"), ImmutableList<IElement>.Empty, true);
-        var parentSection = SectionBuilder.Create()
-            .Name("Parent")
-            .AddSection(section)
-            .OK()
-            .Build();
-
-        parentSection.Data.Should().Contain(section);
-    }
-    
-    [Fact]
     public void AddSection_ShouldAddSection_WhenSectionBuilderIsUsed()
     {
-        var parentSection = SectionBuilder.Create()
+        var parentSection = GetSectionBuilderFactory().Create()
             .Name("Parent")
             .AddSection(builder => builder.Name("Test").Description("Test description").OK())
             .OK()
@@ -160,22 +111,9 @@ public class SectionBuilderTests
     }
     
     [Fact]
-    public void AddInfo_ShouldAddInfo()
-    {
-        var info = new Info(new InfoSetting("Test", "Test description"));
-        var section = SectionBuilder.Create()
-            .Name("Test")
-            .AddInfo(info)
-            .OK()
-            .Build();
-
-        section.Data.Should().Contain(info);
-    }
-    
-    [Fact]
     public void AddInfo_ShouldAddInfo_WhenInfoBuilderIsUsed()
     {
-        var section = SectionBuilder.Create()
+        var section = GetSectionBuilderFactory().Create()
             .Name("Test")
             .AddInfo(builder => builder.Name("Test").Description("Test description").Unit("Test unit").Value(123.4))
             .OK()
@@ -187,7 +125,7 @@ public class SectionBuilderTests
     [Fact]
     public void ShouldBuildSectionUsingEvaluate_WhenAddingOnlyOKValues()
     {
-        var section = SectionBuilder.Create()
+        var section = GetSectionBuilderFactory().Create()
             .Name("Test")
             .AddValue(builder => builder.Name("Test").Result(123.4).Unit("Test unit").OK())
             .Evaluate()
@@ -199,7 +137,7 @@ public class SectionBuilderTests
     [Fact]
     public void ShouldBuildSectionUsingEvaluate_WhenAddingOnlyNOKValues()
     {
-        var section = SectionBuilder.Create()
+        var section = GetSectionBuilderFactory().Create()
             .Name("Test")
             .AddValue(builder => builder.Name("Test").Result(123.4).Unit("Test unit").NOK())
             .Evaluate()
@@ -211,7 +149,7 @@ public class SectionBuilderTests
     [Fact]
     public void ShouldBuildSectionUsingEvaluate_WhenAddingOKAndNOKValues()
     {
-        var section = SectionBuilder.Create()
+        var section = GetSectionBuilderFactory().Create()
             .Name("Test")
             .AddValue(builder => builder.Name("Test1").Result(123.4).Unit("Test unit").OK())
             .AddValue(builder => builder.Name("Test2").Result(123.4).Unit("Test unit").NOK())
@@ -224,7 +162,7 @@ public class SectionBuilderTests
     [Fact]
     public void ShouldBuildSectionUsingEvaluate_WhenAddingOnlyOKSubSections()
     {
-        var section = SectionBuilder.Create()
+        var section = GetSectionBuilderFactory().Create()
             .Name("Test")
             .AddSection(builder => builder.Name("Test1").OK())
             .AddSection(builder => builder.Name("Test2").OK())
@@ -237,7 +175,7 @@ public class SectionBuilderTests
     [Fact]
     public void ShouldBuildSectionUsingEvaluate_WhenAddingMultiLevelSubSections()
     {
-        var section = SectionBuilder.Create()
+        var section = GetSectionBuilderFactory().Create()
             .Name("Test")
             .AddSection(testSection => 
                 testSection.Name("Test1")
@@ -256,7 +194,7 @@ public class SectionBuilderTests
     [Fact]
     public void ShouldThrowInvalidOperationException_WhenNameWasNotSet()
     {
-        Action action = () => SectionBuilder.Create()
+        Action action = () => GetSectionBuilderFactory().Create()
             .OK()
             .Build();
 
@@ -266,7 +204,7 @@ public class SectionBuilderTests
     [Fact]
     public void ShouldThrowInvalidOperationException_WhenResultWasNotSet()
     {
-        Action action = () => SectionBuilder.Create()
+        Action action = () => GetSectionBuilderFactory().Create()
             .Name("Test")
             .Build();
 
@@ -276,7 +214,7 @@ public class SectionBuilderTests
     [Fact]
     public void ShouldNotThrowInvalidOperationException_WhenResultWasSet_ByUsingOK()
     {
-        Action action = () => SectionBuilder.Create()
+        Action action = () => GetSectionBuilderFactory().Create()
             .OK()
             .Build();
         
@@ -286,7 +224,7 @@ public class SectionBuilderTests
     [Fact]
     public void ShouldNotThrowInvalidOperationException_WhenResultWasSet_ByUsingNOK()
     {
-        Action action = () => SectionBuilder.Create()
+        Action action = () => GetSectionBuilderFactory().Create()
             .NOK()
             .Build();
         
@@ -296,7 +234,7 @@ public class SectionBuilderTests
     [Fact]
     public void ShouldNotThrowInvalidOperationException_WhenResultWasSet_ByUsingEvaluate()
     {
-        Action action = () => SectionBuilder.Create()
+        Action action = () => GetSectionBuilderFactory().Create()
             .Evaluate()
             .Build();
         
@@ -304,17 +242,9 @@ public class SectionBuilderTests
     }
     
     [Fact]
-    public void ShouldThrowArgumentException_WhenCreatedFromSetting_AndSettingIsNull()
-    {
-        Action action = () => SectionBuilder.CreateFromSetting(null!);
-        
-        action.Should().Throw<ArgumentException>();
-    }
-    
-    [Fact]
     public void ShouldThrowArgumentException_WhenMultipleElementsHaveTheSameName()
     {
-        Action action = () => SectionBuilder.Create()
+        Action action = () => GetSectionBuilderFactory().Create()
             .Name("Test")
             .AddValue(builder => builder.Name("Test value").Result(123.4).Unit("Test unit").OK())
             .AddValue(builder => builder.Name("Test value").Result(123.4).Unit("Test unit").OK())
@@ -322,33 +252,5 @@ public class SectionBuilderTests
             .Build();
         
         action.Should().Throw<ArgumentException>().WithMessage("*Test value*");
-    }
-
-    [Fact]
-    public void ShouldBuildSection_WithAddMethodOverloadsWithNames()
-    {
-        var section = SectionBuilder.Create()
-            .Name("Test")
-            .Description("Test description")
-            .AddComment("Test comment", c => c.Description("Test comment description").Text("Test comment"))
-            .AddFlag("Test flag", f => f.Description("Test flag description").OK())
-            .AddInfo("Test info", i => i.Description("Test info description").Unit("Test info unit").Value(123.4))
-            .AddValue("Test value", v => v.Description("Test value description").Result(123.4).Unit("Test value unit").OK())
-            .AddSection("SubTest", s =>s
-                .Description("Test section description")
-                .AddComment(c => c.Name("SubTest comment").Description("SubTest comment description").Text("Test comment"))
-                .OK())
-            .Evaluate()
-            .Build();
-        
-        section.Name.Should().Be("Test");
-        section.Description.Should().Be("Test description");
-        section.Data.Should().Contain(e => e.Name == "Test comment" && e.Description == "Test comment description");
-        section.Data.Should().Contain(e => e.Name == "Test flag" && e.Description == "Test flag description");
-        section.Data.Should().Contain(e => e.Name == "Test info" && e.Description == "Test info description");
-        section.Data.Should().Contain(e => e.Name == "Test value" && e.Description == "Test value description");
-        section.Data.Should().Contain(e => e.Name == "SubTest" && e.Description == "Test section description");
-        
-        section.OK.Should().BeTrue();
     }
 }

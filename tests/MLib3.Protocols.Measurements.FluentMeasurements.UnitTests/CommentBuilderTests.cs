@@ -5,7 +5,7 @@ public class CommentBuilderTests
     [Fact]
     public void ShouldBuildComment_WithAllOptions()
     {
-        var comment = CommentBuilder.Create()
+        var comment = new CommentBuilderFactory().Create()
             .Name("Test")
             .Description("Test description")
             .Text("Test text")
@@ -19,7 +19,7 @@ public class CommentBuilderTests
     [Fact]
     public void ShouldBuildComment_WithOnlyRequiredOptions()
     {
-        var comment = CommentBuilder.Create()
+        var comment = new CommentBuilderFactory().Create()
             .Name("Test")
             .Text("Test text")
             .Build();
@@ -33,7 +33,7 @@ public class CommentBuilderTests
     public void ShouldBuildComment_WhenCreatedFromCommentSetting()
     {
         ICommentSetting setting = new CommentSetting("Test", "Test description");
-        var comment = CommentBuilder.CreateFromSetting(setting)
+        var comment = new CommentBuilderFactory().Create(setting)
             .Text("Test text")
             .Build();
         
@@ -45,7 +45,7 @@ public class CommentBuilderTests
     [Fact]
     public void ShouldThrowInvalidOperationException_WhenNameWasNotSet()
     {
-        Action action = () => CommentBuilder.Create()
+        Action action = () => new CommentBuilderFactory().Create()
             .Text("Test text")
             .Build();
         
@@ -55,18 +55,10 @@ public class CommentBuilderTests
     [Fact]
     public void ShouldThrowInvalidOperationException_WhenTextWasNotSet()
     {
-        Action action = () => CommentBuilder.Create()
+        Action action = () => new CommentBuilderFactory().Create()
             .Name("Test")
             .Build();
         
         action.Should().Throw<InvalidOperationException>().WithMessage("*Text*");
-    }
-    
-    [Fact]
-    public void ShouldThrowArgumentException_WhenCreatedFromSetting_AndSettingIsNull()
-    {
-        Action action = () => CommentBuilder.CreateFromSetting(null!);
-        
-        action.Should().Throw<ArgumentException>();
     }
 }

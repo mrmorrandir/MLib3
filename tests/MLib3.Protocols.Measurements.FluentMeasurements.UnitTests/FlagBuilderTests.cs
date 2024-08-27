@@ -5,7 +5,7 @@ public class FlagBuilderTests
     [Fact]
     public void ShouldBuildFlag_WithAllOptions()
     {
-        var flag = FlagBuilder.Create()
+        var flag = new FlagBuilder()
             .Name("Test")
             .Description("Test description")
             .OK()
@@ -19,7 +19,7 @@ public class FlagBuilderTests
     [Fact]
     public void ShouldBuildFlag_WithAllOptions_AndNOK()
     {
-        var flag = FlagBuilder.Create()
+        var flag = new FlagBuilder()
             .Name("Test")
             .Description("Test description")
             .OK() // first OK
@@ -34,7 +34,7 @@ public class FlagBuilderTests
     [Fact]
     public void ShouldBuildFlag_WithOnlyRequiredOptions()
     {
-        var flag = FlagBuilder.Create()
+        var flag = new FlagBuilder()
             .Name("Test")
             .OK()
             .Build();
@@ -48,7 +48,7 @@ public class FlagBuilderTests
     public void ShouldBuildFlag_WhenFlagSettingIsGiven()
     {
         IFlagSetting setting = new FlagSetting("Test", description: "Test description");
-        var flag = FlagBuilder.CreateFromSetting(setting)
+        var flag = new FlagBuilder(setting)
             .OK()
             .Build();
         
@@ -60,7 +60,7 @@ public class FlagBuilderTests
     [Fact]
     public void ShouldThrowInvalidOperationException_WhenNameWasNotSet()
     {
-        Action action = () => FlagBuilder.Create()
+        Action action = () => new FlagBuilder()
             .OK()
             .Build();
         
@@ -70,18 +70,10 @@ public class FlagBuilderTests
     [Fact]
     public void ShouldThrowInvalidOperationException_WhenResultWasNotSet()
     {
-        Action action = () => FlagBuilder.Create()
+        Action action = () => new FlagBuilder()
             .Name("Test")
             .Build();
         
         action.Should().Throw<InvalidOperationException>().WithMessage("*Result*OK*NOK*");
-    }
-    
-    [Fact]
-    public void ShouldThrowArgumentException_WhenCreatedFromSetting_AndSettingIsNull()
-    {
-        Action action = () => FlagBuilder.CreateFromSetting(null!);
-        
-        action.Should().Throw<ArgumentException>();
     }
 }

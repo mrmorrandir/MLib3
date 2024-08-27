@@ -5,20 +5,9 @@ public class FlagBuilder : IFlagBuilder
     private readonly Flag _flag;
     private bool _isResultSet;
 
-    private FlagBuilder(IFlagSetting? flagSetting = null)
+    public FlagBuilder(IFlagSetting? flagSetting = null)
     {
         _flag = flagSetting is null ? new Flag() : new Flag(flagSetting);
-    }
-
-    public static IFlagBuilder Create()
-    {
-        return new FlagBuilder();
-    }
-    
-    public static IFlagBuilder CreateFromSetting(IFlagSetting flagSetting)
-    {
-        if (flagSetting == null) throw new ArgumentNullException(nameof(flagSetting));
-        return new FlagBuilder(flagSetting);
     }
     
     public IFlagBuilder Name(string name)

@@ -5,20 +5,9 @@ public class CommentBuilder : ICommentBuilder
     private readonly Comment _comment;
     private bool _isTextSet;
 
-    private CommentBuilder(ICommentSetting? commentSetting = null)
+    public CommentBuilder(ICommentSetting? commentSetting = null)
     {
         _comment = commentSetting is null ? new Comment() : new Comment(commentSetting);
-    }
-
-    public static ICommentBuilder Create()
-    {
-        return new CommentBuilder();
-    }
-    
-    public static ICommentBuilder CreateFromSetting(ICommentSetting commentSetting)
-    {
-        if (commentSetting == null) throw new ArgumentNullException(nameof(commentSetting));
-        return new CommentBuilder(commentSetting);
     }
     
     public ICommentBuilder Name(string name)
