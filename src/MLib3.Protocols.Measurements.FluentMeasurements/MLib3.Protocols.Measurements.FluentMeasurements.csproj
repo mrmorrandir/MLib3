@@ -14,7 +14,7 @@
         <RepositoryUrl>MLib3.Protocols.Measurements.FluentMeasurements</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>Protocols, Measurements, Fluent</PackageTags>
-        <Version>1.1.0-preview-20240805.1</Version>
+        <Version>1.1.0-preview-20240827.1</Version>
     </PropertyGroup>
 
     <ItemGroup>

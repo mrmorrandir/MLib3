@@ -13,7 +13,7 @@
         <PackageIcon>icon.png</PackageIcon>
         <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <Version>1.1.0-preview-20240805.1</Version>
+        <Version>1.1.0-preview-20240827.1</Version>
         <RootNamespace>MLib3.Protocols.Measurements.FluentMeasurements</RootNamespace>
     </PropertyGroup>
 
