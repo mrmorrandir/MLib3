@@ -1,20 +1,16 @@
-﻿using System.ComponentModel;
-using System.Reflection;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace MLib3.MVVM
 {
     public class DelegateCommand<T> : ICommandBase
     {
-        private readonly Func<T, bool> _canExecute;
-        private readonly Action<T> _execute;
-        private Dictionary<object, List<string>> _dependsOn;
+        private readonly Func<T?, bool> _canExecute;
+        private readonly Action<T?> _execute;
 
         public DelegateCommand(Action<T?> execute, Func<T?, bool>? canExecute = null)
         {
             _execute = execute;
             _canExecute = canExecute ?? (_ => true);
-            _dependsOn = new Dictionary<object, List<string>>();
         }
 
         public bool CanExecute(T? parameter = default)

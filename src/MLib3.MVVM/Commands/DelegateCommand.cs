@@ -1,6 +1,4 @@
-﻿using System.Windows.Input;
-
-namespace MLib3.MVVM
+﻿namespace MLib3.MVVM
 {
     public class DelegateCommand : DelegateCommand<object>
     {

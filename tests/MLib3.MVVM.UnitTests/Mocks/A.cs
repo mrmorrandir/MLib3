@@ -4,7 +4,7 @@ namespace MLib3.MVVM.UnitTests.Mocks;
 
 public class A : INotifyPropertyChanged
 {
-    public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler? PropertyChanged;
 
     private B _b = new B();
     public B B
