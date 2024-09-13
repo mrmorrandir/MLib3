@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.Reflection;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace MLib3.MVVM
 {
@@ -60,7 +58,5 @@ namespace MLib3.MVVM
             if (CanExecute((T)parameter!))
                 await ExecuteAsync((T)parameter!).ConfigureAwait(true);
         }
-
-        
     }
 }

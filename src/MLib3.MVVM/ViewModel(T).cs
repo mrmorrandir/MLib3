@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 namespace MLib3.MVVM;
 
@@ -12,7 +11,7 @@ public abstract class ViewModel<TModel> : ViewModel, IViewModel<TModel> where TM
         Model = model ?? throw new ArgumentNullException(nameof(model));
     }
     
-    protected virtual void SetModel<TValue>(TValue? value, ValueChangedCallback<TValue?>? callback = null, [CallerMemberName] string property = null)
+    protected virtual void SetModel<TValue>(TValue? value, ValueChangedCallback<TValue?>? callback = null, [CallerMemberName] string? property = null)
     {
         if (property is null) throw new ArgumentNullException(nameof(property));
         var propertyInfo = Model.GetType().GetProperty(property);
