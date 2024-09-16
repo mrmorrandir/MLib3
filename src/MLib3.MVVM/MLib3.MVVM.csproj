@@ -21,13 +21,4 @@
       <PackageReference Include="System.Reactive" Version="6.0.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Reference Include="Microsoft.CodeAnalysis">
-        <HintPath>..\..\..\..\..\.nuget\packages\microsoft.codeanalysis.common\4.1.0\lib\netcoreapp3.1\Microsoft.CodeAnalysis.dll</HintPath>
-      </Reference>
-      <Reference Include="Microsoft.CodeAnalysis.CSharp">
-        <HintPath>..\..\..\..\..\.nuget\packages\microsoft.codeanalysis.csharp\4.1.0\lib\netcoreapp3.1\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
-      </Reference>
-    </ItemGroup>
-
 </Project>

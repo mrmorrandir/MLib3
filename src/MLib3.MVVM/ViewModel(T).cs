@@ -2,7 +2,6 @@
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace MLib3.MVVM;
 

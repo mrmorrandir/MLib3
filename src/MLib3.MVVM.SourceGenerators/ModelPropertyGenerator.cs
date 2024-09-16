@@ -43,10 +43,18 @@ namespace MLib3.MVVM.SourceGenerators
             var classDeclaration = property.Parent as ClassDeclarationSyntax;
             if (classDeclaration == null) continue;
 
-            var namespaceDeclaration = classDeclaration.Ancestors().OfType<NamespaceDeclarationSyntax>().FirstOrDefault();
-            if (namespaceDeclaration == null) continue;
-
-            var namespaceName = namespaceDeclaration.Name.ToString();
+            // find the namespace declaration or the file namespace declaration
+            string? namespaceName = null;
+            var namespaceDeclaration = classDeclaration.Parent;
+            if (namespaceDeclaration is NamespaceDeclarationSyntax namespaceDeclarationSyntax)
+            {
+                namespaceName = namespaceDeclarationSyntax.Name.ToString();
+            }
+            if (namespaceDeclaration is FileScopedNamespaceDeclarationSyntax fileScopedNamespaceDeclarationSyntax)
+            {
+                namespaceName = fileScopedNamespaceDeclarationSyntax.Name.ToString();
+            }
+            if (namespaceName is null) continue;
             var className = classDeclaration.Identifier.Text;
             var propertyName = property.Identifier.Text;
             var propertyType = property.Type.ToString();
@@ -61,9 +69,13 @@ namespace {namespaceName}
             return Model.{propertyName};
         }}
 
-        public void Set{propertyName}({propertyType} value)
+        public void Set{propertyName}({propertyType} value, ValueChangedCallback<{propertyType}>? callback = null)
         {{
+            var oldValue = Model.{propertyName};
+            if (EqualityComparer<{propertyType}>.Default.Equals(oldValue, value)) return;
             Model.{propertyName} = value;
+            callback?.Invoke(oldValue, value);
+            OnPropertyChanged(nameof({propertyName}));
         }}
     }}
 }}";

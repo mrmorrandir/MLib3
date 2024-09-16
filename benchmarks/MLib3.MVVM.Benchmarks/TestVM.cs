@@ -26,8 +26,8 @@ public partial class TestVM : ViewModel<Test>
     [ModelProperty]
     public string Name4
     {
-        get;
-        set;
+        get => GetName4();
+        set => SetName4(value);
     }
     
     public TestVM() : this(new Test()){}

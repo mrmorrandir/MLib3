@@ -4,7 +4,7 @@ namespace MLib3.MVVM.Benchmarks;
 
 public class ViewModelBaseBenchmark
 {
-    [Params(1, 10, 100, 1000)]
+    [Params(1000)]
     public int Iterations { get; set; }
     
     [Benchmark]
@@ -20,7 +20,7 @@ public class ViewModelBaseBenchmark
     }
     
     [Benchmark]
-    public TestVM SetModel2_WithoutReflection()
+    public TestVM SetModel2_WithoutReflectionAndSeperateDictionaries()
     {
         var vm = new TestVM();
         for (int i = 0; i < Iterations; i++)
@@ -32,12 +32,24 @@ public class ViewModelBaseBenchmark
     }
     
     [Benchmark]
-    public TestVM SetModel3_WithoutReflection()
+    public TestVM SetModel3_WithoutReflectionAndCombinedDictionary()
     {
         var vm = new TestVM();
         for (int i = 0; i < Iterations; i++)
         {
-            vm.Name2 = $"Test{i}";
+            vm.Name3 = $"Test{i}";
+        }
+
+        return vm;
+    }
+    
+    [Benchmark]
+    public TestVM SetModel4_WithSourceGeneration()
+    {
+        var vm = new TestVM();
+        for (int i = 0; i < Iterations; i++)
+        {
+            vm.Name4 = $"Test{i}";
         }
 
         return vm;
