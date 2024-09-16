@@ -1,7 +1,10 @@
+using MLib3.MVVM.SourceGenerators;
+
 namespace MLib3.MVVM.Benchmarks;
 
-public class TestVM : ViewModel<Test>
+public partial class TestVM : ViewModel<Test>
 {
+    
     public string Name
     {
         get => Model.Name;
@@ -18,6 +21,13 @@ public class TestVM : ViewModel<Test>
     {
         get => Model.Name3;
         set => SetModel2(value);
+    }
+
+    [ModelProperty]
+    public string Name4
+    {
+        get;
+        set;
     }
     
     public TestVM() : this(new Test()){}
