@@ -6,17 +6,17 @@ public static class MessageBrokerExtensions
 {
     /// <summary>
     /// Publishes an ErrorMessage which can be reset with the <paramref name="resetAction"/>.
-    /// When the <paramref name="resetAction"/> is successfull it has to publish an <see cref="ErrorResolvedMessage"/> via the MessageBroker.
+    /// When the <paramref name="resetAction"/> is successfull it has to publish an <see cref="ResolvedMessage"/> via the MessageBroker.
     /// </summary>
     /// <param name="messageBroker">The <see cref="MessageBroker"/> to use</param>
     /// <param name="errorMessage">The error text</param>
-    /// <param name="resetAction">An Action to reset an error state. Must publish a <see cref="ErrorResolvedMessage"/> on success in order to tell the message handler that the error message should disappear.</param>
+    /// <param name="resetAction">An Action to reset an error state. Must publish a <see cref="ResolvedMessage"/> on success in order to tell the message handler that the error message should disappear.</param>
     /// <returns>A Disposable to resolve the error</returns>
     public static IDisposable PublishError(this IMessageBroker messageBroker, string errorMessage, Action<Guid> resetAction)
     {
         var message = new ErrorMessage(errorMessage, resetAction);
         messageBroker.Publish(message);
-        return new ErrorMessageResolver(messageBroker, message.Id);
+        return new MessageResolver(messageBroker, message.Id);
     }
 
     /// <summary>
@@ -28,9 +28,9 @@ public static class MessageBrokerExtensions
     /// <returns>A Disposable to resolve the error</returns>
     public static IDisposable PublishError(this IMessageBroker messageBroker, string errorMessage)
     {
-        var message = new ErrorMessage(errorMessage, id => messageBroker.Publish(new ErrorResolvedMessage(id)));
+        var message = new ErrorMessage(errorMessage, id => messageBroker.Publish(new ResolvedMessage(id)));
         messageBroker.Publish(message);
-        return new ErrorMessageResolver(messageBroker, message.Id);
+        return new MessageResolver(messageBroker, message.Id);
     }
 
     /// <summary>
@@ -38,11 +38,11 @@ public static class MessageBrokerExtensions
     /// </summary>
     /// <param name="messageBroker">The <see cref="MessageBroker"/> to use</param>
     /// <param name="errorMessage">The error message object to publish</param>
-    /// <returns></returns>
+    /// <returns>A Disposable to resolve the error</returns>
     public static IDisposable PublishError(this IMessageBroker messageBroker, ErrorMessage errorMessage)
     {
         messageBroker.Publish(errorMessage);
-        return new ErrorMessageResolver(messageBroker, errorMessage.Id);
+        return new MessageResolver(messageBroker, errorMessage.Id);
     }
     
     /// <summary>
@@ -61,9 +61,12 @@ public static class MessageBrokerExtensions
     /// </summary>
     /// <param name="messageBroker">The <see cref="MessageBroker"/> to use</param>
     /// <param name="warning">The warning message to be shown by the message handler</param>
-    public static void PublishWarning(this IMessageBroker messageBroker, string warning)
+    /// <returns>A Disposable to resolve the warning</returns>
+    public static IDisposable PublishWarning(this IMessageBroker messageBroker, string warning)
     {
-        messageBroker.Publish(new WarningMessage { Text = warning });
+        var warningMessage = new WarningMessage { Text = warning };
+        messageBroker.Publish(warningMessage);
+        return new MessageResolver(messageBroker, warningMessage.Id);
     }
     
     /// <summary>
@@ -75,6 +78,19 @@ public static class MessageBrokerExtensions
     public static void PublishTempWarning(this IMessageBroker messageBroker, string warning, int milliseconds = 5000)
     {
         messageBroker.Publish(new TempWarningMessage(warning, milliseconds));
+    }
+    
+    /// <summary>
+    /// Publishes an info message.
+    /// </summary>
+    /// <param name="messageBroker">The <see cref="MessageBroker"/> to use</param>
+    /// <param name="info">The information to be shown by the message handler</param>
+    /// <returns>A Disposable to resolve the info</returns>
+    public static IDisposable PublishInfo(this IMessageBroker messageBroker, string info)
+    {
+        var infoMessage = new InfoMessage { Text = info };
+        messageBroker.Publish(infoMessage);
+        return new MessageResolver(messageBroker, infoMessage.Id);
     }
 
     /// <summary>
@@ -88,13 +104,5 @@ public static class MessageBrokerExtensions
         messageBroker.Publish(new TempInfoMessage { Text = info, Timeout = TimeSpan.FromMilliseconds(milliseconds) });
     }
 
-    /// <summary>
-    /// Publishes an info message.
-    /// </summary>
-    /// <param name="messageBroker">The <see cref="MessageBroker"/> to use</param>
-    /// <param name="info">The information to be shown by the message handler</param>
-    public static void PublishInfo(this IMessageBroker messageBroker, string info)
-    {
-        messageBroker.Publish(new InfoMessage { Text = info });
-    }
+    
 }

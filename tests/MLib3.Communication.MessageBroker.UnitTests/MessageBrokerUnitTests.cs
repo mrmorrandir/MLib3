@@ -82,7 +82,7 @@ public class MessageBrokerUnitTests
     [Theory]
     [InlineData(typeof(IMessage), typeof(MockBaseMessage))]
     [InlineData(typeof(IMessage), typeof(ErrorMessage))]
-    [InlineData(typeof(IMessage), typeof(ErrorResolvedMessage))]
+    [InlineData(typeof(IMessage), typeof(ResolvedMessage))]
     [InlineData(typeof(IMessage), typeof(TempErrorMessage))]
     [InlineData(typeof(IMessage), typeof(WarningMessage))]
     [InlineData(typeof(IMessage), typeof(TempWarningMessage))]
