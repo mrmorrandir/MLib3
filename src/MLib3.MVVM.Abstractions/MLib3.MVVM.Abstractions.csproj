@@ -5,7 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <RootNamespace>MLib3.MVVM</RootNamespace>
-        <Version>1.0.0-preview-20241022.1</Version>
+        <Version>1.0.0-preview-20241022.2</Version>
         <Title>MLib3.MVVM.Abstractions</Title>
         <Authors>Andreas Naumann</Authors>
         <Copyright>2024 @ Andreas Naumann</Copyright>

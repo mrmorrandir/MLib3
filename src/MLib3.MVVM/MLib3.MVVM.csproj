@@ -4,7 +4,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <Version>1.0.0-preview-20241022.1</Version>
+        <Version>1.0.0-preview-20241022.2</Version>
         <Title>MLib3.MVVM</Title>
         <Authors>Andreas Naumann</Authors>
         <Copyright>2024 @ Andreas Naumann</Copyright>
