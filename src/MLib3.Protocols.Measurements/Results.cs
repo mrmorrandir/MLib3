@@ -17,7 +17,7 @@ public class Results : IResults
     }
 
     public IExtensions? Extensions { get; set; }
-    public IEnumerable<IElement> Data { get; set; }
+    public IList<IElement> Data { get; set; }
 
     public Results(IEnumerable<IElement>? elements = null, bool ok = false)
     {
@@ -32,7 +32,7 @@ public class Results : IResults
             throw new ArgumentNullException(nameof(element));
         if (Data.Any(e => e.Name == element.Name))
             throw new ArgumentException($"Element with name {element.Name} already exists.");
-        Data = Data.Append(element);
+        Data = Data.Append(element).ToList();
         return this;
     }
 
@@ -47,7 +47,7 @@ public class Results : IResults
             throw new ArgumentException("Elements must have unique names.", nameof(elements));
         if (list.Any(e => Data.Any(d => d.Name == e.Name)))
             throw new ArgumentException("One or more elements already exist.", nameof(elements));
-        Data = Data.Concat(list);
+        Data = Data.Concat(list).ToList();
         return this;
     }
 
@@ -64,7 +64,7 @@ public class Results : IResults
             throw new ArgumentNullException(nameof(element));
         if (Data.All(e => e.Name != element.Name))
             throw new ArgumentException($"Element with name {element.Name} does not exist.");
-        Data = Data.Where(e => e.Name != element.Name);
+        Data = Data.Where(e => e.Name != element.Name).ToList();
         return this;
     }
 
@@ -78,7 +78,7 @@ public class Results : IResults
         if (list.Any(e => Data.All(d => d.Name != e.Name)))
             throw new ArgumentException("One or more elements do not exist.", nameof(elements));
 
-        Data = Data.Where(e => !list.Contains(e));
+        Data = Data.Where(e => !list.Contains(e)).ToList();
         return this;
     }
 

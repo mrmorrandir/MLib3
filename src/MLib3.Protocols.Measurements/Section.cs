@@ -13,7 +13,7 @@ public class Section : Results, ISection
             throw new ArgumentNullException(nameof(sectionSetting));
         Name = sectionSetting.Name;
         Description = sectionSetting.Description;
-        Data = elements ?? new List<IElement>();
+        Data = elements?.ToList() ?? new List<IElement>();
         OK = ok;
     }
 }
