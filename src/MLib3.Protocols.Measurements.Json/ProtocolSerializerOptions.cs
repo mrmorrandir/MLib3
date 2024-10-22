@@ -1,21 +1,14 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MLib3.Protocols.Measurements.Json;
 
-public static class ProtocolSerializerSettings
+public static class ProtocolSerializerOptions
 {
-    public static JsonSerializerSettings Default => new()
+    public static JsonSerializerOptions Default => new JsonSerializerOptions
     {
-        Formatting = Formatting.Indented,
-        NullValueHandling = NullValueHandling.Ignore,
-        TypeNameHandling = TypeNameHandling.Auto,
-        TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
-        Converters = [ new StringEnumConverter() ],
-        ContractResolver = new DefaultContractResolver
-        {
-            NamingStrategy = new CamelCaseNamingStrategy()
-        }
+        WriteIndented = true,
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        Converters = { new IElementConverter(), new IMetaConverter(), new IProductConverter(), new IResultsConverter() }
     };
 }

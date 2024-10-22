@@ -25,6 +25,11 @@ public class Results : IResults
         Data = elements?.ToList() ?? new List<IElement>();
         Extensions = null;
     }
+    
+    public Results()
+    {
+        Data = new List<IElement>();
+    }
 
     public IResults Add(IElement element)
     {
