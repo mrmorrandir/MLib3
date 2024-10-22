@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <IsPackable>true</IsPackable>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
+
+        <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+        <IsRoslynComponent>true</IsRoslynComponent>
+
+        <RootNamespace>MLib3.MVVM.WPF.ViewLocators</RootNamespace>
+        <PackageId>MLib3.MVVM.WPF.ViewLocators</PackageId>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>MLib3.MVVM.WPF.ViewLocators</Title>
+        <Authors>Andreas Naumann</Authors>
+        <Description>An incremental source generator which will generate a static ViewLocator class that lets you register DataTemplates (Views 2 ViewModels) into a ResourceDictionary of your choice (peferred that of the main application).</Description>
+        <Copyright>2024 @ Andreas Naumann</Copyright>
+        <PackageTags>Roslyn;SourceGenerator;WPF;MVVM;ViewLocator;</PackageTags>
+        <Version>1.0.0</Version>
+        <PackageIcon>icon.png</PackageIcon>
+        <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.0"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.3.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+        <None Include="..\..\assets\icon.png">
+          <Pack>True</Pack>
+          <PackagePath></PackagePath>
+          <Link>icon.png</Link>
+        </None>
+    </ItemGroup>
+</Project>
