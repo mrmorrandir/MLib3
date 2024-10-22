@@ -1,0 +1,9 @@
+{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "Debug ModelPropertyExposerIncrementalSourceGenerator": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "../../tests/MLib3.MVVM.SourceGenerators.Target/MLib3.MVVM.SourceGenerators.Target.csproj"
+    }
+  }
+}
