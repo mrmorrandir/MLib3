@@ -38,10 +38,14 @@ namespace MLib3.MVVM.SourceGenerators
 
     private void GenerateCode(SourceProductionContext ctx, Compilation compilation, ImmutableArray<PropertyDeclarationSyntax> properties)
     {
-        foreach (var property in properties)
+        // group the properties by class
+        var classGroup = properties.GroupBy(p => p.Parent as ClassDeclarationSyntax).ToImmutableArray();
+        foreach (var @class in classGroup)
         {
-            var classDeclaration = property.Parent as ClassDeclarationSyntax;
+            var classDeclaration = @class.Key;
             if (classDeclaration == null) continue;
+            
+            var className = classDeclaration.Identifier.Text;
 
             // find the namespace declaration or the file namespace declaration
             string? namespaceName = null;
@@ -55,32 +59,42 @@ namespace MLib3.MVVM.SourceGenerators
                 namespaceName = fileScopedNamespaceDeclarationSyntax.Name.ToString();
             }
             if (namespaceName is null) continue;
-            var className = classDeclaration.Identifier.Text;
-            var propertyName = property.Identifier.Text;
-            var propertyType = property.Type.ToString();
+            
+            var switchSource = new StringBuilder();
+            switchSource.AppendLine($@"
+                switch(property) {{
+            ");
+            foreach (var property in @class)
+            {
+                var propertyName = property.Identifier.Text;
+                var propertyType = property.Type.ToString();
+                switchSource.AppendLine($@"
+                    case nameof({propertyName}):
+                        var oldValue = Model.{propertyName};
+                        if (EqualityComparer<{propertyType}>.Default.Equals(oldValue, value)) return;
+                        Model.{propertyName} = value;
+                        callback?.Invoke(oldValue, value);
+                        OnPropertyChanged(nameof({propertyName}));
+                        break;
+                ");
+            }
+            switchSource.AppendLine($@"
+                default:
+                    throw new ArgumentException($""Property {{property}} not found on model {{typeof({className}).Name}}"");
+                }}");
 
             var source = $@"
 namespace {namespaceName}
 {{
     public partial class {className}
     {{
-        public {propertyType} Get{propertyName}()
+        public void SetModel<TValue>(TValue? value, ValueChangedCallback<TValue?>? callback = null, [CallerMemberName] string? property = null)
         {{
-            return Model.{propertyName};
-        }}
-
-        public void Set{propertyName}({propertyType} value, ValueChangedCallback<{propertyType}>? callback = null)
-        {{
-            var oldValue = Model.{propertyName};
-            if (EqualityComparer<{propertyType}>.Default.Equals(oldValue, value)) return;
-            Model.{propertyName} = value;
-            callback?.Invoke(oldValue, value);
-            OnPropertyChanged(nameof({propertyName}));
+            {switchSource}
         }}
     }}
 }}";
-
-            ctx.AddSource($"{className}_{propertyName}_Generated.cs", SourceText.From(source, Encoding.UTF8));
+            ctx.AddSource($"{className}_g.cs", SourceText.From(source, Encoding.UTF8));
         }
     }
 
