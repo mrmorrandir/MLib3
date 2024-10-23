@@ -1,7 +1,6 @@
 using FluentResults;
-using MLib3.Protocols.Measurements.Abstractions;
 
-namespace MLib3.Protocols.Measurements.Json;
+namespace MLib3.Protocols.Measurements.Abstractions;
 
 public interface IProtocolDeserializer
 {

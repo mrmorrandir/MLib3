@@ -1,6 +1,8 @@
-﻿namespace MLib3.Protocols.Measurements.Abstractions;
+﻿using FluentResults;
+
+namespace MLib3.Protocols.Measurements.Abstractions;
 
 public interface IProtocolFileWriter
 {
-    void Write(string filename, IProtocol protocol);
+    Result Write(string filename, IProtocol protocol);
 }

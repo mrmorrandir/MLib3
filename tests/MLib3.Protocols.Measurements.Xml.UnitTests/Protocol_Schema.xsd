@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:element name="Protocol" nillable="true">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="1" maxOccurs="1" name="ProductMeta" type="ProductMeta"/>
+				<xs:element minOccurs="1" maxOccurs="1" name="MeasurementMeta" type="MeasurementMeta"/>
+				<xs:element minOccurs="1" maxOccurs="1" name="MeasurementData" type="MeasurementData"/>
+			</xs:sequence>
+			<xs:attribute name="Specification" type="xs:string"/>
+			<xs:attribute name="Version" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+
+	<!-- Klassen für den inneren Aufbau des XML-Protocolls -->
+	<!-- ====================================================================================================== -->
+	<xs:complexType name="ProductMeta">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="Serialnumber" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="Articlecode" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="OrderKey" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="ProductionOrder" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="Extensions" type="Extensions" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="MeasurementMeta">
+		<xs:sequence>
+			<xs:element minOccurs="1" maxOccurs="1" name="Timestamp" type="xs:dateTime" />
+			<xs:element minOccurs="0" maxOccurs="1" name="DeviceName" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="DeviceID" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="Worker" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="Program" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="ProgramVersion" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="TestRoutine" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="TestRoutineVersion" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="Extensions" type="Extensions" />
+		</xs:sequence>
+		<xs:attribute name="Type" type="xs:string" />
+	</xs:complexType>
+
+	<xs:complexType name="MeasurementData">
+		<xs:sequence>
+			<xs:element minOccurs="1" maxOccurs="1" name="Measurements" type="ArrayOfMeasurementChoice" />
+			<xs:element minOccurs="0" maxOccurs="1" name="Extensions" type="Extensions" />
+		</xs:sequence>
+		<xs:attribute name="OK" type="xs:boolean" use="required" />
+	</xs:complexType>
+
+	<!-- Klassen für den inneren Aufbau von MeasurementData -->
+	<!-- ====================================================================================================== -->
+	<xs:complexType name="ArrayOfMeasurementChoice">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element minOccurs="1" maxOccurs="1" name="MeasurementSection" nillable="true" type="MeasurementSection" />
+			<xs:element minOccurs="1" maxOccurs="1" name="MeasurementComment" nillable="true" type="MeasurementComment" />
+			<xs:element minOccurs="1" maxOccurs="1" name="MeasurementValue" nillable="true" type="MeasurementValue" />
+			<xs:element minOccurs="1" maxOccurs="1" name="MeasurementFlag" nillable="true" type="MeasurementFlag" />
+			<xs:element minOccurs="1" maxOccurs="1" name="MeasurementRawDataList" nillable="true" type="MeasurementRawDataList" />
+			<xs:element minOccurs="1" maxOccurs="1" name="MeasurementRawData" nillable="true" type="MeasurementRawData"/>
+			<xs:element minOccurs="1" maxOccurs="1" name="MeasurementInfo" nillable="true" type="MeasurementInfo" />
+
+		</xs:choice>
+	</xs:complexType>
+
+	
+
+	<!-- Konkrete Messwert-Typen und deren Basisklasse Measurement -->
+	<!-- Diese Klassen können alle im MeasurementContainer enthalten sein (darum auch xs:choice)-->
+	<!-- ====================================================================================================== -->
+	<xs:complexType name="Measurement">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="Extensions" type="Extensions" />
+		</xs:sequence>
+		<xs:attribute name="Name" type="xs:string" />
+		<xs:attribute name="Hint" type="xs:string" />
+	</xs:complexType>
+	
+	<xs:complexType name="MeasurementSection">
+		<xs:complexContent mixed="false">
+			<xs:extension base="Measurement">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Measurements" type="ArrayOfMeasurementChoice" />
+				</xs:sequence>
+				<xs:attribute name="OK" type="xs:boolean" use="required" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="MeasurementComment">
+		<xs:complexContent mixed="false">
+			<xs:extension base="Measurement">
+				<xs:attribute name="Text" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="MeasurementInfo">
+		<xs:complexContent mixed="false">
+			<xs:extension base="Measurement">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="Value" type="xs:double" />
+				</xs:sequence>
+				<xs:attribute name="Unit" type="xs:string" />
+				<xs:attribute name="Precision" type="xs:double" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="MeasurementFlag">
+		<xs:complexContent mixed="false">
+			<xs:extension base="MeasurementFlagSetting">
+				<xs:attribute name="OK" type="xs:boolean" use="required" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="MeasurementValue">
+		<xs:complexContent mixed="false">
+			<xs:extension base="MeasurementValueSetting">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="Value" type="xs:double" />
+				</xs:sequence>
+				<xs:attribute name="OK" type="xs:boolean" use="required" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="MeasurementRawData">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="Name" type="xs:string"/>
+				<xs:attribute name="Hint" type="xs:string"/>
+				<xs:attribute name="Format" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="MeasurementRawDataList">
+		<xs:complexContent mixed="false">
+			<xs:extension base="Measurement">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Points" type="ArrayOfMeasurementRawDataListPoint" />
+				</xs:sequence>
+				<xs:attribute name="XValueDescription" type="xs:string" />
+				<xs:attribute name="YValueDescription" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- Vorgaben für Messwerte -->
+	<!-- ====================================================================================================== -->
+	<xs:complexType name="MeasurementFlagSetting">
+		<xs:complexContent mixed="false">
+			<xs:extension base="Measurement" />
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="MeasurementValueSetting">
+		<xs:complexContent mixed="false">
+			<xs:extension base="MeasurementFlagSetting">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="ValueLimitMinimum" nillable="true" type="xs:double" />
+					<xs:element minOccurs="0" maxOccurs="1" name="ValueNominal" nillable="true" type="xs:double" />
+					<xs:element minOccurs="0" maxOccurs="1" name="ValueLimitMaximum" nillable="true" type="xs:double" />
+					<xs:element minOccurs="0" maxOccurs="1" name="ValueLimitMinimumType" type="ValueLimitType" />
+					<xs:element minOccurs="0" maxOccurs="1" name="ValueLimitMaximumType" type="ValueLimitType" />
+				</xs:sequence>
+				<xs:attribute name="Unit" type="xs:string" />
+				<xs:attribute name="Precision" type="xs:double" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<!-- Hilfs-Typen für Erweiterbarkeit und Werte-Speicherung -->
+	<!-- ====================================================================================================== -->
+	<xs:complexType name="Extensions">
+		<xs:sequence>
+			<xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="ValueLimitType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="None" />
+			<xs:enumeration value="Value" />
+			<xs:enumeration value="Natural" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="ArrayOfMeasurementRawDataListPoint">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="P" nillable="true" type="MeasurementRawDataListPoint" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="MeasurementRawDataListPoint">
+		<xs:attribute name="X" type="xs:double" use="required" />
+		<xs:attribute name="Y" type="xs:double" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="MeasurementSerializationInfo">
+		<xs:attribute name="Type" type="xs:string" />
+		<xs:attribute name="Property" type="xs:string" />
+		<xs:attribute name="Index" type="xs:int" />
+	</xs:complexType>
+
+	<xs:complexType name="ArrayOfMeasurement">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="Measurement" nillable="true" type="Measurement" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>
