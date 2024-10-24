@@ -5,26 +5,32 @@ namespace MLib3.Protocols.Measurements.Xml;
 
 public class ProtocolSerializer : IProtocolSerializer
 {
+    private static readonly XmlSerializer _serializer;
+    
     private readonly ISerializationPostProcessor? _serializationPostProcessor;
 
-    private readonly XmlSerializer _serializer = new(typeof(Protocol), [
-        typeof(Product),
-        typeof(Meta),
-        typeof(Results),
+    static ProtocolSerializer()
+    {
+        Type[] extraTypes = [
+            typeof(Product),
+            typeof(Meta),
+            typeof(Results),
 
-        typeof(Section),
-        typeof(Comment),
-        typeof(Info),
-        typeof(Flag),
-        typeof(Value),
-        typeof(RawData),
+            typeof(Section),
+            typeof(Comment),
+            typeof(Info),
+            typeof(Flag),
+            typeof(Value),
+            typeof(RawData),
 
-        typeof(CommentSetting),
-        typeof(InfoSetting),
-        typeof(FlagSetting),
-        typeof(ValueSetting),
-        typeof(RawDataSetting)
-    ]);
+            typeof(CommentSetting),
+            typeof(InfoSetting),
+            typeof(FlagSetting),
+            typeof(ValueSetting),
+            typeof(RawDataSetting)
+        ];
+        _serializer = new(typeof(Protocol), extraTypes);
+    }
 
     public ProtocolSerializer(ISerializationPostProcessor? serializationPostProcessor = null)
     {

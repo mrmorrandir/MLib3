@@ -7,6 +7,11 @@ namespace MLib3.Protocols.Measurements.Xml;
 public class RawData : RawDataSetting, IXmlSerializable
 {
     public string Raw { get; set; } = string.Empty;
+    
+    public RawData()
+    {
+    }
+    
     /// <summary>
     /// Implementation of <see cref="IXmlSerializable"/>! Returns null!
     /// </summary>

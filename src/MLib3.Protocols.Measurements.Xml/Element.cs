@@ -2,7 +2,7 @@ using System.Xml.Serialization;
 
 namespace MLib3.Protocols.Measurements.Xml;
 
-public class Element
+public abstract class Element
 {
     [XmlAttribute]
     public string Name { get; set; } = string.Empty;

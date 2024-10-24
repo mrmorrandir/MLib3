@@ -2,6 +2,10 @@ using System.Xml.Linq;
 
 namespace MLib3.Protocols.Measurements.Xml.V2;
 
+/// <summary>
+/// This class is used to post-process the XML string after serialization.
+/// It is used to rename elements and attributes (and delete elements in some cases) to match the Measurements2 schema.
+/// </summary>
 public class SerializationPostProcessor : ISerializationPostProcessor
 {
     public string Process(string xml)
@@ -16,7 +20,7 @@ public class SerializationPostProcessor : ISerializationPostProcessor
         RenameAttribute(results, "Ok", "OK");
         results.Element(nameof(Results.Data))!.Name = "Measurements";
         
-        foreach (var element in xdoc.Descendants())
+        foreach (var element in xdoc.Descendants().ToArray())
         {
             if (element.Name == nameof(Product.Equipment)) element.Name = "Serialnumber";
             if (element.Name == nameof(Product.Material)) element.Name = "Articlecode";
@@ -27,6 +31,18 @@ public class SerializationPostProcessor : ISerializationPostProcessor
             if (element.Name == nameof(Meta.Operator)) element.Name = "Worker";
             if (element.Name == nameof(Meta.Software)) element.Name = "Program";
             if (element.Name == nameof(Meta.SoftwareVersion)) element.Name = "ProgramVersion";
+
+            if (element.Name == nameof(RawDataSetting))
+            {
+                // RawDataSetting is not used in the Measurements2 schema
+                element.Remove();
+            }
+
+            if (element.Name == nameof(InfoSetting))
+            {
+                // InfoSetting is not used in the Measurements2 schema
+                element.Remove();
+            }
 
             if (element.Name == nameof(FlagSetting))
             {

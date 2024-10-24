@@ -17,7 +17,7 @@ public class Results
 {
     [XmlAttribute]
     public bool Ok { get; set; }
-    
+
     [XmlArray("Data")]
     [XmlArrayItem("Comment", typeof(Comment), Namespace = "")]
     [XmlArrayItem("Value", typeof(Value), Namespace = "")]
@@ -30,7 +30,7 @@ public class Results
     [XmlArrayItem("FlagSetting", typeof(FlagSetting), Namespace = "")]
     [XmlArrayItem("ValueSetting", typeof(ValueSetting), Namespace = "")]
     [XmlArrayItem("RawDataSetting", typeof(RawDataSetting), Namespace = "")]
-    public List<Element> Data { get; set; }
+    public List<Element> Data { get; set; } = new();
     
     public Extensions? Extensions { get; set; }
 }
