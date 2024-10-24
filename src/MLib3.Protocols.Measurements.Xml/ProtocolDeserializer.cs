@@ -5,33 +5,44 @@ namespace MLib3.Protocols.Measurements.Xml;
 
 public class ProtocolDeserializer : IProtocolDeserializer
 {
-    private readonly XmlSerializer _serializer = new(typeof(Protocol), [
-        typeof(Product),
-        typeof(Meta),
-        typeof(Results),
-
-        typeof(Section),
-        typeof(Comment),
-        typeof(Info),
-        typeof(Flag),
-        typeof(Value),
-        typeof(RawData),
-
-        typeof(CommentSetting),
-        typeof(InfoSetting),
-        typeof(FlagSetting),
-        typeof(ValueSetting),
-        typeof(RawDataSetting)
-    ]);
+    private static readonly XmlSerializer _serializer;
     
-    public Result<IProtocol> Deserialize(string data)
+
+    static ProtocolDeserializer()
     {
-        using var reader = new StringReader(data);
+        Type[] extraTypes = [
+            typeof(Product),
+            typeof(Meta),
+            typeof(Results),
+
+            typeof(Section),
+            typeof(Comment),
+            typeof(Info),
+            typeof(Flag),
+            typeof(Value),
+            typeof(RawData),
+
+            typeof(CommentSetting),
+            typeof(InfoSetting),
+            typeof(FlagSetting),
+            typeof(ValueSetting),
+            typeof(RawDataSetting)
+        ];
+        _serializer = new(typeof(Protocol), extraTypes);
+    }
+
+    public ProtocolDeserializer()
+    {
+    }
+
+    public Result<IProtocol> Deserialize(string xml)
+    {
+        using var reader = new StringReader(xml);
         // ReSharper disable once AccessToDisposedClosure
-        var deserializeResult = Result.Try(() => _serializer.Deserialize(reader) as Protocol);
+        var deserializeResult = Result.Try(() => (Protocol)_serializer.Deserialize(reader));
         if (deserializeResult.IsFailed)
             return Result.Fail(deserializeResult.Errors);
 
-        return Result.Ok(SerializationToProtocolMapper.Map(deserializeResult.Value!));
+        return Result.Ok(SerializationToProtocolMapper.Map(deserializeResult.Value));
     }
 }

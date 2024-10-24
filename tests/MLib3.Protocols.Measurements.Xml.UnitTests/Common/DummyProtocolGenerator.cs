@@ -32,8 +32,7 @@ public static class DummyProtocolGenerator
                 TestRoutineVersion = "Test TestRoutineVersion",
                 Timestamp = DateTime.Now,
                 Type = "Test Type",
-                Operator = "Test Operator",
-
+                Operator = "Test Operator"
             },
             Results = new Measurements.Results
             {
@@ -42,68 +41,68 @@ public static class DummyProtocolGenerator
                 {
                     new Measurements.Extension("Key", "Value")
                 },
-                Data = new List<IElement>()
+                Data = new List<IElement>
                 {
-                    // new Measurements.Section
-                    // {
-                    //     Ok = true,
-                    //     Extensions = new Measurements.Extensions
-                    //     {
-                    //         new Measurements.Extension("Key", "Value")
-                    //     },
-                    //     Data = new List<IElement>
-                    //     {
-                    //         new Measurements.Comment
-                    //         {
-                    //             Extensions = new Measurements.Extensions
-                    //             {
-                    //                 new Measurements.Extension("Key", "Value")
-                    //             },
-                    //             Name = "Test CommentName",
-                    //             Description = "Test CommentDescription",
-                    //             Text = "Test CommentText"
-                    //         },
-                    //         new Measurements.Info
-                    //         {
-                    //             Extensions = new Measurements.Extensions
-                    //             {
-                    //                 new Measurements.Extension("Key",
-                    //                     "Value")
-                    //             },
-                    //             Name = "Test InfoName",
-                    //             Description = "Test InfoDescription",
-                    //             Precision = 0.1,
-                    //             Unit = "mm",
-                    //             Value = 1.0,
-                    //         },
-                    //         new Measurements.Flag()
-                    //         {
-                    //             Extensions = new Measurements.Extensions
-                    //             {
-                    //                 new Measurements.Extension("Key", "Value")
-                    //             },
-                    //             Name = "Test FlagName",
-                    //             Description = "Test FlagDescription",
-                    //             Ok = true,
-                    //         },
-                    //         new Measurements.Value()
-                    //         {
-                    //             Extensions = new Measurements.Extensions
-                    //             {
-                    //                 new Measurements.Extension("Key", "Value")
-                    //             },
-                    //             Name = "Test ValueName",
-                    //             Description = "Test ValueDescription",
-                    //             Unit = "mm",
-                    //             Precision = 0.1,
-                    //             Min = 0.0,
-                    //             Nom = 1.0,
-                    //             Max = 2.0,
-                    //             MinLimitType = ValueLimitType.Value,
-                    //             MaxLimitType = ValueLimitType.Value,
-                    //             Result = 1.0,
-                    //             Ok = true,
-                    //         },
+                    new Measurements.Section
+                    {
+                        Ok = true,
+                        Extensions = new Measurements.Extensions
+                        {
+                            new Measurements.Extension("Key", "Value")
+                        },
+                        Data = new List<IElement>
+                        {
+                            new Measurements.Comment
+                            {
+                                Extensions = new Measurements.Extensions
+                                {
+                                    new Measurements.Extension("Key", "Value")
+                                },
+                                Name = "Test CommentName",
+                                Description = "Test CommentDescription",
+                                Text = "Test CommentText"
+                            },
+                            new Measurements.Info
+                            {
+                                Extensions = new Measurements.Extensions
+                                {
+                                    new Measurements.Extension("Key",
+                                        "Value")
+                                },
+                                Name = "Test InfoName",
+                                Description = "Test InfoDescription",
+                                Precision = 0.1,
+                                Unit = "mm",
+                                Value = 1.0
+                            },
+                            new Measurements.Flag
+                            {
+                                Extensions = new Measurements.Extensions
+                                {
+                                    new Measurements.Extension("Key", "Value")
+                                },
+                                Name = "Test FlagName",
+                                Description = "Test FlagDescription",
+                                Ok = true
+                            },
+                            new Measurements.Value
+                            {
+                                Extensions = new Measurements.Extensions
+                                {
+                                    new Measurements.Extension("Key", "Value")
+                                },
+                                Name = "Test ValueName",
+                                Description = "Test ValueDescription",
+                                Unit = "mm",
+                                Precision = 0.1,
+                                Min = 0.0,
+                                Nom = 1.0,
+                                Max = 2.0,
+                                MinLimitType = ValueLimitType.Value,
+                                MaxLimitType = ValueLimitType.Value,
+                                Result = 1.0,
+                                Ok = true
+                            },
                             new Measurements.RawData
                             {
                                 Extensions = new Measurements.Extensions
@@ -114,21 +113,73 @@ public static class DummyProtocolGenerator
                                 Description = "Test RawDataDescription",
                                 Format = "csv",
                                 Raw = "Hello;World"
-                            },
-                            new Measurements.RawDataSetting
-                            {
-                                Extensions = new Measurements.Extensions
-                                {
-                                    new Measurements.Extension("Key", "Value")
-                                },
-                                Name = "Test RawDataSetting",
-                                Description = "Test RawDataDescription",
-                                Format = "csv"
                             }
-                            // },
-                        // Name = "Test Section 1",
-                        // Description = "Test Description"
-                    // }
+                        },
+                        Name = "Test Section 1",
+                        Description = "Test Description"
+                    },
+                    new Measurements.Comment
+                    {
+                        Extensions = new Measurements.Extensions
+                        {
+                            new Measurements.Extension("Key", "Value")
+                        },
+                        Name = "Test CommentName",
+                        Description = "Test CommentDescription",
+                        Text = "Test CommentText"
+                    },
+                    new Measurements.Info
+                    {
+                        Extensions = new Measurements.Extensions
+                        {
+                            new Measurements.Extension("Key",
+                                "Value")
+                        },
+                        Name = "Test InfoName",
+                        Description = "Test InfoDescription",
+                        Precision = 0.1,
+                        Unit = "mm",
+                        Value = 1.0
+                    },
+                    new Measurements.Flag
+                    {
+                        Extensions = new Measurements.Extensions
+                        {
+                            new Measurements.Extension("Key", "Value")
+                        },
+                        Name = "Test FlagName",
+                        Description = "Test FlagDescription",
+                        Ok = true
+                    },
+                    new Measurements.Value
+                    {
+                        Extensions = new Measurements.Extensions
+                        {
+                            new Measurements.Extension("Key", "Value")
+                        },
+                        Name = "Test ValueName",
+                        Description = "Test ValueDescription",
+                        Unit = "mm",
+                        Precision = 0.1,
+                        Min = 0.0,
+                        Nom = 1.0,
+                        Max = 2.0,
+                        MinLimitType = ValueLimitType.Value,
+                        MaxLimitType = ValueLimitType.Value,
+                        Result = 1.0,
+                        Ok = true
+                    },
+                    new Measurements.RawData
+                    {
+                        Extensions = new Measurements.Extensions
+                        {
+                            new Measurements.Extension("Key", "Value")
+                        },
+                        Name = "Test RawData",
+                        Description = "Test RawDataDescription",
+                        Format = "csv",
+                        Raw = "Hello;World"
+                    }
                 }
             },
             Specification = "Test",
