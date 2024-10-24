@@ -1,11 +1,13 @@
-﻿namespace MLib3.Protocols.Measurements;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MLib3.Protocols.Measurements;
 
 public class Value : IValue
 {
     public IExtensions? Extensions { get; set; }
-    public string? Name { get; set; }
+    public string Name { get; set; } = string.Empty;
     public string? Description { get; set; }
-    public string? Unit { get; set; }
+    public string Unit { get; set; } = string.Empty;
     public double? Precision { get; set; }
     public double? Min { get; set; }
     public double? Nom { get; set; }

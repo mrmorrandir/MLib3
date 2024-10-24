@@ -29,7 +29,7 @@ public class Protocol : IProtocol
         Results = new Results();
     }
 
-    public Protocol(Product product, Meta meta, Results results)
+    public Protocol(IProduct product, IMeta meta, IResults results)
     {
         Product = product ?? throw new ArgumentNullException(nameof(product));
         Meta = meta ?? throw new ArgumentNullException(nameof(meta));

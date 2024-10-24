@@ -1,4 +1,4 @@
-﻿namespace MLib3.Protocols.Measurements.Abstractions;
+﻿namespace MLib3.Protocols.Measurements;
 
 public enum ValueLimitType
 {

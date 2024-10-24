@@ -3,11 +3,11 @@
 public class Info : IInfo
 {
     public IExtensions? Extensions { get; set; }
-    public string? Name { get; set; }
+    public string Name { get; set; } = string.Empty;
     public string? Description { get; set; }
     public double? Precision { get; set; }
-    public string Unit { get; set; }
-    public double Value { get; set; }
+    public string Unit { get; set; } = string.Empty;
+    public double Value { get; set; } = 0;
 
     public Info() { }
 

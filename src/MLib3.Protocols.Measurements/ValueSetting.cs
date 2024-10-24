@@ -3,9 +3,9 @@
 public class ValueSetting : IValueSetting
 {
     public IExtensions? Extensions { get; set; }
-    public string? Name { get; set; }
+    public string Name { get; set; } = string.Empty;
     public string? Description { get; set; }
-    public string? Unit { get; set; }
+    public string Unit { get; set; } = string.Empty;
     public double? Precision { get; set; }
     public double? Min { get; set; }
     public double? Nom { get; set; }
@@ -40,7 +40,7 @@ public class ValueSetting : IValueSetting
         Name = name ?? throw new ArgumentNullException(nameof(name));
         Description = description;
         Precision = precision;
-        Unit = unit;
+        Unit = unit ?? string.Empty;
         Max = maximum;
         Nom = nominal;
         Min = minimum;

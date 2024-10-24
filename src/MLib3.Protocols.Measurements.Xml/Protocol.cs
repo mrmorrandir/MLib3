@@ -13,4 +13,15 @@ public class Protocol
 
     [XmlAttribute]
     public string Version { get; set; } = string.Empty;
+
+    public Protocol()
+    {
+    }
+
+    public Protocol(Product product, Meta meta, Results results)
+    {
+        Product = product;
+        Meta = meta;
+        Results = results;
+    }
 }

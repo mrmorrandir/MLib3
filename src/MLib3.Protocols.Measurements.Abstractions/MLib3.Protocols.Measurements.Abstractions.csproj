@@ -13,6 +13,7 @@
         <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>Measurements, Protocols</PackageTags>
+        <RootNamespace>MLib3.Protocols.Measurements</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

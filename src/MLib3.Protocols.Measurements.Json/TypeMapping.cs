@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using MLib3.Protocols.Measurements;
-using MLib3.Protocols.Measurements.Abstractions;
+
 namespace MLib3.Protocols.Measurements.Json;
 
 public static class TypeMapping

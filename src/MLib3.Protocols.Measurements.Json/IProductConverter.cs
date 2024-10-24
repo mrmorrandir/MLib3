@@ -1,7 +1,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using MLib3.Protocols.Measurements.Abstractions;
 
 namespace MLib3.Protocols.Measurements.Json;
 

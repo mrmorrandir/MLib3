@@ -1,11 +1,15 @@
-using MLib3.Protocols.Measurements.Abstractions;
+using System.Xml.Serialization;
 
 namespace MLib3.Protocols.Measurements.Xml;
 
 public class ValueSetting : Element
 {
-    public string? Unit { get; set; }
-    public double? Precision { get; set; }
+    [XmlAttribute]
+    public string Unit { get; set; } = string.Empty;
+    [XmlAttribute]
+    public double Precision { get; set; }
+    [XmlIgnore]
+    public bool PrecisionSpecified { get; set; }
     public double? Min { get; set; }
     public double? Nom { get; set; }
     public double? Max { get; set; }
