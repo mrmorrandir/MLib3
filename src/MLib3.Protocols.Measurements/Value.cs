@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
+﻿
 namespace MLib3.Protocols.Measurements;
 
 public class Value : IValue

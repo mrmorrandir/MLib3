@@ -34,9 +34,10 @@ public class ProtocolSerializer : IProtocolSerializer
     public Result<string> Serialize(IProtocol protocol)
     {
             using var writer = new StringWriter();
+            var serializationObject = ProtocolToSerializationMapper.Map(protocol);
             
             // ReSharper disable once AccessToDisposedClosure
-            var serializeResult = Result.Try(() => _serializer.Serialize(writer, ProtocolToSerializationMapper.Map(protocol)));
+            var serializeResult = Result.Try(() => _serializer.Serialize(writer, serializationObject));
             if (serializeResult.IsFailed)
                 return Result.Fail(serializeResult.Errors);
 
