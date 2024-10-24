@@ -13,7 +13,7 @@ public class Value : IValue
     public ValueLimitType? MinLimitType { get; set; }
     public ValueLimitType? MaxLimitType { get; set; }
     public double Result { get; set; }
-    public bool OK { get; set; }
+    public bool Ok { get; set; }
 
     public Value() { }
 
@@ -30,7 +30,7 @@ public class Value : IValue
         MinLimitType = valueSetting.MinLimitType;
         MaxLimitType = valueSetting.MaxLimitType;
         Result = result;
-        OK = ok;
+        Ok = ok;
         Extensions = null;
     }
 }

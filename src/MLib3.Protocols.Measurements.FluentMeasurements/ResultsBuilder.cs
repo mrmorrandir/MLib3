@@ -64,14 +64,14 @@ public class ResultsBuilder : IResultsBuilder
     
     public IResultsBuilder OK()
     {
-        _results.OK = true;
+        _results.Ok = true;
         _isResultSet = true;
         return this;
     }
 
     public IResultsBuilder NOK()
     {
-        _results.OK = false;
+        _results.Ok = false;
         _isResultSet = true;
         return this;
     }
@@ -88,7 +88,7 @@ public class ResultsBuilder : IResultsBuilder
         foreach (var builder in _builders)
             _results.Add(builder());
         if (_evaluate)
-            _results.OK = _results.Data.All(x => (x as IEvaluated)?.OK ?? true);
+            _results.Ok = _results.Data.All(x => (x as IEvaluated)?.Ok ?? true);
         if (!_isResultSet)
             throw new InvalidOperationException($"Result is not set. Use {nameof(OK)}, {nameof(NOK)} or {nameof(Evaluate)}");
         return _results;

@@ -10,7 +10,7 @@ public class SectionTests
         section.Name.Should().BeNullOrWhiteSpace();
         section.Description.Should().BeNull();
         section.Extensions.Should().BeNull();
-        section.OK.Should().BeFalse();
+        section.Ok.Should().BeFalse();
     }
 
     [Fact]
@@ -23,7 +23,7 @@ public class SectionTests
         section.Description.Should().Be("TestDescription");
         section.Data.Should().HaveCount(1);
         section.Extensions.Should().BeNull();
-        section.OK.Should().BeTrue();
+        section.Ok.Should().BeTrue();
     }
 
     [Fact]

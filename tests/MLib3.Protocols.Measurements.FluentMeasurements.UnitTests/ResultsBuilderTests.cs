@@ -20,7 +20,7 @@ public class ResultsBuilderTests
             .OK()
             .Build();
         
-        results.OK.Should().BeTrue();
+        results.Ok.Should().BeTrue();
     }
     
     [Fact]
@@ -31,7 +31,7 @@ public class ResultsBuilderTests
             .NOK() // then NOK
             .Build();
         
-        results.OK.Should().BeFalse();
+        results.Ok.Should().BeFalse();
     }
     
     [Fact]
@@ -41,7 +41,7 @@ public class ResultsBuilderTests
             .OK()
             .Build();
         
-        results.OK.Should().BeTrue();
+        results.Ok.Should().BeTrue();
     }
     
     [Fact]
@@ -52,7 +52,7 @@ public class ResultsBuilderTests
             .OK()
             .Build();
             
-        results.Data.Should().Contain(e => e.Name == "Test" && (e as IValue)!.Result == 123.4 && (e as IValue)!.OK );
+        results.Data.Should().Contain(e => e.Name == "Test" && (e as IValue)!.Result == 123.4 && (e as IValue)!.Ok );
     }
     
     [Fact]
@@ -107,7 +107,7 @@ public class ResultsBuilderTests
             .Evaluate()
             .Build();
 
-        results.OK.Should().BeTrue();
+        results.Ok.Should().BeTrue();
     }
     
     [Fact]
@@ -118,7 +118,7 @@ public class ResultsBuilderTests
             .Evaluate()
             .Build();
 
-        results.OK.Should().BeFalse();
+        results.Ok.Should().BeFalse();
     }
     
     [Fact]
@@ -130,7 +130,7 @@ public class ResultsBuilderTests
             .Evaluate()
             .Build();
 
-        results.OK.Should().BeFalse();
+        results.Ok.Should().BeFalse();
     }
     
     [Fact]
@@ -142,7 +142,7 @@ public class ResultsBuilderTests
             .Evaluate()
             .Build();
 
-        results.OK.Should().BeTrue();
+        results.Ok.Should().BeTrue();
     }
     
     [Fact]
@@ -160,7 +160,7 @@ public class ResultsBuilderTests
             .Evaluate()
             .Build();
 
-        section.OK.Should().BeTrue();
+        section.Ok.Should().BeTrue();
     }
 
     [Fact]

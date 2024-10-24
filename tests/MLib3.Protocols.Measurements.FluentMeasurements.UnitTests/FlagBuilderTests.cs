@@ -13,7 +13,7 @@ public class FlagBuilderTests
         
         flag.Name.Should().Be("Test");
         flag.Description.Should().Be("Test description");
-        flag.OK.Should().BeTrue();
+        flag.Ok.Should().BeTrue();
     }
     
     [Fact]
@@ -28,7 +28,7 @@ public class FlagBuilderTests
         
         flag.Name.Should().Be("Test");
         flag.Description.Should().Be("Test description");
-        flag.OK.Should().BeFalse();
+        flag.Ok.Should().BeFalse();
     }
     
     [Fact]
@@ -41,7 +41,7 @@ public class FlagBuilderTests
         
         flag.Name.Should().Be("Test");
         flag.Description.Should().BeNull();
-        flag.OK.Should().BeTrue();
+        flag.Ok.Should().BeTrue();
     }
     
     [Fact]
@@ -54,7 +54,7 @@ public class FlagBuilderTests
         
         flag.Name.Should().Be("Test");
         flag.Description.Should().Be("Test description");
-        flag.OK.Should().BeTrue();
+        flag.Ok.Should().BeTrue();
     }
     
     [Fact]

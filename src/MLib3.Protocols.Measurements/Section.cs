@@ -14,6 +14,6 @@ public class Section : Results, ISection
         Name = sectionSetting.Name;
         Description = sectionSetting.Description;
         Data = elements?.ToList() ?? new List<IElement>();
-        OK = ok;
+        Ok = ok;
     }
 }

@@ -24,14 +24,14 @@ public class FlagBuilder : IFlagBuilder
 
     public IFlagBuilder OK()
     {
-        _flag.OK = true;
+        _flag.Ok = true;
         _isResultSet = true;
         return this;
     }
     
     public IFlagBuilder NOK()
     {
-        _flag.OK = false;
+        _flag.Ok = false;
         _isResultSet = true;
         return this;
     }

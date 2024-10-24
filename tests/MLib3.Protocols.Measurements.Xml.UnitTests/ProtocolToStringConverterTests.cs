@@ -46,3 +46,37 @@ public class ProtocolToStringConverterTests
         validationErrors.Should().BeEmpty("the converter works correctly");
     }
 }
+
+public class ProtocolSerializer2Tests
+{
+    private readonly Protocol _protocol;
+
+    public ProtocolSerializer2Tests()
+    {
+        _protocol = new Protocol(
+            new Product("123"),
+            new Meta("Test", DateTime.Now),
+            new Results(ok:true));
+        var section = new Section(new SectionSetting("MySection", "No Idea Section"), ok: true);
+        var comment = new Comment(new CommentSetting("MyComment", "No Idea Comment"), "This is a comment!");
+        var info = new Info(new InfoSetting("MyInfo", "InfoUnit", "No Idea Info"), 1.234);
+        var flag = new Flag(new FlagSetting("MyFlag", "No Idea Flag"), true);
+        var value = new Value(new ValueSetting("Current", "A", "Measurement with Fluke"), 1.234, true);
+
+        section.Add(comment);
+        section.Add(info);
+        section.Add(flag);
+        section.Add(value);
+        _protocol.Results.Data.Add(section);
+    }
+    
+    [Fact]
+    public void ShouldSucceed()
+    {
+        var protocolSerializer = new ProtocolSerializer2();
+        
+        var result = protocolSerializer.Serialize(_protocol);
+        
+        result.IsSuccess.Should().BeTrue();
+    }
+}

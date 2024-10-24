@@ -64,14 +64,14 @@ public class ValueBuilder : IValueBuilder
     
     public IValueBuilder OK()
     {
-        _value.OK = true;
+        _value.Ok = true;
         _isResultSet = true;
         return this;
     }
 
     public IValueBuilder NOK()
     {
-        _value.OK = false;
+        _value.Ok = false;
         _isResultSet = true;
         return this;
     }
@@ -81,7 +81,7 @@ public class ValueBuilder : IValueBuilder
         var isMinimumInTolerance = _value.Min is null || _value.Min.Value <= _value.Result;
         var isMaximumInTolerance = _value.Max is null || _value.Max.Value >= _value.Result;
             
-        _value.OK = isMinimumInTolerance && isMaximumInTolerance;
+        _value.Ok = isMinimumInTolerance && isMaximumInTolerance;
         _isResultSet = true;
         return this;
     }

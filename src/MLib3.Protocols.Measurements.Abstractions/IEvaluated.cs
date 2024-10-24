@@ -2,5 +2,5 @@
 
 public interface IEvaluated
 {
-    bool OK { get; set; }
+    bool Ok { get; set; }
 }

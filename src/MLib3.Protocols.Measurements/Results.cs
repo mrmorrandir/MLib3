@@ -2,7 +2,7 @@
 
 public class Results : IResults
 {
-    public bool OK { get; set; }
+    public bool Ok { get; set; }
 
     public IElement this[string name]
     {
@@ -21,7 +21,7 @@ public class Results : IResults
 
     public Results(IEnumerable<IElement>? elements = null, bool ok = false)
     {
-        OK = ok;
+        Ok = ok;
         Data = elements?.ToList() ?? new List<IElement>();
         Extensions = null;
     }

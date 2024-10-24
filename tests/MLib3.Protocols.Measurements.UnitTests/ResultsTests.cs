@@ -9,7 +9,7 @@ public class ResultsTests
 
         results.Data.Should().NotBeNull();
         results.Extensions.Should().BeNull();
-        results.OK.Should().BeFalse();
+        results.Ok.Should().BeFalse();
     }
 
     [Fact]
@@ -21,7 +21,7 @@ public class ResultsTests
 
         results.Data.Should().HaveCount(1);
         results.Extensions.Should().BeNull();
-        results.OK.Should().BeTrue();
+        results.Ok.Should().BeTrue();
     }
 
     [Fact]

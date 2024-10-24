@@ -17,7 +17,7 @@ public class ValueTests
         value.MinLimitType.Should().BeNull();
         value.MaxLimitType.Should().BeNull();
         value.Result.Should().Be(0);
-        value.OK.Should().BeFalse();
+        value.Ok.Should().BeFalse();
         value.Extensions.Should().BeNull();
     }
 
@@ -48,7 +48,7 @@ public class ValueTests
         value.MinLimitType.Should().Be(valueSetting.MinLimitType);
         value.MaxLimitType.Should().Be(valueSetting.MaxLimitType);
         value.Result.Should().Be(1.5);
-        value.OK.Should().BeTrue();
+        value.Ok.Should().BeTrue();
         value.Extensions.Should().BeNull();
     }
 

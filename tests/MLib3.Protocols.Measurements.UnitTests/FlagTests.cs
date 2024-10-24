@@ -9,7 +9,7 @@ public class FlagTests
 
         flag.Name.Should().BeNull();
         flag.Description.Should().BeNull();
-        flag.OK.Should().BeFalse();
+        flag.Ok.Should().BeFalse();
         flag.Extensions.Should().BeNull();
     }
 
@@ -25,7 +25,7 @@ public class FlagTests
 
         flag.Name.Should().Be(flagSetting.Name);
         flag.Description.Should().Be(flagSetting.Description);
-        flag.OK.Should().BeTrue();
+        flag.Ok.Should().BeTrue();
         flag.Extensions.Should().BeNull();
     }
 

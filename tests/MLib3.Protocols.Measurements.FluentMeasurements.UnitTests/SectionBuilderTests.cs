@@ -18,7 +18,7 @@ public class SectionBuilderTests
         
         section.Name.Should().Be("Test");
         section.Description.Should().Be("Test description");
-        section.OK.Should().BeTrue();
+        section.Ok.Should().BeTrue();
     }
     
     [Fact]
@@ -33,7 +33,7 @@ public class SectionBuilderTests
         
         section.Name.Should().Be("Test");
         section.Description.Should().Be("Test description");
-        section.OK.Should().BeFalse();
+        section.Ok.Should().BeFalse();
     }
     
     [Fact]
@@ -46,7 +46,7 @@ public class SectionBuilderTests
         
         section.Name.Should().Be("Test");
         section.Description.Should().BeNull();
-        section.OK.Should().BeTrue();
+        section.Ok.Should().BeTrue();
     }
     
     [Fact]
@@ -59,7 +59,7 @@ public class SectionBuilderTests
         
         section.Name.Should().Be("Test");
         section.Description.Should().Be("Test description");
-        section.OK.Should().BeTrue();
+        section.Ok.Should().BeTrue();
     }
 
     [Fact]
@@ -71,7 +71,7 @@ public class SectionBuilderTests
             .OK()
             .Build();
             
-        section.Data.Should().Contain(e => e.Name == "Test" && (e as IValue)!.Result == 123.4 && (e as IValue)!.OK );
+        section.Data.Should().Contain(e => e.Name == "Test" && (e as IValue)!.Result == 123.4 && (e as IValue)!.Ok );
     }
     
     [Fact]
@@ -131,7 +131,7 @@ public class SectionBuilderTests
             .Evaluate()
             .Build();
 
-        section.OK.Should().BeTrue();
+        section.Ok.Should().BeTrue();
     }
     
     [Fact]
@@ -143,7 +143,7 @@ public class SectionBuilderTests
             .Evaluate()
             .Build();
 
-        section.OK.Should().BeFalse();
+        section.Ok.Should().BeFalse();
     }
     
     [Fact]
@@ -156,7 +156,7 @@ public class SectionBuilderTests
             .Evaluate()
             .Build();
 
-        section.OK.Should().BeFalse();
+        section.Ok.Should().BeFalse();
     }
     
     [Fact]
@@ -169,7 +169,7 @@ public class SectionBuilderTests
             .Evaluate()
             .Build();
 
-        section.OK.Should().BeTrue();
+        section.Ok.Should().BeTrue();
     }
     
     [Fact]
@@ -188,7 +188,7 @@ public class SectionBuilderTests
             .Evaluate()
             .Build();
 
-        section.OK.Should().BeTrue();
+        section.Ok.Should().BeTrue();
     }
    
     [Fact]

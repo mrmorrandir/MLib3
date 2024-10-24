@@ -24,7 +24,7 @@ public class ValueBuilderTests
         value.Min.Should().Be(0);
         value.Nom.Should().Be(500);
         value.Result.Should().Be(234);
-        value.OK.Should().BeTrue();
+        value.Ok.Should().BeTrue();
     }
 
     [Fact]
@@ -50,7 +50,7 @@ public class ValueBuilderTests
         value.Min.Should().Be(0);
         value.Nom.Should().Be(500);
         value.Result.Should().Be(234);
-        value.OK.Should().BeFalse();
+        value.Ok.Should().BeFalse();
     }
 
     [Fact]
@@ -70,7 +70,7 @@ public class ValueBuilderTests
         value.Min.Should().BeNull();
         value.Nom.Should().BeNull();
         value.Result.Should().Be(234);
-        value.OK.Should().BeTrue();
+        value.Ok.Should().BeTrue();
     }
     
     [Fact]
@@ -83,7 +83,7 @@ public class ValueBuilderTests
             .Evaluate()
             .Build();
         
-        value.OK.Should().BeTrue();
+        value.Ok.Should().BeTrue();
     }
     
     [Fact]
@@ -98,7 +98,7 @@ public class ValueBuilderTests
             .Evaluate()
             .Build();
         
-        value.OK.Should().BeTrue();
+        value.Ok.Should().BeTrue();
     }
     
     [Fact]
@@ -113,7 +113,7 @@ public class ValueBuilderTests
             .Evaluate()
             .Build();
         
-        value.OK.Should().BeFalse();
+        value.Ok.Should().BeFalse();
     }
     
     [Fact]
@@ -133,7 +133,7 @@ public class ValueBuilderTests
         value.Min.Should().Be(0);
         value.Nom.Should().Be(500);
         value.Result.Should().Be(1000);
-        value.OK.Should().BeFalse();
+        value.Ok.Should().BeFalse();
     }
     
     [Fact]
