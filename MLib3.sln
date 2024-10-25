@@ -50,13 +50,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SourceGeneratorTargets", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.MVVM.SourceGenerators.Target", "tests\MLib3.MVVM.SourceGenerators.Target\MLib3.MVVM.SourceGenerators.Target.csproj", "{C3324595-EE74-446B-8397-D2071D669E46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.Protocols.Measurements.Json", "src\MLib3.Protocols.Measurements.Json\MLib3.Protocols.Measurements.Json.csproj", "{E60A75E5-5207-45F4-896D-55FB5EB17EB6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.Protocols.Measurements.Serialization.Json", "src\MLib3.Protocols.Measurements.Serialization.Json\MLib3.Protocols.Measurements.Serialization.Json.csproj", "{E60A75E5-5207-45F4-896D-55FB5EB17EB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.Protocols.Measurements.Json.UnitTests", "tests\MLib3.Protocols.Measurements.Json.UnitTests\MLib3.Protocols.Measurements.Json.UnitTests.csproj", "{7914482C-D29B-470B-AFF9-F9234F54EA12}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.Protocols.Measurements.Serialization.Json.UnitTests", "tests\MLib3.Protocols.Measurements.Serialization.Json.UnitTests\MLib3.Protocols.Measurements.Serialization.Json.UnitTests.csproj", "{7914482C-D29B-470B-AFF9-F9234F54EA12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.Protocols.Measurements.Xml", "src\MLib3.Protocols.Measurements.Xml\MLib3.Protocols.Measurements.Xml.csproj", "{132F3F1C-21DC-46A5-88C3-B3F290800C3D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.Protocols.Measurements.Serialization.Xml", "src\MLib3.Protocols.Measurements.Serialization.Xml\MLib3.Protocols.Measurements.Serialization.Xml.csproj", "{132F3F1C-21DC-46A5-88C3-B3F290800C3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.Protocols.Measurements.Xml.UnitTests", "tests\MLib3.Protocols.Measurements.Xml.UnitTests\MLib3.Protocols.Measurements.Xml.UnitTests.csproj", "{C222B9C0-BA6D-4D8D-9256-E54CDD336FFC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.Protocols.Measurements.Serialization.Xml.UnitTests", "tests\MLib3.Protocols.Measurements.Serialization.Xml.UnitTests\MLib3.Protocols.Measurements.Serialization.Xml.UnitTests.csproj", "{C222B9C0-BA6D-4D8D-9256-E54CDD336FFC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.Protocols.Measurements.Serialization", "src\MLib3.Protocols.Measurements.Serialization\MLib3.Protocols.Measurements.Serialization.csproj", "{A336D40C-7745-4B0F-A6E1-72F95B05A152}"
 EndProject
