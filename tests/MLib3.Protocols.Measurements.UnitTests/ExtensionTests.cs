@@ -7,7 +7,7 @@ public class ExtensionTests
     {
         var extension = new Extension();
 
-        extension.Key.Should().BeNull();
+        extension.Key.Should().BeEmpty();
         extension.Value.Should().BeNull();
     }
 

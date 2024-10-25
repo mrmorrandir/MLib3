@@ -1,18 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>netstandard2.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>MLib3.Protocols.Measurements</Title>
         <Authors>Andreas Naumann</Authors>
-        <Copyright>2022 @ Andreas Naumann</Copyright>
+        <Copyright>2024 @ Andreas Naumann</Copyright>
         <PackageProjectUrl>https://github.com/mrmorrandir/MLib3</PackageProjectUrl>
         <PackageIcon>icon.png</PackageIcon>
         <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>Measurements, Protocols</PackageTags>
+        <LangVersion>default</LangVersion>
+        <Version>1.1.0</Version>
     </PropertyGroup>
 
     <ItemGroup>

@@ -76,14 +76,14 @@ public class SectionBuilder : ISectionBuilder
 
     public ISectionBuilder OK()
     {
-        _section.OK = true;
+        _section.Ok = true;
         _isResultSet = true;
         return this;
     }
 
     public ISectionBuilder NOK()
     {
-        _section.OK = false;
+        _section.Ok = false;
         _isResultSet = true;
         return this;
     }
@@ -102,7 +102,7 @@ public class SectionBuilder : ISectionBuilder
         foreach (var builder in _builders)
             _section.Add(builder());
         if (_evaluate)
-            _section.OK = _section.Data.All(x => (x as IEvaluated)?.OK ?? true);
+            _section.Ok = _section.Data.All(x => (x as IEvaluated)?.Ok ?? true);
         if (!_isResultSet)
             throw new InvalidOperationException($"Result is not set. Use {nameof(OK)}, {nameof(NOK)} or {nameof(Evaluate)}");
         return _section;

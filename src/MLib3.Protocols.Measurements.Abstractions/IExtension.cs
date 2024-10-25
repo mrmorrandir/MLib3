@@ -1,7 +1,7 @@
-﻿namespace MLib3.Protocols.Measurements.Abstractions;
+﻿namespace MLib3.Protocols.Measurements;
 
 public interface IExtension
 {
     string Key { get; }
-    object Value { get; set; }
+    object? Value { get; set; }
 }

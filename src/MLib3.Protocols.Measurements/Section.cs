@@ -2,7 +2,7 @@
 
 public class Section : Results, ISection
 {
-    public string? Name { get; set; }
+    public string Name { get; set; } = string.Empty;
     public string? Description { get; set; }
 
     public Section() { }
@@ -13,7 +13,7 @@ public class Section : Results, ISection
             throw new ArgumentNullException(nameof(sectionSetting));
         Name = sectionSetting.Name;
         Description = sectionSetting.Description;
-        Data = elements ?? new List<IElement>();
-        OK = ok;
+        Data = elements?.ToList() ?? new List<IElement>();
+        Ok = ok;
     }
 }

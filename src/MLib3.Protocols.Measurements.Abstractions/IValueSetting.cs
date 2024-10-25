@@ -1,8 +1,8 @@
-﻿namespace MLib3.Protocols.Measurements.Abstractions;
+﻿namespace MLib3.Protocols.Measurements;
 
 public interface IValueSetting : IElement
 {
-    string? Unit { get; }
+    string Unit { get; }
     double? Precision { get; }
     double? Min { get; }
     double? Nom { get; }

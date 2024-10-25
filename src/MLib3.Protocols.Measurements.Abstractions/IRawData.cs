@@ -1,7 +1,6 @@
-﻿namespace MLib3.Protocols.Measurements.Abstractions;
+﻿namespace MLib3.Protocols.Measurements;
 
-public interface IRawData : IElement
+public interface IRawData : IRawDataSetting
 {
-    string Format { get; set; }
     string Raw { get; set; }
 }

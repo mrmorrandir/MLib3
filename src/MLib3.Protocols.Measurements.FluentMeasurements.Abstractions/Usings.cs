@@ -1,1 +1,1 @@
-﻿global using MLib3.Protocols.Measurements.Abstractions;
+﻿

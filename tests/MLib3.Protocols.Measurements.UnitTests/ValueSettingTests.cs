@@ -7,9 +7,9 @@ public class ValueSettingTests
     {
         var valueSetting = new ValueSetting();
 
-        valueSetting.Name.Should().BeNullOrWhiteSpace();
+        valueSetting.Name.Should().BeEmpty();
         valueSetting.Description.Should().BeNull();
-        valueSetting.Unit.Should().BeNull();
+        valueSetting.Unit.Should().BeEmpty();
         valueSetting.Precision.Should().BeNull();
         valueSetting.Min.Should().BeNull();
         valueSetting.Max.Should().BeNull();

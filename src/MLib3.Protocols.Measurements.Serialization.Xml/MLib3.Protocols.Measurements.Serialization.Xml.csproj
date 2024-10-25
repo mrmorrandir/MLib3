@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>default</LangVersion>
+        <Version>1.1.0</Version>
+        <Title>MLib3.Protocols.Measurements.Serialization.Xml</Title>
+        <Authors>Andreas Naumann</Authors>
+        <Copyright>2024 @ Andreas Naumann</Copyright>
+        <PackageProjectUrl>https://github.com/mrmorrandir/MLib3</PackageProjectUrl>
+        <PackageIcon>icon.png</PackageIcon>
+        <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MLib3.Protocols.Measurements.Serialization\MLib3.Protocols.Measurements.Serialization.csproj" />
+      <ProjectReference Include="..\MLib3.Protocols.Measurements\MLib3.Protocols.Measurements.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
+      <PackageReference Include="Scrutor" Version="5.0.1" />
+      <PackageReference Include="TestableIO.System.IO.Abstractions.Wrappers" Version="21.0.29" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\assets\icon.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+        <Link>icon.png</Link>
+      </None>
+    </ItemGroup>
+
+</Project>

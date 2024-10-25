@@ -1,8 +1,8 @@
-﻿namespace MLib3.Protocols.Measurements.Abstractions;
+﻿namespace MLib3.Protocols.Measurements;
 
 public interface IResults : IExtendable, IEvaluated
 {
-    IEnumerable<IElement> Data { get; }
+    IList<IElement> Data { get; }
     IElement this[string name] { get; }
 
     IResults Add(IElement element);

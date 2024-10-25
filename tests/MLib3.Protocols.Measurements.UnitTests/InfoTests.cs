@@ -7,9 +7,9 @@ public class InfoTests
     {
         var info = new Info();
 
-        info.Name.Should().BeNull();
+        info.Name.Should().BeEmpty();
         info.Description.Should().BeNull();
-        info.Unit.Should().BeNull();
+        info.Unit.Should().BeEmpty();
         info.Precision.Should().BeNull();
         info.Value.Should().Be(0);
         info.Extensions.Should().BeNull();
