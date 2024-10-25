@@ -24,6 +24,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\MLib3.Protocols.Measurements.Json\MLib3.Protocols.Measurements.Json.csproj" />
+      <ProjectReference Include="..\MLib3.Protocols.Measurements.TestCore\MLib3.Protocols.Measurements.TestCore.csproj" />
     </ItemGroup>
 
 </Project>

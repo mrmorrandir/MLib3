@@ -7,7 +7,7 @@ public class SectionTests
     {
         var section = new Section();
 
-        section.Name.Should().BeNullOrWhiteSpace();
+        section.Name.Should().BeEmpty();
         section.Description.Should().BeNull();
         section.Extensions.Should().BeNull();
         section.Ok.Should().BeFalse();

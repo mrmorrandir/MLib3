@@ -27,10 +27,14 @@
     <ItemGroup>
       <ProjectReference Include="..\..\src\MLib3.Protocols.Measurements.Xml\MLib3.Protocols.Measurements.Xml.csproj" />
       <ProjectReference Include="..\..\src\MLib3.Protocols.Measurements\MLib3.Protocols.Measurements.csproj" />
+      <ProjectReference Include="..\MLib3.Protocols.Measurements.TestCore\MLib3.Protocols.Measurements.TestCore.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="Protocol_Schema.xsd">
+      <None Update="SchemaV2.xsd">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="SchemaV3.xsd">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>

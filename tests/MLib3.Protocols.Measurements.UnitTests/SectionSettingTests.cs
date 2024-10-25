@@ -7,7 +7,7 @@ public class SectionSettingTests
     {
         var sectionSetting = new SectionSetting();
 
-        sectionSetting.Name.Should().BeNullOrWhiteSpace();
+        sectionSetting.Name.Should().BeEmpty();
         sectionSetting.Description.Should().BeNull();
         sectionSetting.Extensions.Should().BeNull();
     }

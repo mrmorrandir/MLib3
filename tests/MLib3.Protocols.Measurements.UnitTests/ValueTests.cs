@@ -7,9 +7,9 @@ public class ValueTests
     {
         var value = new Value();
 
-        value.Name.Should().BeNull();
+        value.Name.Should().BeEmpty();
         value.Description.Should().BeNull();
-        value.Unit.Should().BeNull();
+        value.Unit.Should().BeEmpty();
         value.Precision.Should().BeNull();
         value.Min.Should().BeNull();
         value.Max.Should().BeNull();

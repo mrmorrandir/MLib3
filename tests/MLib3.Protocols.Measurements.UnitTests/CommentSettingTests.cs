@@ -7,7 +7,7 @@ public class CommentSettingTests
     {
         var commentSetting = new CommentSetting();
 
-        commentSetting.Name.Should().BeNull();
+        commentSetting.Name.Should().BeEmpty();
         commentSetting.Description.Should().BeNull();
         commentSetting.Extensions.Should().BeNull();
     }

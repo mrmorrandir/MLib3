@@ -1,28 +1,43 @@
+using Microsoft.Extensions.DependencyInjection;
+using MLib3.Protocols.Measurements.TestCore;
+
 namespace MLib3.Protocols.Measurements.Xml.UnitTests;
 
 public class ProtocolSerializerTests
 {
+    
     [Fact]
-    public void ShouldSucceed()
+    public void Serialize_ShouldSucceed()
     {
-        var protocolSerializer = new ProtocolSerializer();
+        var serviceProvider = Setup(config => config.UseV3());
+        var protocolSerializer = serviceProvider.GetRequiredService<IProtocolSerializer>();
         var protocol = DummyProtocolGenerator.Generate();
         
         var result = protocolSerializer.Serialize(protocol);
         
         result.IsSuccess.Should().BeTrue();
+        var validationResults = XmlSchemaValidatorV3.Validate(result.Value);
+        validationResults.Should().BeSuccess();
     }
 
     [Fact]
-    public void ShouldSucceed_ForV2()
+    public void Serialize_ShouldSucceed_ForV2()
     {
-        var protocolSerializer = new ProtocolSerializer(new V2.SerializationPostProcessor());
+        var serviceProvider = Setup(config => config.UseV2());
+        var protocolSerializer = serviceProvider.GetRequiredService<IProtocolSerializer>();
         var protocol = DummyProtocolGenerator.Generate();
         
         var result = protocolSerializer.Serialize(protocol);
         
         result.IsSuccess.Should().BeTrue();
-        var validationResults = XmlSchemaValidator.Validate(result.Value);
+        var validationResults = XmlSchemaValidatorV2.Validate(result.Value);
         validationResults.Should().BeSuccess();
+    }
+
+    private ServiceProvider Setup(Action<ProtocolConfigurationBuilder> configAction)
+    {
+        var services = new ServiceCollection();
+        services.AddXmlProtocolServices(configAction);
+        return services.BuildServiceProvider();
     }
 }

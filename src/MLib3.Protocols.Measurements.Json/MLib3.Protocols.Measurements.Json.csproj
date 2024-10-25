@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\MLib3.Protocols.Measurements.Abstractions\MLib3.Protocols.Measurements.Abstractions.csproj" />
+      <ProjectReference Include="..\MLib3.Protocols.Measurements.Serialization\MLib3.Protocols.Measurements.Serialization.csproj" />
       <ProjectReference Include="..\MLib3.Protocols.Measurements\MLib3.Protocols.Measurements.csproj" />
     </ItemGroup>
 

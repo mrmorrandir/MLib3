@@ -7,9 +7,9 @@ public class InfoSettingTests
     {
         var infoSetting = new InfoSetting();
 
-        infoSetting.Name.Should().BeNullOrWhiteSpace();
+        infoSetting.Name.Should().BeEmpty();
         infoSetting.Description.Should().BeNull();
-        infoSetting.Unit.Should().BeNull();
+        infoSetting.Unit.Should().BeEmpty();
         infoSetting.Precision.Should().BeNull();
         infoSetting.Extensions.Should().BeNull();
     }

@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:element name="Protocol" nillable="true">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="1" maxOccurs="1" name="Product" type="Product"/>
+				<xs:element minOccurs="1" maxOccurs="1" name="Meta" type="Meta"/>
+				<xs:element minOccurs="1" maxOccurs="1" name="Results" type="Results"/>
+			</xs:sequence>
+			<xs:attribute name="Specification" type="xs:string"/>
+			<xs:attribute name="Version" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+
+	<!-- Klassen für den inneren Aufbau des XML-Protocolls -->
+	<!-- ====================================================================================================== -->
+	<xs:complexType name="Product">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="Equipment" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="Material" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="MaterialText" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="Order" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="Extensions" type="Extensions" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Meta">
+		<xs:sequence>
+			<xs:element minOccurs="1" maxOccurs="1" name="Timestamp" type="xs:dateTime" />
+			<xs:element minOccurs="0" maxOccurs="1" name="DeviceName" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="DeviceId" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="Operator" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="Software" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="SoftwareVersion" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="TestRoutine" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="TestRoutineVersion" type="xs:string" />
+			<xs:element minOccurs="0" maxOccurs="1" name="Extensions" type="Extensions" />
+		</xs:sequence>
+		<xs:attribute name="Type" type="xs:string" />
+	</xs:complexType>
+
+	<xs:complexType name="Results">
+		<xs:sequence>
+			<xs:element minOccurs="1" maxOccurs="1" name="Data" type="ArrayOfElementChoice" />
+			<xs:element minOccurs="0" maxOccurs="1" name="Extensions" type="Extensions" />
+		</xs:sequence>
+		<xs:attribute name="Ok" type="xs:boolean" use="required" />
+	</xs:complexType>
+
+	<!-- Klassen für den inneren Aufbau von Data -->
+	<!-- ====================================================================================================== -->
+	<xs:complexType name="ArrayOfElementChoice">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element minOccurs="1" maxOccurs="1" name="Section" nillable="true" type="Section" />
+			<xs:element minOccurs="1" maxOccurs="1" name="Comment" nillable="true" type="Comment" />
+			<xs:element minOccurs="1" maxOccurs="1" name="Value" nillable="true" type="Value" />
+			<xs:element minOccurs="1" maxOccurs="1" name="Flag" nillable="true" type="Flag" />
+			<xs:element minOccurs="1" maxOccurs="1" name="RawData" nillable="true" type="RawData"/>
+			<xs:element minOccurs="1" maxOccurs="1" name="Info" nillable="true" type="Info" />
+			<xs:element minOccurs="1" maxOccurs="1" name="FlagSetting" nillable="true" type="FlagSetting" />
+			<xs:element minOccurs="1" maxOccurs="1" name="ValueSetting" nillable="true" type="ValueSetting" />
+			<xs:element minOccurs="1" maxOccurs="1" name="InfoSetting" nillable="true" type="InfoSetting" />
+			<xs:element minOccurs="1" maxOccurs="1" name="CommentSetting" nillable="true" type="CommentSetting" />
+		</xs:choice>
+	</xs:complexType>
+
+	<!-- Konkrete Messwert-Typen und deren Basisklasse  -->
+	<!-- Diese Klassen können alle im Container enthalten sein (darum auch xs:choice)-->
+	<!-- ====================================================================================================== -->
+	<xs:complexType name="Element">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="Extensions" type="Extensions" />
+		</xs:sequence>
+		<xs:attribute name="Name" type="xs:string" />
+		<xs:attribute name="Description" type="xs:string" />
+	</xs:complexType>
+	
+	<xs:complexType name="Section">
+		<xs:complexContent mixed="false">
+			<xs:extension base="Element">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Data" type="ArrayOfElementChoice" />
+				</xs:sequence>
+				<xs:attribute name="Ok" type="xs:boolean" use="required" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="Comment">
+		<xs:complexContent mixed="false">
+			<xs:extension base="CommentSetting">
+				<xs:attribute name="Text" type="xs:string" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="Info">
+		<xs:complexContent mixed="false">
+			<xs:extension base="InfoSetting">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="Value" type="xs:double" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="Flag">
+		<xs:complexContent mixed="false">
+			<xs:extension base="FlagSetting">
+				<xs:attribute name="Ok" type="xs:boolean" use="required" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="Value">
+		<xs:complexContent mixed="false">
+			<xs:extension base="ValueSetting">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="Result" type="xs:double" />
+				</xs:sequence>
+				<xs:attribute name="Ok" type="xs:boolean" use="required" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="RawData">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="Name" type="xs:string"/>
+				<xs:attribute name="Description" type="xs:string"/>
+				<xs:attribute name="Format" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<!-- Vorgaben für Messwerte -->
+	<!-- ====================================================================================================== -->
+	<xs:complexType name="FlagSetting">
+		<xs:complexContent mixed="false">
+			<xs:extension base="Element" />
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="ValueSetting">
+		<xs:complexContent mixed="false">
+			<xs:extension base="FlagSetting">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Min" nillable="true" type="xs:double" />
+					<xs:element minOccurs="0" maxOccurs="1" name="Nom" nillable="true" type="xs:double" />
+					<xs:element minOccurs="0" maxOccurs="1" name="Max" nillable="true" type="xs:double" />
+					<xs:element minOccurs="0" maxOccurs="1" name="MinLimitType" nillable="true" type="ValueLimitType" />
+					<xs:element minOccurs="0" maxOccurs="1" name="MaxLimitType" nillable="true" type="ValueLimitType" />
+				</xs:sequence>
+				<xs:attribute name="Unit" type="xs:string" />
+				<xs:attribute name="Precision" type="xs:double" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="InfoSetting">
+		<xs:complexContent mixed="false">
+			<xs:extension base="Element">
+				<xs:attribute name="Unit" type="xs:string" />
+				<xs:attribute name="Precision" type="xs:double" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="CommentSetting">
+		<xs:complexContent mixed="false">
+			<xs:extension base="Element">
+				
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<!-- Hilfs-Typen für Erweiterbarkeit und Werte-Speicherung -->
+	<!-- ====================================================================================================== -->
+	<xs:complexType name="Extensions">
+		<xs:sequence>
+			<xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="ValueLimitType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="None" />
+			<xs:enumeration value="Value" />
+			<xs:enumeration value="Natural" />
+		</xs:restriction>
+	</xs:simpleType>
+
+</xs:schema>

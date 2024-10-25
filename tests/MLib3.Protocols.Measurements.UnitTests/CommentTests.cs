@@ -7,9 +7,9 @@ public class CommentTests
     {
         var comment = new Comment();
 
-        comment.Name.Should().BeNull();
+        comment.Name.Should().BeEmpty();
         comment.Description.Should().BeNull();
-        comment.Text.Should().BeNull();
+        comment.Text.Should().BeEmpty();
         comment.Extensions.Should().BeNull();
     }
 

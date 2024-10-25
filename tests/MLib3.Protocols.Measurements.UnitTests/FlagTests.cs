@@ -7,7 +7,7 @@ public class FlagTests
     {
         var flag = new Flag();
 
-        flag.Name.Should().BeNull();
+        flag.Name.Should().BeEmpty();
         flag.Description.Should().BeNull();
         flag.Ok.Should().BeFalse();
         flag.Extensions.Should().BeNull();
