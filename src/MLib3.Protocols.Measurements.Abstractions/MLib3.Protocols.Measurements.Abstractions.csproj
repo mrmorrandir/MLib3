@@ -7,7 +7,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>MLib3.Protocols.Measurements.Abstractions</Title>
         <Authors>Andreas Naumann</Authors>
-        <Copyright>2022 @ Andreas Naumann</Copyright>
+        <Copyright>2024 @ Andreas Naumann</Copyright>
         <PackageProjectUrl>https://github.com/mrmorrandir/MLib3</PackageProjectUrl>
         <PackageIcon>icon.png</PackageIcon>
         <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
@@ -15,6 +15,7 @@
         <PackageTags>Measurements, Protocols</PackageTags>
         <RootNamespace>MLib3.Protocols.Measurements</RootNamespace>
         <LangVersion>default</LangVersion>
+        <Version>1.1.0</Version>
     </PropertyGroup>
 
     <ItemGroup>

@@ -5,11 +5,28 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>default</LangVersion>
+        <Version>1.1.0</Version>
+        <Title>MLib3.Protocols.Measurements.Serialization</Title>
+        <Authors>Andreas Naumann</Authors>
+        <Copyright>2024 @ Andreas Naumann</Copyright>
+        <PackageIcon>icon.png</PackageIcon>
+        <PackageProjectUrl>https://github.com/mrmorrandir/MLib3</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\MLib3.Protocols.Measurements.Abstractions\MLib3.Protocols.Measurements.Abstractions.csproj" />
       <ProjectReference Include="..\MLib3.Protocols.Measurements\MLib3.Protocols.Measurements.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\assets\icon.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+        <Link>icon.png</Link>
+      </None>
     </ItemGroup>
 
 </Project>

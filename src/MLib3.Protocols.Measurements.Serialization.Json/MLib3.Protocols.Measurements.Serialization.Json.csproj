@@ -4,6 +4,15 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Version>1.1.0</Version>
+        <Title>MLib3.Protocols.Measurements.Serialization.Json</Title>
+        <Authors>Andreas Naumann</Authors>
+        <Copyright>2024 @ Andreas Naumann</Copyright>
+        <PackageProjectUrl>https://github.com/mrmorrandir/MLib3</PackageProjectUrl>
+        <PackageIcon>icon.png</PackageIcon>
+        <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>
@@ -15,6 +24,14 @@
     <ItemGroup>
       <PackageReference Include="FluentResults" Version="3.16.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\assets\icon.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+        <Link>icon.png</Link>
+      </None>
     </ItemGroup>
 
 </Project>
