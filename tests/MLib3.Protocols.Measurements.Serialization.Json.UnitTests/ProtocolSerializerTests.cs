@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using MLib3.Protocols.Measurements.Serialization.Json.Serializers;
 using MLib3.Protocols.Measurements.Serialization.Mappers;
 using MLib3.Protocols.Measurements.TestCore;
@@ -9,11 +10,19 @@ public class ProtocolSerializerTests
     [Fact]
     public void Serialize_ShouldSucceed()
     {
-        var serializer2 = new ProtocolSerializer(new SerializationMapper());
+        var serializer = Setup().GetRequiredService<IProtocolSerializer>();
         var protocol = DummyProtocolGenerator.Generate();
         
-        var result = serializer2.Serialize(protocol);
+        var result = serializer.Serialize(protocol);
 
         result.Should().BeSuccess();
+    }
+    
+    
+    private ServiceProvider Setup()
+    {
+        var services = new ServiceCollection();
+        services.AddJsonProtocolServices();
+        return services.BuildServiceProvider();
     }
 }

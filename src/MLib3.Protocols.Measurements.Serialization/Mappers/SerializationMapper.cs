@@ -1,10 +1,12 @@
+using FluentResults;
+
 namespace MLib3.Protocols.Measurements.Serialization.Mappers;
 
 public class SerializationMapper : ISerializationMapper
 {
-    public Serialization.Protocol Map(IProtocol protocol)
+    public Result<Protocol> Map(IProtocol protocol)
     {
-        var product = new Serialization.Product
+        var product = new Product
         {
             Extensions = MapExtensions(protocol.Product.Extensions),
             Material = protocol.Product.Material,
@@ -13,7 +15,7 @@ public class SerializationMapper : ISerializationMapper
             Equipment = protocol.Product.Equipment
         };
 
-        var meta = new Serialization.Meta
+        var meta = new Meta
         {
             Extensions = MapExtensions(protocol.Meta.Extensions),
             DeviceId = protocol.Meta.DeviceId,
@@ -27,24 +29,24 @@ public class SerializationMapper : ISerializationMapper
             Operator = protocol.Meta.Operator
         };
 
-        var results = new Serialization.Results
+        var results = new Results
         {
             Ok = protocol.Results.Ok,
             Extensions = MapExtensions(protocol.Results.Extensions),
             Data = protocol.Results.Data.Select(MapElement).ToList()
         };
 
-        return new Serialization.Protocol(product, meta, results);
+        return new Protocol(product, meta, results);
     }
 
-    private static Serialization.Extensions? MapExtensions(IExtensions? extensions)
+    private static Extensions? MapExtensions(IExtensions? extensions)
     {
         if (extensions is null)
             return null;
 
-        var result = new Serialization.Extensions();
+        var result = new Extensions();
         foreach (var extension in extensions)
-            result.Add(new Serialization.Extension(extension.Key, extension.Value));
+            result.Add(new Extension(extension.Key, extension.Value));
         return result;
     }
 
@@ -53,7 +55,7 @@ public class SerializationMapper : ISerializationMapper
         // switch-case for different element types
         return element switch
         {
-            Measurements.Section section => new Serialization.Section
+            Measurements.Section section => new Section
             {
                 Extensions = MapExtensions(section.Extensions),
                 Name = section.Name,
@@ -61,13 +63,13 @@ public class SerializationMapper : ISerializationMapper
                 Data = section.Data.Select(MapElement).ToList(),
                 Ok = section.Ok
             },
-            Measurements.Comment comment => new Serialization.Comment { Extensions = MapExtensions(comment.Extensions), Name = comment.Name, Description = comment.Description, Text = comment.Text },
-            Measurements.Info info => new Serialization.Info { Extensions = MapExtensions(info.Extensions), Name = info.Name, Description = info.Description, Value = info.Value },
-            Measurements.Flag flag => new Serialization.Flag
+            Measurements.Comment comment => new Comment { Extensions = MapExtensions(comment.Extensions), Name = comment.Name, Description = comment.Description, Text = comment.Text },
+            Measurements.Info info => new Info { Extensions = MapExtensions(info.Extensions), Name = info.Name, Description = info.Description, Value = info.Value },
+            Measurements.Flag flag => new Flag
             {
                 Extensions = MapExtensions(flag.Extensions), Name = flag.Name, Description = flag.Description, Ok = flag.Ok
             },
-            Measurements.Value value => new Serialization.Value
+            Measurements.Value value => new Value
             {
                 Extensions = MapExtensions(value.Extensions),
                 Name = value.Name,
@@ -84,16 +86,16 @@ public class SerializationMapper : ISerializationMapper
                 Result = value.Result,
                 Ok = value.Ok
             },
-            Measurements.RawData rawData => new Serialization.RawData
+            Measurements.RawData rawData => new RawData
             {
                 Extensions = MapExtensions(rawData.Extensions),
                 Name = rawData.Name,
                 Description = rawData.Description,
-                Format = rawData.Format,
+                Format = rawData.Format ?? string.Empty,
                 Raw = rawData.Raw
             },
-            Measurements.CommentSetting commentSetting => new Serialization.CommentSetting { Extensions = MapExtensions(commentSetting.Extensions), Name = commentSetting.Name, Description = commentSetting.Description },
-            Measurements.InfoSetting infoSetting => new Serialization.InfoSetting
+            Measurements.CommentSetting commentSetting => new CommentSetting { Extensions = MapExtensions(commentSetting.Extensions), Name = commentSetting.Name, Description = commentSetting.Description },
+            Measurements.InfoSetting infoSetting => new InfoSetting
             {
                 Extensions = MapExtensions(infoSetting.Extensions),
                 Name = infoSetting.Name,
@@ -102,8 +104,8 @@ public class SerializationMapper : ISerializationMapper
                 PrecisionSpecified = infoSetting.Precision.HasValue,
                 Unit = infoSetting.Unit
             },
-            Measurements.FlagSetting flagSetting => new Serialization.FlagSetting { Extensions = MapExtensions(flagSetting.Extensions), Name = flagSetting.Name, Description = flagSetting.Description },
-            Measurements.ValueSetting valueSetting => new Serialization.ValueSetting
+            Measurements.FlagSetting flagSetting => new FlagSetting { Extensions = MapExtensions(flagSetting.Extensions), Name = flagSetting.Name, Description = flagSetting.Description },
+            Measurements.ValueSetting valueSetting => new ValueSetting
             {
                 Extensions = MapExtensions(valueSetting.Extensions),
                 Name = valueSetting.Name,
@@ -117,7 +119,7 @@ public class SerializationMapper : ISerializationMapper
                 MinLimitType = valueSetting.MinLimitType,
                 MaxLimitType = valueSetting.MaxLimitType
             },
-            Measurements.RawDataSetting rawDataSetting => new Serialization.RawDataSetting { Extensions = MapExtensions(rawDataSetting.Extensions), Name = rawDataSetting.Name, Description = rawDataSetting.Description, Format = rawDataSetting.Format },
+            Measurements.RawDataSetting rawDataSetting => new RawDataSetting { Extensions = MapExtensions(rawDataSetting.Extensions), Name = rawDataSetting.Name, Description = rawDataSetting.Description, Format = rawDataSetting.Format ?? string.Empty },
             _ => throw new NotSupportedException($"Element type {element.GetType()} is not supported.")
         };
     }

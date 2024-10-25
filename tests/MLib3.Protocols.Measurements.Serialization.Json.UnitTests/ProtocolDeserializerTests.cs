@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using MLib3.Protocols.Measurements.Serialization.Json.Deserializers;
 using MLib3.Protocols.Measurements.Serialization.Json.Serializers;
 using MLib3.Protocols.Measurements.Serialization.Mappers;
@@ -10,13 +11,21 @@ public class ProtocolDeserializerTests
     [Fact]
     public void Deserialize_ShouldSucceed()
     {
-        var serializer2 = new ProtocolSerializer(new SerializationMapper());
+        var serviceProvider = Setup();
+        var serializer = serviceProvider.GetRequiredService<IProtocolSerializer>();
+        var deserializer = serviceProvider.GetRequiredService<IProtocolDeserializer>();
         var protocol = DummyProtocolGenerator.Generate();
-        var json = serializer2.Serialize(protocol).Value;
-        var deserializer2 = new ProtocolDeserializer(new DeserializationMapper());
+        var json = serializer.Serialize(protocol).Value;
         
-        var result = deserializer2.Deserialize(json);
+        var result = deserializer.Deserialize(json);
 
         result.Should().BeSuccess();
+    }
+    
+    private ServiceProvider Setup()
+    {
+        var services = new ServiceCollection();
+        services.AddJsonProtocolServices();
+        return services.BuildServiceProvider();
     }
 }

@@ -16,7 +16,7 @@ public class ProtocolSerializer : IProtocolSerializer
     }
     public Result<string> Serialize(IProtocol protocol)
     {
-        var mapResult = Result.Try(() => _serializationMapper.Map(protocol));
+        var mapResult =  _serializationMapper.Map(protocol);
         if (mapResult.IsFailed)
             return Result.Fail(mapResult.Errors);
         

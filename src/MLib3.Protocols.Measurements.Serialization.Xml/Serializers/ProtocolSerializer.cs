@@ -13,24 +13,24 @@ internal class ProtocolSerializer : IProtocolSerializer
     {
         Type[] extraTypes =
         [
-            typeof(Serialization.Product),
-            typeof(Serialization.Meta),
-            typeof(Serialization.Results),
+            typeof(Product),
+            typeof(Meta),
+            typeof(Results),
 
-            typeof(Serialization.Section),
-            typeof(Serialization.Comment),
-            typeof(Serialization.Info),
-            typeof(Serialization.Flag),
-            typeof(Serialization.Value),
-            typeof(Serialization.RawData),
+            typeof(Section),
+            typeof(Comment),
+            typeof(Info),
+            typeof(Flag),
+            typeof(Value),
+            typeof(RawData),
 
-            typeof(Serialization.CommentSetting),
-            typeof(Serialization.InfoSetting),
-            typeof(Serialization.FlagSetting),
-            typeof(Serialization.ValueSetting),
-            typeof(Serialization.RawDataSetting)
+            typeof(CommentSetting),
+            typeof(InfoSetting),
+            typeof(FlagSetting),
+            typeof(ValueSetting),
+            typeof(RawDataSetting)
         ];
-        _serializer = new XmlSerializer(typeof(Serialization.Protocol), extraTypes);
+        _serializer = new XmlSerializer(typeof(Protocol), extraTypes);
     }
 
     public ProtocolSerializer(ISerializationMapper serializationMapper)
@@ -41,7 +41,7 @@ internal class ProtocolSerializer : IProtocolSerializer
     public Result<string> Serialize(IProtocol protocol)
     {
         using var writer = new StringWriter();
-        var mapResult = Result.Try(() => _serializationMapper.Map(protocol));
+        var mapResult = _serializationMapper.Map(protocol);
         if (mapResult.IsFailed)
             return Result.Fail(mapResult.Errors);
 

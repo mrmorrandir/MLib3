@@ -13,24 +13,24 @@ internal class ProtocolDeserializer : IProtocolDeserializer
     static ProtocolDeserializer()
     {
         Type[] extraTypes = [
-            typeof(Serialization.Product),
-            typeof(Serialization.Meta),
-            typeof(Serialization.Results),
+            typeof(Product),
+            typeof(Meta),
+            typeof(Results),
 
-            typeof(Serialization.Section),
-            typeof(Serialization.Comment),
-            typeof(Serialization.Info),
-            typeof(Serialization.Flag),
-            typeof(Serialization.Value),
-            typeof(Serialization.RawData),
+            typeof(Section),
+            typeof(Comment),
+            typeof(Info),
+            typeof(Flag),
+            typeof(Value),
+            typeof(RawData),
 
-            typeof(Serialization.CommentSetting),
-            typeof(Serialization.InfoSetting),
-            typeof(Serialization.FlagSetting),
-            typeof(Serialization.ValueSetting),
-            typeof(Serialization.RawDataSetting)
+            typeof(CommentSetting),
+            typeof(InfoSetting),
+            typeof(FlagSetting),
+            typeof(ValueSetting),
+            typeof(RawDataSetting)
         ];
-        _serializer = new(typeof(Serialization.Protocol), extraTypes);
+        _serializer = new(typeof(Protocol), extraTypes);
     }
 
     public ProtocolDeserializer(IDeserializationMapper deserializationMapper)
@@ -42,11 +42,11 @@ internal class ProtocolDeserializer : IProtocolDeserializer
     {
         using var reader = new StringReader(xml);
         // ReSharper disable once AccessToDisposedClosure
-        var deserializeResult = Result.Try(() => (Serialization.Protocol)_serializer.Deserialize(reader));
+        var deserializeResult = Result.Try(() => (Protocol)_serializer.Deserialize(reader));
         if (deserializeResult.IsFailed)
             return Result.Fail(deserializeResult.Errors);
 
-        var mapResult = Result.Try(() => _deserializationMapper.Map(deserializeResult.Value));
+        var mapResult = _deserializationMapper.Map(deserializeResult.Value);
         if (mapResult.IsFailed)
             return Result.Fail(mapResult.Errors);
         return Result.Ok(mapResult.Value);

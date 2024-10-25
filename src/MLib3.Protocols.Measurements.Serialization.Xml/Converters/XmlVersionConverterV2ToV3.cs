@@ -9,34 +9,34 @@ namespace MLib3.Protocols.Measurements.Serialization.Xml.Converters
             var xdoc = XDocument.Parse(xml);
             if (xdoc.Root == null) return xml;
 
-            xdoc.Root.Element("ProductMeta")!.Name = nameof(Serialization.Product);
-            xdoc.Root.Element("MeasurementMeta")!.Name = nameof(Serialization.Meta);
+            xdoc.Root.Element("ProductMeta")!.Name = nameof(Product);
+            xdoc.Root.Element("MeasurementMeta")!.Name = nameof(Meta);
             var results = xdoc.Root.Element("MeasurementData")!;
-            results.Name = nameof(Serialization.Results);
+            results.Name = nameof(Results);
             RenameAttribute(results, "OK", "Ok");
-            results.Element("Measurements")!.Name = nameof(Serialization.Results.Data);
+            results.Element("Measurements")!.Name = nameof(Results.Data);
 
             foreach (var element in xdoc.Descendants().ToArray())
             {
-                if (element.Name == "Serialnumber") element.Name = nameof(Serialization.Product.Equipment);
-                if (element.Name == "Articlecode") element.Name = nameof(Serialization.Product.Material);
-                if (element.Name == "OrderKey") element.Name = nameof(Serialization.Product.MaterialText);
-                if (element.Name == "ProductionOrder") element.Name = nameof(Serialization.Product.Order);
+                if (element.Name == "Serialnumber") element.Name = nameof(Product.Equipment);
+                if (element.Name == "Articlecode") element.Name = nameof(Product.Material);
+                if (element.Name == "OrderKey") element.Name = nameof(Product.MaterialText);
+                if (element.Name == "ProductionOrder") element.Name = nameof(Product.Order);
 
-                if (element.Name == "DeviceID") element.Name = nameof(Serialization.Meta.DeviceId);
-                if (element.Name == "Worker") element.Name = nameof(Serialization.Meta.Operator);
-                if (element.Name == "Program") element.Name = nameof(Serialization.Meta.Software);
-                if (element.Name == "ProgramVersion") element.Name = nameof(Serialization.Meta.SoftwareVersion);
+                if (element.Name == "DeviceID") element.Name = nameof(Meta.DeviceId);
+                if (element.Name == "Worker") element.Name = nameof(Meta.Operator);
+                if (element.Name == "Program") element.Name = nameof(Meta.Software);
+                if (element.Name == "ProgramVersion") element.Name = nameof(Meta.SoftwareVersion);
 
                 if (element.Name == "MeasurementFlagSetting")
                 {
-                    element.Name = nameof(Serialization.FlagSetting);
+                    element.Name = nameof(FlagSetting);
                     RenameAttribute(element, "Hint", "Description");
                 }
 
                 if (element.Name == "MeasurementValueSetting")
                 {
-                    element.Name = nameof(Serialization.ValueSetting);
+                    element.Name = nameof(ValueSetting);
                     RenameAttribute(element, "Hint", "Description");
                     var min = element.Element("ValueLimitMinimum");
                     var nom = element.Element("ValueNominal");
@@ -44,38 +44,38 @@ namespace MLib3.Protocols.Measurements.Serialization.Xml.Converters
                     var minType = element.Element("ValueLimitMinimumType");
                     var maxType = element.Element("ValueLimitMaximumType");
                     if (min is not null)
-                        min.Name = nameof(Serialization.Value.Min);
+                        min.Name = nameof(Value.Min);
                     if (nom is not null)
-                        nom.Name = nameof(Serialization.Value.Nom);
+                        nom.Name = nameof(Value.Nom);
                     if (max is not null)
-                        max.Name = nameof(Serialization.Value.Max);
+                        max.Name = nameof(Value.Max);
                     if (minType is not null)
-                        minType.Name = nameof(Serialization.Value.MinLimitType);
+                        minType.Name = nameof(Value.MinLimitType);
                     if (maxType is not null)
-                        maxType.Name = nameof(Serialization.Value.MaxLimitType);
+                        maxType.Name = nameof(Value.MaxLimitType);
                 }
 
                 if (element.Name == "MeasurementComment")
                 {
-                    element.Name = nameof(Serialization.Comment);
+                    element.Name = nameof(Comment);
                     RenameAttribute(element, "Hint", "Description");
                 }
 
                 if (element.Name == "MeasurementInfo")
                 {
-                    element.Name = nameof(Serialization.Info);
+                    element.Name = nameof(Info);
                     RenameAttribute(element, "Hint", "Description");
                 }
                 if (element.Name == "MeasurementFlag")
                 {
-                    element.Name = nameof(Serialization.Flag);
+                    element.Name = nameof(Flag);
                     RenameAttribute(element, "OK", "Ok");
                     RenameAttribute(element, "Hint", "Description");
                 }
 
                 if (element.Name == "MeasurementValue" && element.HasElements)
                 {
-                    element.Name = nameof(Serialization.Value);
+                    element.Name = nameof(Value);
                     RenameAttribute(element, "OK", "Ok");
                     RenameAttribute(element, "Hint", "Description");
                     var min = element.Element("ValueLimitMinimum");
@@ -85,30 +85,30 @@ namespace MLib3.Protocols.Measurements.Serialization.Xml.Converters
                     var maxType = element.Element("ValueLimitMaximumType");
                     var result = element.Element("Value");
                     if (min is not null)
-                        min.Name = nameof(Serialization.Value.Min);
+                        min.Name = nameof(Value.Min);
                     if (nom is not null)
-                        nom.Name = nameof(Serialization.Value.Nom);
+                        nom.Name = nameof(Value.Nom);
                     if (max is not null)
-                        max.Name = nameof(Serialization.Value.Max);
+                        max.Name = nameof(Value.Max);
                     if (minType is not null)
-                        minType.Name = nameof(Serialization.Value.MinLimitType);
+                        minType.Name = nameof(Value.MinLimitType);
                     if (maxType is not null)
-                        maxType.Name = nameof(Serialization.Value.MaxLimitType);
+                        maxType.Name = nameof(Value.MaxLimitType);
                     if (result is not null)
-                        result.Name = nameof(Serialization.Value.Result);
+                        result.Name = nameof(Value.Result);
                 }
 
                 if (element.Name == "MeasurementRawData")
                 {
-                    element.Name = nameof(Serialization.RawData);
+                    element.Name = nameof(RawData);
                     RenameAttribute(element, "Hint", "Description");
                 }
                 if (element.Name == "MeasurementSection")
                 {
-                    element.Name = nameof(Serialization.Section);
+                    element.Name = nameof(Section);
                     RenameAttribute(element, "OK", "Ok");
                     RenameAttribute(element, "Hint", "Description");
-                    element.Element("Measurements")!.Name = nameof(Serialization.Results.Data);
+                    element.Element("Measurements")!.Name = nameof(Results.Data);
                 }
             }
 

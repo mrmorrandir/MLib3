@@ -15,11 +15,11 @@ public class ProtocolDeserializer : IProtocolDeserializer
     }
     public Result<IProtocol> Deserialize(string json)
     {
-        var deserializeResult = Result.Try(() => JsonSerializer.Deserialize<Serialization.Protocol>(json, ProtocolSerializerOptions.Default));
+        var deserializeResult = Result.Try(() => JsonSerializer.Deserialize<Protocol>(json, ProtocolSerializerOptions.Default));
         if (deserializeResult.IsFailed)
             return Result.Fail(deserializeResult.Errors);
 
-        var mapResult = Result.Try(() => _deserializationMapper.Map(deserializeResult.Value!));
+        var mapResult = _deserializationMapper.Map(deserializeResult.Value!);
         if (mapResult.IsFailed)
             return Result.Fail(mapResult.Errors);
         return Result.Ok(mapResult.Value);

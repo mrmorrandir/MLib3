@@ -1,8 +1,10 @@
+using FluentResults;
+
 namespace MLib3.Protocols.Measurements.Serialization.Mappers;
 
 public class DeserializationMapper : IDeserializationMapper
 {
-    public IProtocol Map(Protocol protocol)
+    public Result<IProtocol> Map(Protocol protocol)
     {
         var xmlProduct = protocol.Product;
         var xmlMeta = protocol.Meta;

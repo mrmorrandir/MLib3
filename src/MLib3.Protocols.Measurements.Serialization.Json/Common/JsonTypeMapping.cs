@@ -4,31 +4,31 @@ public static class JsonTypeMapping
 {
     public static readonly Dictionary<string, Type> TypeNameToType = new()
     {
-        { "Section", typeof(Serialization.Section) },
-        { "CommentSetting", typeof(Serialization.CommentSetting) },
-        { "Comment", typeof(Serialization.Comment) },
-        { "InfoSetting", typeof(Serialization.InfoSetting) },
-        { "Info", typeof(Serialization.Info) },
-        { "FlagSetting", typeof(Serialization.FlagSetting) },
-        { "Flag", typeof(Serialization.Flag) },
-        { "ValueSetting", typeof(Serialization.ValueSetting) },
-        { "Value", typeof(Serialization.Value) },
-        { "RawDataSetting", typeof(Serialization.RawDataSetting) },
-        { "RawData", typeof(Serialization.RawData) }
+        { "Section", typeof(Section) },
+        { "CommentSetting", typeof(CommentSetting) },
+        { "Comment", typeof(Comment) },
+        { "InfoSetting", typeof(InfoSetting) },
+        { "Info", typeof(Info) },
+        { "FlagSetting", typeof(FlagSetting) },
+        { "Flag", typeof(Flag) },
+        { "ValueSetting", typeof(ValueSetting) },
+        { "Value", typeof(Value) },
+        { "RawDataSetting", typeof(RawDataSetting) },
+        { "RawData", typeof(RawData) }
     };
 
     public static readonly Dictionary<Type, string> TypeToTypeName = new()
     {
-        { typeof(Serialization.Section), "Section" },
-        { typeof(Serialization.CommentSetting), "CommentSetting" },
-        { typeof(Serialization.Comment), "Comment" },
-        { typeof(Serialization.InfoSetting), "InfoSetting" },
-        { typeof(Serialization.Info), "Info" },
-        { typeof(Serialization.FlagSetting), "FlagSetting" },
-        { typeof(Serialization.Flag), "Flag" },
-        { typeof(Serialization.ValueSetting), "ValueSetting" },
-        { typeof(Serialization.Value), "Value" },
-        { typeof(Serialization.RawDataSetting), "RawDataSetting" },
-        { typeof(Serialization.RawData), "RawData" }
+        { typeof(Section), "Section" },
+        { typeof(CommentSetting), "CommentSetting" },
+        { typeof(Comment), "Comment" },
+        { typeof(InfoSetting), "InfoSetting" },
+        { typeof(Info), "Info" },
+        { typeof(FlagSetting), "FlagSetting" },
+        { typeof(Flag), "Flag" },
+        { typeof(ValueSetting), "ValueSetting" },
+        { typeof(Value), "Value" },
+        { typeof(RawDataSetting), "RawDataSetting" },
+        { typeof(RawData), "RawData" }
     };
 }
