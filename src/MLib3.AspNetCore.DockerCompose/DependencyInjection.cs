@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace MLib3.AspNetCore.DockerCompose;
 
 public static class DependencyInjection
@@ -18,7 +20,22 @@ public static class DependencyInjection
         if (!directoryInfo.Exists)
             return configuration;
 
-        directoryInfo.GetFiles().OrderBy(x => x.Name).ToList().ForEach(file => { configuration.AddJsonFile(file.FullName); });
+        var secretFiles = directoryInfo.GetFiles().OrderBy(x => x.Name).ToList();
+        foreach (var file in secretFiles)
+        {
+            try
+            {
+                using var stream = file.OpenRead();
+                using var doc = JsonDocument.Parse(stream);
+            }
+            catch (JsonException)
+            {
+                continue;
+            }
+
+            configuration.AddJsonFile(file.FullName);
+        }
+
         configuration.AddEnvironmentVariables();
         return configuration;
     }
