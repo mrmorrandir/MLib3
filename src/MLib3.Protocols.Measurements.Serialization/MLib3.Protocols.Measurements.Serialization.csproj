@@ -5,7 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>default</LangVersion>
-        <Version>1.1.0</Version>
+        <Version>1.2.0</Version>
         <Title>MLib3.Protocols.Measurements.Serialization</Title>
         <Authors>Andreas Naumann</Authors>
         <Copyright>2024 @ Andreas Naumann</Copyright>
@@ -27,6 +27,10 @@
         <PackagePath></PackagePath>
         <Link>icon.png</Link>
       </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Text.Json" Version="9.0.2" />
     </ItemGroup>
 
 </Project>

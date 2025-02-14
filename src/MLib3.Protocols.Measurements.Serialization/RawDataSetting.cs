@@ -11,27 +11,30 @@ public class RawDataSetting : Element, IXmlSerializable
 {
     public string Format { get; set; } = string.Empty;
 
-    public RawDataSetting()
+    public RawDataSetting() { }
+
+    public RawDataSetting(string name, string? description = null, string? format = null) : base(name, description)
     {
+        Format = format ?? string.Empty;
     }
 
-    public System.Xml.Schema.XmlSchema GetSchema()
+    public virtual System.Xml.Schema.XmlSchema GetSchema()
     {
-        return null;
+        return null!;
     }
 
-    public void ReadXml(System.Xml.XmlReader reader)
+    public virtual void ReadXml(System.Xml.XmlReader reader)
     {
         reader.MoveToContent();
-        Name = reader.GetAttribute("Name");
+        Name = reader.GetAttribute("Name") ?? "RawDataSetting";
         Description = reader.GetAttribute("Description");
-        Format = reader.GetAttribute("Format");
+        Format = reader.GetAttribute("Format") ?? "text";
     }
 
-    public void WriteXml(System.Xml.XmlWriter writer)
+    public virtual void WriteXml(System.Xml.XmlWriter writer)
     {
         writer.WriteAttributeString("Name", Name);
-        writer.WriteAttributeString("Description", Description);
+        writer.WriteAttributeString("Description", Description ?? string.Empty);
         writer.WriteAttributeString("Format", Format);
     }
 }

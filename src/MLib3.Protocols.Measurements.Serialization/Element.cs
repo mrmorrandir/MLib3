@@ -10,4 +10,12 @@ public abstract class Element
     public string? Description { get; set; }
     
     public Extensions? Extensions { get; set; }
+
+    protected Element() {}
+
+    protected Element(string name, string? description = null)
+    {
+        Name = name;
+        Description = description;
+    }
 }
