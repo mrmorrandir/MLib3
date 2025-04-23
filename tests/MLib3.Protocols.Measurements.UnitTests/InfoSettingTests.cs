@@ -10,7 +10,7 @@ public class InfoSettingTests
         infoSetting.Name.Should().BeEmpty();
         infoSetting.Description.Should().BeNull();
         infoSetting.Unit.Should().BeEmpty();
-        infoSetting.Precision.Should().BeNull();
+        infoSetting.Precision.Should().Be(0.0);
         infoSetting.Extensions.Should().BeNull();
     }
 

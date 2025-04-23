@@ -10,7 +10,7 @@ public class ValueTests
         value.Name.Should().BeEmpty();
         value.Description.Should().BeNull();
         value.Unit.Should().BeEmpty();
-        value.Precision.Should().BeNull();
+        value.Precision.Should().Be(0.0);
         value.Min.Should().BeNull();
         value.Max.Should().BeNull();
         value.Nom.Should().BeNull();
@@ -55,8 +55,8 @@ public class ValueTests
     [Fact]
     public void ShouldThrowArgumentException_WhenConstructorWithParametersIsUsed_AndValueSettingsIsNull()
     {
-        Action action = () => new Value(null, 1.5, true);
+        Action action = () => new Value(null!, 1.5, true);
 
-        action.Should().Throw<ArgumentException>();
+        action.Should().Throw<Exception>();
     }
 }

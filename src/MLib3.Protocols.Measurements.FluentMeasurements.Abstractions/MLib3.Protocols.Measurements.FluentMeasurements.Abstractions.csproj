@@ -19,10 +19,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MLib3.Protocols.Measurements.Abstractions\MLib3.Protocols.Measurements.Abstractions.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <None Include="..\..\assets\icon.png">
         <Pack>True</Pack>
         <PackagePath></PackagePath>

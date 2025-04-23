@@ -19,9 +19,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MLib3.Protocols.Measurements.Abstractions\MLib3.Protocols.Measurements.Abstractions.csproj" />
       <ProjectReference Include="..\MLib3.Protocols.Measurements.FluentMeasurements.Abstractions\MLib3.Protocols.Measurements.FluentMeasurements.Abstractions.csproj" />
-      <ProjectReference Include="..\MLib3.Protocols.Measurements\MLib3.Protocols.Measurements.csproj" />
     </ItemGroup>
 
     <ItemGroup>

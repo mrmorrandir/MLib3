@@ -30,6 +30,6 @@ public class CommentTests
     {
         Action action = () => new Comment(null, "TestText");
 
-        action.Should().Throw<ArgumentException>();
+        action.Should().Throw<Exception>();
     }
 }

@@ -2,7 +2,7 @@ namespace MLib3.Protocols.Measurements.TestCore;
 
 public static class DummyProtocolGenerator
 {
-    public static IProtocol Generate()
+    public static Protocol Generate()
     {
         return new Protocol
         {
@@ -41,7 +41,7 @@ public static class DummyProtocolGenerator
                 {
                     new Extension("Key", "Value")
                 },
-                Data = new List<IElement>
+                Data = new List<Element>
                 {
                     new Section
                     {
@@ -50,7 +50,7 @@ public static class DummyProtocolGenerator
                         {
                             new Extension("Key", "Value")
                         },
-                        Data = new List<IElement>
+                        Data = new List<Element>
                         {
                             new Comment
                             {

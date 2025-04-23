@@ -1,4 +1,3 @@
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using MLib3.Protocols.Measurements.Serialization.Json.Converters;
 

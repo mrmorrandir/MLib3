@@ -14,7 +14,7 @@ internal class ProtocolSerializerV2 : IProtocolSerializer
         _xmlVersionConverter = xmlVersionConverter;
     }
 
-    public Result<string> Serialize(IProtocol protocol)
+    public Result<string> Serialize(Protocol protocol)
     {
         var serializeResult = _protocolSerializer.Serialize(protocol);
         if (serializeResult.IsFailed)

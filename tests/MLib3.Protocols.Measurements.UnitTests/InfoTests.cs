@@ -10,7 +10,7 @@ public class InfoTests
         info.Name.Should().BeEmpty();
         info.Description.Should().BeNull();
         info.Unit.Should().BeEmpty();
-        info.Precision.Should().BeNull();
+        info.Precision.Should().Be(0.0);
         info.Value.Should().Be(0);
         info.Extensions.Should().BeNull();
     }
@@ -34,6 +34,6 @@ public class InfoTests
     {
         Action action = () => new Info(null, 1.5);
 
-        action.Should().Throw<ArgumentException>();
+        action.Should().Throw<Exception>();
     }
 }

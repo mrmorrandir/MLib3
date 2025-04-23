@@ -1,13 +1,11 @@
 using System.Xml.Serialization;
 using FluentResults;
-using MLib3.Protocols.Measurements.Serialization.Mappers;
 
 namespace MLib3.Protocols.Measurements.Serialization.Xml.Serializers;
 
 internal class ProtocolSerializer : IProtocolSerializer
 {
     private static readonly XmlSerializer _serializer;
-    private readonly ISerializationMapper _serializationMapper;
 
     static ProtocolSerializer()
     {
@@ -33,20 +31,15 @@ internal class ProtocolSerializer : IProtocolSerializer
         _serializer = new XmlSerializer(typeof(Protocol), extraTypes);
     }
 
-    public ProtocolSerializer(ISerializationMapper serializationMapper)
+    public ProtocolSerializer()
     {
-        _serializationMapper = serializationMapper;
     }
 
-    public Result<string> Serialize(IProtocol protocol)
+    public Result<string> Serialize(Protocol protocol)
     {
         using var writer = new StringWriter();
-        var mapResult = _serializationMapper.Map(protocol);
-        if (mapResult.IsFailed)
-            return Result.Fail(mapResult.Errors);
-
         // ReSharper disable once AccessToDisposedClosure
-        var serializeResult = Result.Try(() => _serializer.Serialize(writer, mapResult.Value));
+        var serializeResult = Result.Try(() => _serializer.Serialize(writer, protocol));
         if (serializeResult.IsFailed)
             return Result.Fail(serializeResult.Errors);
 

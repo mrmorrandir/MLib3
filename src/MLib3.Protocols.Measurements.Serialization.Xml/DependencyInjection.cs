@@ -1,6 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using MLib3.Protocols.Measurements.Serialization.Mappers;
 using MLib3.Protocols.Measurements.Serialization.Xml.Converters;
 using MLib3.Protocols.Measurements.Serialization.Xml.Deserializers;
 using MLib3.Protocols.Measurements.Serialization.Xml.Serializers;
@@ -15,9 +14,6 @@ public static class DependencyInjection
         configAction(builder);
         var config = builder.Build();
     
-        services.TryAddTransient<ISerializationMapper, SerializationMapper>();
-        services.TryAddTransient<IDeserializationMapper, DeserializationMapper>();
-
         services.TryAddTransient<ProtocolSerializer>();
         services.TryAddTransient<ProtocolDeserializer>();
         

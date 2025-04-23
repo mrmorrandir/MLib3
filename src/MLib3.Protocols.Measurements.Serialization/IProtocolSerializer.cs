@@ -4,5 +4,5 @@ namespace MLib3.Protocols.Measurements.Serialization;
 
 public interface IProtocolSerializer
 {
-    Result<string> Serialize(IProtocol protocol);
+    Result<string> Serialize(Protocol protocol);
 }
