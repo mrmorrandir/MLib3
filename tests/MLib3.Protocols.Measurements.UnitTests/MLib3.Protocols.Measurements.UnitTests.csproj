@@ -25,7 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\MLib3.Protocols.Measurements\MLib3.Protocols.Measurements.csproj" />
+      <ProjectReference Include="..\..\src\MLib3.Protocols.Measurements\MLib3.Protocols.Measurements.csproj" />
     </ItemGroup>
 
 </Project>
