@@ -9,6 +9,12 @@ public static class ResultsExtensions
         return results.AddRange(elements.AsEnumerable());
     }
     
+    public static IResults Add(this IResults results, IResults additionalResults)
+    {
+        results.AddRange(additionalResults.Data);
+        return results;
+    }
+    
     public static IResults AddRange(this IResults results, IEnumerable<Element> elements)
     {
         var sourceArray = elements as Element[] ?? elements.ToArray();
@@ -24,6 +30,7 @@ public static class ResultsExtensions
         results.Data.AddRange(sourceArray);
         return results;
     }
+
     
     public static IResults AddComment(this IResults results, string name, string? description = null, string? text = null, Extensions? extensions = null)
     {
@@ -95,6 +102,37 @@ public static class ResultsExtensions
         var section = new Section(name, description, ok, extensions);
         section.Data.AddRange(elements);
         results.Data.Add(section);
+        return results;
+    }
+
+    public static IResults Remove(this IResults results, params Element[] elements)
+    {
+        return results.RemoveRange(elements.AsEnumerable());
+    }
+    
+    public static IResults Remove(this IResults results, IResults additionalResults)
+    {
+        results.RemoveRange(additionalResults.Data);
+        return results;
+    }
+
+    public static IResults RemoveRange(this IResults results, IEnumerable<Element> elements)
+    {
+        var sourceArray = elements as Element[] ?? elements.ToArray();
+        if (sourceArray.Any(x => x is null))
+            throw new ArgumentNullException(nameof(elements), "Elements cannot contain null values.");
+        foreach(var element in sourceArray)
+        {
+            if (!results.Data.Contains(element))
+                throw new ArgumentException($"Element with name '{element.Name}' does not exist.");
+        }
+        results.Data.RemoveAll(x => sourceArray.Contains(x));
+        return results;
+    }
+    
+    public static IResults Clear(this IResults results)
+    {
+        results.Data.Clear();
         return results;
     }
 }
