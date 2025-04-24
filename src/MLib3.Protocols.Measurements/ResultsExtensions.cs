@@ -9,7 +9,7 @@ public static class ResultsExtensions
         return results.AddRange(elements.AsEnumerable());
     }
     
-    public static IResults Add(this IResults results, IResults additionalResults)
+    public static IResults Add(this IResults results, Results additionalResults)
     {
         results.AddRange(additionalResults.Data);
         return results;
@@ -31,7 +31,6 @@ public static class ResultsExtensions
         return results;
     }
 
-    
     public static IResults AddComment(this IResults results, string name, string? description = null, string? text = null, Extensions? extensions = null)
     {
         if (string.IsNullOrEmpty(name))
@@ -55,7 +54,7 @@ public static class ResultsExtensions
         results.Data.Add(flag);
         return results;
     }
-
+    
     public static IResults AddInfo(this IResults results, string name, string? description = null, double? precision = null, string? unit = null, double? value = null, Extensions? extensions = null)
     {
         if (string.IsNullOrEmpty(name))
@@ -99,12 +98,13 @@ public static class ResultsExtensions
         if (results.Data.Any(x => x.Name == name))
             throw new ArgumentException($"Element with name '{name}' already exists.");
         
-        var section = new Section(name, description, ok, extensions);
-        section.Data.AddRange(elements);
+        var section = new Section(name, description, ok, extensions, elements);
         results.Data.Add(section);
         return results;
     }
-
+    
+    public static IResults AddSection(this IResults results, string name, params Element[] elements) => results.AddSection(name, null, null, null, elements);
+    
     public static IResults Remove(this IResults results, params Element[] elements)
     {
         return results.RemoveRange(elements.AsEnumerable());

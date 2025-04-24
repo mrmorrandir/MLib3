@@ -46,12 +46,10 @@ public class Section : Element, IResults
     }
     
     public Section() {}
-
-    public Section(string name, string? description = null, bool? ok = null, Extensions? extensions = null) : base(name, description, extensions)
-    {
-        Ok = ok ?? false;
-    }
-    public Section(string name, string? description, bool? ok = null, params Element[] elements) : base(name, description)
+    
+     public Section(string name, params Element[] elements) : this(name, null, false, null, elements) {}
+     
+    public Section(string name, string? description = null, bool? ok = null, Extensions? extensions = null, params Element[] elements) : base(name, description, extensions)
     {
         Ok = ok ?? false;
         Data = new List<Element>(elements);

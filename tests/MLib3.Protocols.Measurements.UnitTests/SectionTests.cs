@@ -16,7 +16,7 @@ public class SectionTests
     [Fact]
     public void ShouldInitializeSection_WhenConstructorWithParametersIsUsed()
     {
-        var section = new Section("TestName", "TestDescription", true, new Flag());
+        var section = new Section("TestName", "TestDescription", true, null, new Flag());
 
         section.Name.Should().Be("TestName");
         section.Description.Should().Be("TestDescription");
