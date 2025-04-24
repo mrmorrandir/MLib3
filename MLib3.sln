@@ -18,12 +18,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.Communication.Message
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.Protocols.Measurements.UnitTests", "tests\MLib3.Protocols.Measurements.UnitTests\MLib3.Protocols.Measurements.UnitTests.csproj", "{2FFB0BEE-C3C1-476B-B585-83F8E6CC6F71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.Protocols.Measurements.FluentMeasurements", "src\MLib3.Protocols.Measurements.FluentMeasurements\MLib3.Protocols.Measurements.FluentMeasurements.csproj", "{2458C833-D6A9-44BF-87AC-2D70B2CB158E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.Protocols.Measurements.FluentMeasurements.UnitTests", "tests\MLib3.Protocols.Measurements.FluentMeasurements.UnitTests\MLib3.Protocols.Measurements.FluentMeasurements.UnitTests.csproj", "{93DE2BD6-A060-4B83-9AE5-DD28BB8266AC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.Protocols.Measurements.FluentMeasurements.Abstractions", "src\MLib3.Protocols.Measurements.FluentMeasurements.Abstractions\MLib3.Protocols.Measurements.FluentMeasurements.Abstractions.csproj", "{60DC1700-F28A-420A-A7E7-FE86F0B3A359}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.Localization", "src\MLib3.Localization\MLib3.Localization.csproj", "{6035EA21-9174-475E-8B68-8EEBD9E63AD7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.Localization.Abstractions", "src\MLib3.Localization.Abstractions\MLib3.Localization.Abstractions.csproj", "{8CBE7DE6-5A9D-467F-B265-BE1C2E6F8316}"
@@ -78,9 +72,6 @@ Global
 		{A0557931-2930-4E36-BC70-667BF7D7EB85} = {DCE20467-1952-4C22-B2A4-4A1145AF5B89}
 		{3A377B4D-BD60-4EE8-B34C-2E8A436E6E90} = {7D70D635-7644-447C-A7FB-58293833BB8C}
 		{2FFB0BEE-C3C1-476B-B585-83F8E6CC6F71} = {7D70D635-7644-447C-A7FB-58293833BB8C}
-		{2458C833-D6A9-44BF-87AC-2D70B2CB158E} = {DCE20467-1952-4C22-B2A4-4A1145AF5B89}
-		{93DE2BD6-A060-4B83-9AE5-DD28BB8266AC} = {7D70D635-7644-447C-A7FB-58293833BB8C}
-		{60DC1700-F28A-420A-A7E7-FE86F0B3A359} = {DCE20467-1952-4C22-B2A4-4A1145AF5B89}
 		{6035EA21-9174-475E-8B68-8EEBD9E63AD7} = {DCE20467-1952-4C22-B2A4-4A1145AF5B89}
 		{8CBE7DE6-5A9D-467F-B265-BE1C2E6F8316} = {DCE20467-1952-4C22-B2A4-4A1145AF5B89}
 		{1E5203CB-97DC-488B-B87F-769933948208} = {7D70D635-7644-447C-A7FB-58293833BB8C}
@@ -129,18 +120,6 @@ Global
 		{2FFB0BEE-C3C1-476B-B585-83F8E6CC6F71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FFB0BEE-C3C1-476B-B585-83F8E6CC6F71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FFB0BEE-C3C1-476B-B585-83F8E6CC6F71}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2458C833-D6A9-44BF-87AC-2D70B2CB158E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2458C833-D6A9-44BF-87AC-2D70B2CB158E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2458C833-D6A9-44BF-87AC-2D70B2CB158E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2458C833-D6A9-44BF-87AC-2D70B2CB158E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93DE2BD6-A060-4B83-9AE5-DD28BB8266AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93DE2BD6-A060-4B83-9AE5-DD28BB8266AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93DE2BD6-A060-4B83-9AE5-DD28BB8266AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93DE2BD6-A060-4B83-9AE5-DD28BB8266AC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{60DC1700-F28A-420A-A7E7-FE86F0B3A359}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{60DC1700-F28A-420A-A7E7-FE86F0B3A359}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{60DC1700-F28A-420A-A7E7-FE86F0B3A359}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{60DC1700-F28A-420A-A7E7-FE86F0B3A359}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6035EA21-9174-475E-8B68-8EEBD9E63AD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6035EA21-9174-475E-8B68-8EEBD9E63AD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6035EA21-9174-475E-8B68-8EEBD9E63AD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
