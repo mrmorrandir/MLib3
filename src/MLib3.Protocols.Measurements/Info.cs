@@ -12,4 +12,6 @@ public class Info : InfoSetting
     {
         Value = value ?? 0.0;
     }
+    
+    public override string ToString() =>  FormattableString.Invariant($"Info: {Name}, Value: {Value}, Unit: {Unit}, Precision: {Precision}");
 }

@@ -67,4 +67,6 @@ public class Section : Element, IResults
         Ok = result;
         return result;
     }
+
+    public override string ToString() => $"Section: {Name}, Ok: {Ok}, Elements: {Data.Count}";
 }

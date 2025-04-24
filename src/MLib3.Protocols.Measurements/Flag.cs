@@ -15,4 +15,6 @@ public class Flag : FlagSetting, IEvaluable
     }
 
     public bool Evaluate() => Ok;
+    
+    public override string ToString() => $"Flag: {Name}, Ok: {Ok}";
 }

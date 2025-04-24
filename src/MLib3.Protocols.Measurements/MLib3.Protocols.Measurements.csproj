@@ -5,7 +5,7 @@
         <LangVersion>default</LangVersion>
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>2.0.0</Version>
+        <Version>2.1.0</Version>
         <Title>MLib3.Protocols.Measurements</Title>
         <Authors>Andreas Naumann, Philipp Köhler</Authors>
         <Description>Create protocols in the Measurements2 (xml) format with this library.</Description>
@@ -15,10 +15,7 @@
         <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>Protocol,Measurements,Results</PackageTags>
-        <PackageReleaseNotes>Breaking Changes:
-- Got rid of most interfaces
-- Simplified the work with the classes
-- Most classes came over from MLib3.Protocols.Measurements.Serialization because they are the real stuff that can be used in API backends. </PackageReleaseNotes>
+        <PackageReleaseNotes></PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

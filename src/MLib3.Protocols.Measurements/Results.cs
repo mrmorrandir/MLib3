@@ -78,4 +78,6 @@ public class Results : IResults
         Ok = result;
         return result;
     }
+
+    public override string ToString() => $"Results: Ok: {Ok}, Elements: {Data.Count}";
 }

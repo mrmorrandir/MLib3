@@ -38,4 +38,6 @@ public class ValueSetting : Element
         MinLimitType = minLimitType;
         MaxLimitType = maxLimitType;
     }
+    
+    public override string ToString() =>  FormattableString.Invariant($"ValueSetting: {Name}, Unit: {Unit}, Precision: {Precision}, Min: {Min}, Nom: {Nom}, Max: {Max}, MinLimitType: {MinLimitType}, MaxLimitType: {MaxLimitType}");
 }

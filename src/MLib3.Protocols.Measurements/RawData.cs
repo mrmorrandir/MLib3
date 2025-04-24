@@ -48,4 +48,6 @@ public class RawData : RawDataSetting, IXmlSerializable
         base.WriteXml(writer);
         writer.WriteCData(Raw);
     }
+    
+    public override string ToString() => $"RawData: {Name}, Format: {Format}";
 }

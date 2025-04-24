@@ -19,4 +19,6 @@ public class Product
         Order = order;
         Extensions = extensions;
     }
+
+    public override string ToString() => $"Product: Equipment: {Equipment}, Material: {Material}, MaterialText: {MaterialText}, Order: {Order}, Extensions: {Extensions}";
 }
