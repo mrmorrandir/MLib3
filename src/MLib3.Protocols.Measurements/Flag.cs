@@ -1,19 +1,18 @@
-﻿namespace MLib3.Protocols.Measurements;
+namespace MLib3.Protocols.Measurements;
 
-public class Flag : IFlag, IElement, IEvaluated
+public class Flag : FlagSetting, IEvaluable
 {
-    public IExtensions? Extensions { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public string? Description { get; set; }
+    [XmlAttribute]
     public bool Ok { get; set; }
-    public Flag() { }
-
-    public Flag(IFlagSetting flagSetting, bool ok = false)
+    
+    public Flag() {}
+    
+    public Flag(FlagSetting flagSetting, bool? ok = null) : this(flagSetting.Name, flagSetting.Description, ok, flagSetting.Extensions) {}
+    
+    public Flag(string name, string? description = null, bool? ok = false, Extensions? extensions = null) : base(name, description, extensions)
     {
-        if (flagSetting == null) throw new ArgumentNullException(nameof(flagSetting));
-        Name = flagSetting.Name;
-        Description = flagSetting.Description;
-        Ok = ok;
-        Extensions = null;
+        Ok = ok ?? false;
     }
+
+    public bool Evaluate() => Ok;
 }

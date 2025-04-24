@@ -1,57 +1,35 @@
-﻿using System.Reflection;
+using System.Reflection;
 
 namespace MLib3.Protocols.Measurements;
 
-public class Meta : IMeta
+public class Meta
 {
-    public IExtensions? Extensions { get; set; }
-    public string? DeviceId { get; set; }
-    public string? DeviceName { get; set; }
-    public string? Software { get; set; }
-    public string? SoftwareVersion { get; set; }
+    [XmlAttribute]
+    public string Type { get; set; } = "Unknown";
+
+    public DateTime Timestamp { get; set; } = DateTime.Now;
+    public string? DeviceName { get; set; } = Environment.MachineName;
+    public string? DeviceId { get; set; } = Environment.MachineName;
+    public string? Operator { get; set; } = Environment.UserName;
+    public string? Software { get; set; } = Assembly.GetEntryAssembly()?.GetName().Name ?? "Unknown";
+    public string? SoftwareVersion { get; set; } = Assembly.GetEntryAssembly()?.GetName().Version.ToString(3) ?? "Unknown";
     public string? TestRoutine { get; set; }
     public string? TestRoutineVersion { get; set; }
-    public DateTime Timestamp { get; set; }
-    public string Type { get; set; }
-    public string? Operator { get; set; }
+    public Extensions? Extensions { get; set; }
+    
+    public Meta() {}
 
-    public Meta()
+    public Meta(string? type = null, DateTime? timestamp = null, string? deviceName = null, string? deviceId = null, string? operatorName = null, string? software = null, string? softwareVersion = null, string? testRoutine = null, string? testRoutineVersion = null, Extensions? extensions = null)
     {
-        Timestamp = DateTime.Now;
-        Type = null!;
-        DeviceId = Environment.MachineName;
-        DeviceName = Environment.MachineName;
-        Software = Assembly.GetEntryAssembly()?.GetName().Name ?? string.Empty;
-        SoftwareVersion = Assembly.GetEntryAssembly()?.GetName().Version?.ToString() ?? string.Empty;
-        TestRoutine = null!;
-        TestRoutineVersion = null!;
-        Operator = Environment.UserName;
-        Extensions = null;
-    }
-
-    public Meta(string type, DateTime timestamp, string? deviceId = null, string? deviceName = null, string? software = null, string? softwareVersion = null, string? testRoutine = null, string? testRoutineVersion = null, string? @operator = null)
-    {
-        if (string.IsNullOrWhiteSpace(type))
-            throw new ArgumentException("Value cannot be null or whitespace.", nameof(type));
-        if (DateTime.Now < timestamp)
-            throw new ArgumentException("Value cannot be in the future.", nameof(timestamp));
-        if (software is null && softwareVersion is not null)
-            throw new ArgumentException($"Value of {nameof(softwareVersion)} cannot be used without a {nameof(software)}.", nameof(softwareVersion));
-        if (softwareVersion is null && software is not null)
-            throw new ArgumentException($"Value of {nameof(software)} cannot be used without a {nameof(softwareVersion)}.", nameof(software));
-        if (testRoutine is null && testRoutineVersion is not null)
-            throw new ArgumentException($"Value of {nameof(testRoutineVersion)} cannot be used without a {nameof(testRoutine)}.", nameof(testRoutineVersion));
-        if (testRoutineVersion is null && testRoutine is not null)
-            throw new ArgumentException($"Value of {nameof(testRoutine)} cannot be used without a {nameof(testRoutineVersion)}.", nameof(testRoutine));
-        Type = type;
-        Timestamp = timestamp;
-        DeviceId = deviceId ?? Environment.MachineName;
+        Type = type ?? "Unknown";
+        Timestamp = timestamp ?? DateTime.Now;
         DeviceName = deviceName ?? Environment.MachineName;
-        Software = software ?? Assembly.GetEntryAssembly()?.GetName().Name ?? string.Empty;
-        SoftwareVersion = softwareVersion ?? Assembly.GetEntryAssembly()?.GetName().Version?.ToString() ?? string.Empty;
+        DeviceId = deviceId ?? Environment.MachineName;
+        Operator = operatorName ?? Environment.UserName;
+        Software = software ?? Assembly.GetEntryAssembly()?.FullName ?? "Unknown";
+        SoftwareVersion = softwareVersion ?? Assembly.GetEntryAssembly()?.GetName().Version.ToString(3) ?? "Unknown";;
         TestRoutine = testRoutine;
         TestRoutineVersion = testRoutineVersion;
-        Operator = @operator;
-        Extensions = null;
+        Extensions = extensions;
     }
 }

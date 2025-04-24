@@ -1,24 +1,22 @@
-﻿namespace MLib3.Protocols.Measurements;
+namespace MLib3.Protocols.Measurements;
 
-public class Product : IProduct
+public class Product
 {
+    public string Equipment { get; set; } = "Unknown";
     public string? Material { get; set; }
     public string? MaterialText { get; set; }
     public string? Order { get; set; }
-    public string Equipment { get; set; }
 
-    public IExtensions? Extensions { get; set; }
+    public Extensions? Extensions { get; set; } = null;
+    
+    public Product() {}
 
-    public Product() { }
-
-    public Product(string equipment, string? material = null, string? materialText = null, string? order = null)
+    public Product(string? equipment = null, string? material = null, string? materialText = null, string? order = null, Extensions? extensions = null)
     {
-        if (string.IsNullOrWhiteSpace(equipment))
-            throw new ArgumentException("Value cannot be null or whitespace.", nameof(equipment));
-        Equipment = equipment;
+        Equipment = equipment ?? "Unknown";
         Material = material;
         MaterialText = materialText;
         Order = order;
-        Extensions = null;
+        Extensions = extensions;
     }
 }

@@ -8,23 +8,9 @@ public class ProtocolTests
         var protocol = new Protocol();
 
         protocol.Product.Should().NotBeNull();
-        protocol.Product.Equipment.Should().BeNull();
+        protocol.Product.Equipment.Should().Be("Unknown");
         protocol.Meta.Should().NotBeNull();
-        protocol.Meta.Type.Should().BeNull();
-        protocol.Results.Should().NotBeNull();
-        protocol.Specification.Should().NotBeNullOrWhiteSpace();
-        protocol.Version.Should().NotBeNullOrWhiteSpace();
-    }
-
-    [Fact]
-    public void ShouldInitialize_WhenCalledWithMinimumParameters()
-    {
-        var protocol = new Protocol("Test", "1234567");
-
-        protocol.Product.Should().NotBeNull();
-        protocol.Product.Equipment.Should().Be("1234567");
-        protocol.Meta.Should().NotBeNull();
-        protocol.Meta.Type.Should().Be("Test");
+        protocol.Meta.Type.Should().Be("Unknown");
         protocol.Results.Should().NotBeNull();
         protocol.Specification.Should().NotBeNullOrWhiteSpace();
         protocol.Version.Should().NotBeNullOrWhiteSpace();

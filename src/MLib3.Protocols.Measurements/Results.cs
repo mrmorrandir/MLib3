@@ -1,102 +1,81 @@
-﻿namespace MLib3.Protocols.Measurements;
+using System.Linq;
 
+namespace MLib3.Protocols.Measurements;
+
+[XmlInclude(typeof(Comment))]
+[XmlInclude(typeof(Value))]
+[XmlInclude(typeof(Info))]
+[XmlInclude(typeof(Flag))]
+[XmlInclude(typeof(RawData))]
+[XmlInclude(typeof(Section))]
+[XmlInclude(typeof(InfoSetting))]
+[XmlInclude(typeof(CommentSetting))]
+[XmlInclude(typeof(FlagSetting))]
+[XmlInclude(typeof(ValueSetting))]
+[XmlInclude(typeof(RawDataSetting))]
 public class Results : IResults
 {
+    [XmlAttribute]
     public bool Ok { get; set; }
 
-    public IElement this[string name]
+    [XmlArray("Data")]
+    [XmlArrayItem("Comment", typeof(Comment), Namespace = "")]
+    [XmlArrayItem("Value", typeof(Value), Namespace = "")]
+    [XmlArrayItem("Info", typeof(Info), Namespace = "")]
+    [XmlArrayItem("Flag", typeof(Flag), Namespace = "")]
+    [XmlArrayItem("RawData", typeof(RawData), Namespace = "")]
+    [XmlArrayItem("Section", typeof(Section), Namespace = "")]
+    [XmlArrayItem("InfoSetting", typeof(InfoSetting), Namespace = "")]
+    [XmlArrayItem("CommentSetting", typeof(CommentSetting), Namespace = "")]
+    [XmlArrayItem("FlagSetting", typeof(FlagSetting), Namespace = "")]
+    [XmlArrayItem("ValueSetting", typeof(ValueSetting), Namespace = "")]
+    [XmlArrayItem("RawDataSetting", typeof(RawDataSetting), Namespace = "")]
+    public List<Element> Data { get; set; } = new();
+    
+    public Extensions? Extensions { get; set; }
+    
+    // Indexer for Element Name
+    public Element this[string name]
     {
-        get
+        get => Data.FirstOrDefault(e => e.Name == name) ?? throw new KeyNotFoundException($"Element with name '{name}' not found.");
+        set
         {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Value cannot be null or whitespace.", nameof(name));
-            if (Data.All(x => x.Name != name))
-                throw new ArgumentException($"No element with name '{name}' found.", nameof(name));
-            return Data.Single(e => e.Name == name);
+            var index = Data.FindIndex(e => e.Name == name);
+            if (index >= 0)
+                Data[index] = value;
+            else
+                throw new KeyNotFoundException($"Element with name '{name}' not found.");
         }
     }
-
-    public IExtensions? Extensions { get; set; }
-    public IList<IElement> Data { get; set; }
-
-    public Results(IEnumerable<IElement>? elements = null, bool ok = false)
+    
+    public Results() {}
+    public Results(params Element[] elements)
+    {
+        Data = new List<Element>(elements);
+    }
+    public Results(bool ok, params Element[] elements)
     {
         Ok = ok;
-        Data = elements?.ToList() ?? new List<IElement>();
-        Extensions = null;
+        Data = new List<Element>(elements);
     }
     
-    public Results()
+    public Results(bool? ok = null, Extensions? extensions = null, params Element[] elements)
     {
-        Data = new List<IElement>();
+        Ok = ok ?? false;
+        Extensions = extensions;
+        Data = new List<Element>(elements);
     }
-
-    public IResults Add(IElement element)
+    
+    public bool Evaluate()
     {
-        if (element == null)
-            throw new ArgumentNullException(nameof(element));
-        if (Data.Any(e => e.Name == element.Name))
-            throw new ArgumentException($"Element with name {element.Name} already exists.");
-        Data = Data.Append(element).ToList();
-        return this;
-    }
+        var result = true;
+        foreach (var element in Data)
+        {
+            if (element is IEvaluable evaluable && !evaluable.Evaluate())
+                result = false;
+        }
 
-    public IResults AddRange(IEnumerable<IElement> elements)
-    {
-        if (elements is null)
-            throw new ArgumentNullException(nameof(elements));
-        var list = elements.ToList();
-        if (list.Any(e => e is null))
-            throw new ArgumentException("One or more elements are null.", nameof(elements));
-        if (list.Select(e => e.Name).Distinct().Count() != list.Count)
-            throw new ArgumentException("Elements must have unique names.", nameof(elements));
-        if (list.Any(e => Data.Any(d => d.Name == e.Name)))
-            throw new ArgumentException("One or more elements already exist.", nameof(elements));
-        Data = Data.Concat(list).ToList();
-        return this;
-    }
-
-    public IResults AddRange(IResults results)
-    {
-        if (results is null)
-            throw new ArgumentNullException(nameof(results));
-        return AddRange(results.Data.ToArray());
-    }
-
-    public IResults Remove(IElement element)
-    {
-        if (element is null)
-            throw new ArgumentNullException(nameof(element));
-        if (Data.All(e => e.Name != element.Name))
-            throw new ArgumentException($"Element with name {element.Name} does not exist.");
-        Data = Data.Where(e => e.Name != element.Name).ToList();
-        return this;
-    }
-
-    public IResults RemoveRange(IEnumerable<IElement> elements)
-    {
-        if (elements is null)
-            throw new ArgumentNullException(nameof(elements));
-        var list = elements.ToList();
-        if (list.Any(e => e is null))
-            throw new ArgumentException("One or more elements are null.", nameof(elements));
-        if (list.Any(e => Data.All(d => d.Name != e.Name)))
-            throw new ArgumentException("One or more elements do not exist.", nameof(elements));
-
-        Data = Data.Where(e => !list.Contains(e)).ToList();
-        return this;
-    }
-
-    public IResults RemoveRange(IResults results)
-    {
-        if (results is null)
-            throw new ArgumentNullException(nameof(results));
-        return RemoveRange(results.Data.ToArray());
-    }
-
-    public IResults Clear()
-    {
-        Data = new List<IElement>();
-        return this;
+        Ok = result;
+        return result;
     }
 }

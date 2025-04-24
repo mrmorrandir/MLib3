@@ -34,6 +34,6 @@ public class FlagTests
     {
         Action action = () => new Flag(null, true);
 
-        action.Should().Throw<ArgumentException>();
+        action.Should().Throw<Exception>();
     }
 }

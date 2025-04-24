@@ -1,40 +1,28 @@
-﻿using System.Reflection;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace MLib3.Protocols.Measurements;
 
-public class Protocol : IProtocol
+public class Protocol
 {
-    public IProduct Product { get; set; }
-    public IMeta Meta { get; set; }
-    public IResults Results { get; set; }
+    public Product Product { get; set; } = new();
+    public Meta Meta { get; set; } = new();
+    public Results Results { get; set; } = new();
 
-    public string Specification { get; set; }
-    public string Version { get; set; }
+    [XmlAttribute]
+    public string Specification { get; set; } = Assembly.GetEntryAssembly()?.FullName ?? "Unknown";
+
+    [XmlAttribute]
+    public string Version { get; set; } = Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "Unknown";
 
     public Protocol()
     {
-        Specification = GetType().Assembly.GetName().Name!;
-        Version = GetType().Assembly.GetName().Version!.ToString();
-        Product = new Product();
-        Meta = new Meta();
-        Results = new Results();
     }
 
-    public Protocol(string type, string equipment)
+    public Protocol(Product product, Meta meta, Results results)
     {
-        Specification = GetType().Assembly.GetName().Name!;
-        Version = GetType().Assembly.GetName().Version!.ToString();
-        Product = new Product(equipment);
-        Meta = new Meta(type, DateTime.Now);
-        Results = new Results();
-    }
-
-    public Protocol(IProduct product, IMeta meta, IResults results)
-    {
-        Product = product ?? throw new ArgumentNullException(nameof(product));
-        Meta = meta ?? throw new ArgumentNullException(nameof(meta));
-        Results = results ?? throw new ArgumentNullException(nameof(results));
-        Specification = Assembly.GetEntryAssembly()?.GetName().FullName ?? string.Empty;
-        Version = Assembly.GetEntryAssembly()?.GetName().Version?.ToString() ?? string.Empty;
+        Product = product;
+        Meta = meta;
+        Results = results;
     }
 }

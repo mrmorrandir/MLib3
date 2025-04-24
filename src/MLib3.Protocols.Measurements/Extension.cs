@@ -1,17 +1,17 @@
-﻿namespace MLib3.Protocols.Measurements;
+namespace MLib3.Protocols.Measurements;
 
-public class Extension : IExtension
+public class Extension
 {
     public string Key { get; set; } = string.Empty;
-    public object? Value { get; set; }
-
-    public Extension() { }
-
+    public object? Value { get; set; } = null;
+    
+    public Extension()
+    {
+    }
+    
     public Extension(string key, object? value)
     {
-        if (string.IsNullOrWhiteSpace(key))
-            throw new ArgumentException("Value cannot be null or whitespace.", nameof(key));
-        Key = key;
+        Key = key ?? throw new ArgumentNullException(nameof(key));
         Value = value;
     }
 }

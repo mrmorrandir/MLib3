@@ -1,24 +1,15 @@
-﻿namespace MLib3.Protocols.Measurements;
+namespace MLib3.Protocols.Measurements;
 
-public class Info : IInfo
+public class Info : InfoSetting
 {
-    public IExtensions? Extensions { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public string? Description { get; set; }
-    public double? Precision { get; set; }
-    public string Unit { get; set; } = string.Empty;
-    public double Value { get; set; } = 0;
+    public double Value { get; set; }
+    
+    public Info() {}
+    
+    public Info(InfoSetting infoSetting, double? value = null) : this(infoSetting.Name, infoSetting.Description, infoSetting.Unit, infoSetting.Precision, value, infoSetting.Extensions) { }
 
-    public Info() { }
-
-    public Info(IInfoSetting infoSetting, double value = 0)
+    public Info(string name, string? description = null, string? unit = null, double? precision = 0.0, double? value = 0.0, Extensions? extensions = null) : base(name, description, unit, precision, extensions)
     {
-        if (infoSetting == null) throw new ArgumentNullException(nameof(infoSetting));
-        Name = infoSetting.Name;
-        Description = infoSetting.Description;
-        Precision = infoSetting.Precision;
-        Unit = infoSetting.Unit;
-        Value = value;
-        Extensions = null;
+        Value = value ?? 0.0;
     }
 }

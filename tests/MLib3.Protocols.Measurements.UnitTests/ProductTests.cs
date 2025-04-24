@@ -7,7 +7,7 @@ public class ProductTests
     {
         var product = new Product();
 
-        product.Equipment.Should().BeNull();
+        product.Equipment.Should().Be("Unknown");
         product.Material.Should().BeNull();
         product.MaterialText.Should().BeNull();
         product.Order.Should().BeNull();
@@ -24,13 +24,5 @@ public class ProductTests
         product.MaterialText.Should().Be("TestMaterialText");
         product.Order.Should().Be("TestOrder");
         product.Extensions.Should().BeNull();
-    }
-
-    [Fact]
-    public void ShouldThrowArgumentException_WhenConstructorWithParametersIsUsed_AndEquipmentIsNull()
-    {
-        Action action = () => new Product(null, "TestMaterial", "TestMaterialText", "TestOrder");
-
-        action.Should().Throw<ArgumentException>();
     }
 }

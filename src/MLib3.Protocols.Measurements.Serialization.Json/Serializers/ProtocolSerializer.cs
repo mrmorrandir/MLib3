@@ -1,25 +1,15 @@
-﻿using System.Text.Json;
-using FluentResults;
-using MLib3.Protocols.Measurements.Serialization.Json.Common;
-using MLib3.Protocols.Measurements.Serialization.Mappers;
+﻿using MLib3.Protocols.Measurements.Serialization.Json.Common;
 
 namespace MLib3.Protocols.Measurements.Serialization.Json.Serializers;
 
-
 public class ProtocolSerializer : IProtocolSerializer
 {
-    private readonly ISerializationMapper _serializationMapper;
-
-    public ProtocolSerializer(ISerializationMapper serializationMapper)
+    public ProtocolSerializer()
     {
-        _serializationMapper = serializationMapper;
     }
-    public Result<string> Serialize(IProtocol protocol)
+    
+    public Result<string> Serialize(Protocol protocol)
     {
-        var mapResult =  _serializationMapper.Map(protocol);
-        if (mapResult.IsFailed)
-            return Result.Fail(mapResult.Errors);
-        
-        return Result.Try(() => JsonSerializer.Serialize(mapResult.Value, ProtocolSerializerOptions.Default));
+        return Result.Try(() => JsonSerializer.Serialize(protocol, ProtocolSerializerOptions.Default));
     }
 }

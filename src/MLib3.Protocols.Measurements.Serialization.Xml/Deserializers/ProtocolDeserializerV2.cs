@@ -14,7 +14,7 @@ internal class ProtocolDeserializerV2 : IProtocolDeserializer
         _xmlVersionConverter = xmlVersionConverter;
     }
 
-    public Result<IProtocol> Deserialize(string data)
+    public Result<Protocol> Deserialize(string data)
     {
         var convertResult = Result.Try(() => _xmlVersionConverter.Convert(data));
         if (convertResult.IsFailed)

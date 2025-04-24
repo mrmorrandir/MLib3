@@ -1,21 +1,32 @@
-﻿namespace MLib3.Protocols.Measurements;
+namespace MLib3.Protocols.Measurements;
 
-public class InfoSetting : IInfoSetting
+public class InfoSetting : Element
 {
-    public IExtensions? Extensions { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public string? Description { get; set; }
-    public double? Precision { get; set; }
-    public string Unit { get; set; } = string.Empty;
-
-    public InfoSetting() { }
-
-    public InfoSetting(string name, string? description = null, string? unit = null, double? precision = null)
+    private double _precision = 0.0;
+    
+    [XmlAttribute]
+    public double Precision
     {
-        Name = name ?? throw new ArgumentNullException(nameof(name));
-        Description = description;
+        get => _precision;
+        set
+        {
+            PrecisionSpecified = value != 0.0;
+            _precision = value;
+        }
+    }
+
+    [XmlIgnore]
+    [JsonIgnore]
+    public bool PrecisionSpecified { get; set; }
+
+    [XmlAttribute]
+    public string Unit { get; set; } = string.Empty;
+    
+    public InfoSetting() {}
+
+    public InfoSetting(string name, string? description = null, string? unit = null, double? precision = null, Extensions? extensions = null) : base(name, description, extensions)
+    {
+        Precision = precision ?? 0.0;
         Unit = unit ?? string.Empty;
-        Precision = precision;
-        Extensions = null;
     }
 }
