@@ -35,4 +35,6 @@ public class RawDataSetting : Element, IXmlSerializable
         writer.WriteAttributeString("Description", Description ?? string.Empty);
         writer.WriteAttributeString("Format", Format);
     }
+    
+    public override string ToString() => $"RawDataSetting: {Name}, Format: {Format}";
 }

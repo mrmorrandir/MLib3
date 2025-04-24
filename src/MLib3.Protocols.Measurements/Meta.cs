@@ -32,4 +32,6 @@ public class Meta
         TestRoutineVersion = testRoutineVersion;
         Extensions = extensions;
     }
+    
+    public override string ToString() => FormattableString.Invariant($"Meta: {Type}, Timestamp: {Timestamp}, DeviceName: {DeviceName}, DeviceId: {DeviceId}, Operator: {Operator}, Software: {Software}, SoftwareVersion: {SoftwareVersion}, TestRoutine: {TestRoutine}, TestRoutineVersion: {TestRoutineVersion}");
 }

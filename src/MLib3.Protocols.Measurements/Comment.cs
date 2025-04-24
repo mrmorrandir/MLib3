@@ -15,5 +15,6 @@ public class Comment : CommentSetting
     {
         Text = text ?? string.Empty;
     }
-    
+
+    public override string ToString() => $"Comment: {Name}, Text: {Text}";
 }

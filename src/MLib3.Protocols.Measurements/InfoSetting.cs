@@ -29,4 +29,6 @@ public class InfoSetting : Element
         Precision = precision ?? 0.0;
         Unit = unit ?? string.Empty;
     }
+    
+    public override string ToString() =>  FormattableString.Invariant($"InfoSetting: {Name}, Unit: {Unit}, Precision: {Precision}");
 }

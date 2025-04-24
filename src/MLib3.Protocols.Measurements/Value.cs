@@ -33,4 +33,6 @@ public class Value : ValueSetting, IEvaluable
         }
         return Ok;
     }
+    
+    public override string ToString() => FormattableString.Invariant($"Value: {Name}, Result: {Result}, Unit: {Unit}, Precision: {Precision}, Min: {Min}, Nom: {Nom}, Max: {Max}, MinLimitType: {MinLimitType}, MaxLimitType: {MaxLimitType}");
 }

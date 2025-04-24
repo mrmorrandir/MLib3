@@ -25,4 +25,6 @@ public class Protocol
         Meta = meta;
         Results = results;
     }
+
+    public override string ToString() => FormattableString.Invariant($"Protocol: Ok: {Results.Ok}, Equipment: {Product.Equipment}, Timestamp: {Meta.Timestamp}");
 }
