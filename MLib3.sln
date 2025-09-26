@@ -57,6 +57,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.Protocols.Measurements", "src\MLib3.Protocols.Measurements\MLib3.Protocols.Measurements.csproj", "{5C326D28-96BD-44F8-8BB2-45092D506EF3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.MVVM.Navigation", "src\MLib3.MVVM.Navigation\MLib3.MVVM.Navigation.csproj", "{E7A9FC3A-1400-49DE-81AA-92EC6D4610BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,7 @@ Global
 		{A336D40C-7745-4B0F-A6E1-72F95B05A152} = {DCE20467-1952-4C22-B2A4-4A1145AF5B89}
 		{B661C858-C6E1-443B-BC48-4A5D4F2098A3} = {7D70D635-7644-447C-A7FB-58293833BB8C}
 		{5C326D28-96BD-44F8-8BB2-45092D506EF3} = {DCE20467-1952-4C22-B2A4-4A1145AF5B89}
+		{E7A9FC3A-1400-49DE-81AA-92EC6D4610BD} = {DCE20467-1952-4C22-B2A4-4A1145AF5B89}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FC79F919-ACE3-4D14-BEE4-2D95F6499915}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -181,5 +184,9 @@ Global
 		{5C326D28-96BD-44F8-8BB2-45092D506EF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C326D28-96BD-44F8-8BB2-45092D506EF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C326D28-96BD-44F8-8BB2-45092D506EF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7A9FC3A-1400-49DE-81AA-92EC6D4610BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7A9FC3A-1400-49DE-81AA-92EC6D4610BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7A9FC3A-1400-49DE-81AA-92EC6D4610BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7A9FC3A-1400-49DE-81AA-92EC6D4610BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

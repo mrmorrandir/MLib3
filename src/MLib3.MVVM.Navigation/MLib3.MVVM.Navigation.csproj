@@ -1,18 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <Version>1.0.0-preview-20241022.3</Version>
-        <Title>MLib3.MVVM</Title>
+        <Title>MLib3.MVVM.Navigation</Title>
         <Authors>Andreas Naumann</Authors>
-        <Copyright>2024 @ Andreas Naumann</Copyright>
+        <Description>A library for view model based navigation in WPF applicaitons</Description>
+        <Copyright>2025 @ Andreas Naumann</Copyright>
+        <PackageIcon>icon.png</PackageIcon>
         <PackageProjectUrl>https://github.com/mrmorrandir/MLib3</PackageProjectUrl>
         <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
 
     <ItemGroup>
@@ -20,7 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.9" />
       <PackageReference Include="System.Reactive" Version="6.0.2" />
     </ItemGroup>
 
