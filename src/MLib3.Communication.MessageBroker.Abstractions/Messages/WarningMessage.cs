@@ -2,10 +2,19 @@ namespace MLib3.Communication.MessageBroker.Messages;
 
 public class WarningMessage : Message, IMessage
 {
+    private readonly Action<Guid>? _resetAction;
+    public bool IsResettable => _resetAction != null;
+    
     public WarningMessage(){}
 
-    public WarningMessage(string text)
+    public WarningMessage(string text, Action<Guid>? resetAction = null)
     {
         Text = text;
+        _resetAction = resetAction;
+    }
+    
+    public void Reset()
+    {
+        _resetAction?.Invoke(Id);
     }
 }
