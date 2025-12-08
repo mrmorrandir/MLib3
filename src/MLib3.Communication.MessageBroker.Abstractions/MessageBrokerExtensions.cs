@@ -70,6 +70,21 @@ public static class MessageBrokerExtensions
     }
     
     /// <summary>
+    /// Publishes a warning message. This message is not an error (it is less severe) <paramref name="resetAction"/>.
+    /// When the <paramref name="resetAction"/> is successfull it has to publish an <see cref="ResolvedMessage"/> via the MessageBroker.
+    /// </summary>
+    /// <param name="messageBroker">The <see cref="MessageBroker"/> to use</param>
+    /// <param name="warning">The warning message to be shown by the message handler</param>
+    /// <param name="resetAction">An Action to reset an error state. Must publish a <see cref="ResolvedMessage"/> on success in order to tell the message handler that the warning message should disappear.</param>
+    /// <returns>A Disposable to resolve the error</returns>
+    public static IDisposable PublishWarning(this IMessageBroker messageBroker, string warning, Action<Guid> resetAction)
+    {
+        var warningMessage = new WarningMessage(warning, resetAction);
+        messageBroker.Publish(warningMessage);
+        return new MessageResolver(messageBroker, warningMessage.Id);
+    }
+    
+    /// <summary>
     /// Publishes a warning message. This message is not an error (it is less severe).
     /// </summary>
     /// <param name="messageBroker">The <see cref="MessageBroker"/> to use</param>
