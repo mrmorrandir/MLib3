@@ -64,7 +64,7 @@ public static class MessageBrokerExtensions
     /// <returns>A Disposable to resolve the warning</returns>
     public static IDisposable PublishWarning(this IMessageBroker messageBroker, string warning)
     {
-        var warningMessage = new WarningMessage { Text = warning };
+        var warningMessage = new WarningMessage(warning, id => messageBroker.Publish(new ResolvedMessage(id)));
         messageBroker.Publish(warningMessage);
         return new MessageResolver(messageBroker, warningMessage.Id);
     }
@@ -80,6 +80,18 @@ public static class MessageBrokerExtensions
     public static IDisposable PublishWarning(this IMessageBroker messageBroker, string warning, Action<Guid> resetAction)
     {
         var warningMessage = new WarningMessage(warning, resetAction);
+        messageBroker.Publish(warningMessage);
+        return new MessageResolver(messageBroker, warningMessage.Id);
+    }
+    
+    /// <summary>
+    /// Publishes an WarningMessage.
+    /// </summary>
+    /// <param name="messageBroker">The <see cref="MessageBroker"/> to use</param>
+    /// <param name="warningMessage">The warning message object to publish</param>
+    /// <returns>A Disposable to resolve the error</returns>
+    public static IDisposable PublishWarning(this IMessageBroker messageBroker, WarningMessage warningMessage)
+    {
         messageBroker.Publish(warningMessage);
         return new MessageResolver(messageBroker, warningMessage.Id);
     }
