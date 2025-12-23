@@ -80,7 +80,7 @@ public class ViewLocatorIncrementalSourceGenerator : IIncrementalGenerator
         var baseType = classSymbol.BaseType;
         while (baseType != null)
         {
-            if (baseType.ToDisplayString() == "MLib3.MVVM.ViewModel")
+            if (baseType.ToDisplayString() == "MLib3.MVVM.ViewModel" || baseType.ToDisplayString() == "MLib3.MVVM.ViewModelValidator")
             {
                 implementsViewModelBase = true;
                 break;
