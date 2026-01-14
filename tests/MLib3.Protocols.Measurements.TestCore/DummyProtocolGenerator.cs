@@ -4,6 +4,7 @@ public static class DummyProtocolGenerator
 {
     public static Protocol Generate()
     {
+        int uid = 0;
         return new Protocol
         {
             Product = new Product

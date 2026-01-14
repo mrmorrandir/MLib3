@@ -1,11 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>default</LangVersion>
-        <Version>2.0.1</Version>
+        <Version>2.1.1</Version>
         <Title>MLib3.Protocols.Measurements.Serialization.Xml</Title>
         <Authors>Andreas Naumann</Authors>
         <Copyright>2025 @ Andreas Naumann</Copyright>

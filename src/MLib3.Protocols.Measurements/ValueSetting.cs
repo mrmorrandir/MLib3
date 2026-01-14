@@ -20,10 +20,16 @@ public class ValueSetting : Element
     [XmlIgnore]
     [JsonIgnore]
     public bool PrecisionSpecified { get; set; }
+    
+    
     public double? Min { get; set; }
+    
     public double? Nom { get; set; }
+    
     public double? Max { get; set; }
+    
     public ValueLimitType? MinLimitType { get; set; }
+    
     public ValueLimitType? MaxLimitType { get; set; }
     
     public ValueSetting() {}
@@ -40,4 +46,14 @@ public class ValueSetting : Element
     }
     
     public override string ToString() =>  FormattableString.Invariant($"ValueSetting: {Name}, Unit: {Unit}, Precision: {Precision}, Min: {Min}, Nom: {Nom}, Max: {Max}, MinLimitType: {MinLimitType}, MaxLimitType: {MaxLimitType}");
+    
+    public bool ShouldSerializeMin() => Min.HasValue;
+    
+    public bool ShouldSerializeNom() => Nom.HasValue;
+    
+    public bool ShouldSerializeMax() => Max.HasValue;
+    
+    public bool ShouldSerializeMinLimitType() => MinLimitType.HasValue;
+    
+    public bool ShouldSerializeMaxLimitType() => MaxLimitType.HasValue;
 }
