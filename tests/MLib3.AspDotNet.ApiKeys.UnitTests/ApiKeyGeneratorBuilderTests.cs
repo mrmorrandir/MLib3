@@ -1,4 +1,3 @@
-using FluentAssertions;
 using MLib3.AspDotNet.ApiKeys.Generators;
 using Xunit;
 

@@ -1,4 +1,3 @@
-using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using MLib3.AspDotNet.ApiKeys.Abstractions;
 using MLib3.AspDotNet.ApiKeys.Generators;
