@@ -1,9 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>netstandard2.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <LangVersion>default</LangVersion>
         <Version>2.1.1</Version>
         <Title>MLib3.Protocols.Measurements.Serialization.Json</Title>
         <Authors>Andreas Naumann</Authors>
