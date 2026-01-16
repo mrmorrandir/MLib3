@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <OutputType>Library</OutputType>
-        <Version>1.0.1</Version>
+        <Version>8.0.0</Version>
         <Title>MLib3.AspNetCore.DockerCompose</Title>
         <Authors>Andreas Naumann</Authors>
         <Description>Simple extensions to read docker compose secrets (in json format) into the configuration.</Description>

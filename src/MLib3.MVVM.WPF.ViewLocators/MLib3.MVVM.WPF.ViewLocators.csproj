@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
@@ -17,7 +17,7 @@
         <Description>An incremental source generator which will generate a static ViewLocator class that lets you register DataTemplates (Views 2 ViewModels) into a ResourceDictionary of your choice (peferred that of the main application).</Description>
         <Copyright>2024 @ Andreas Naumann</Copyright>
         <PackageTags>Roslyn;SourceGenerator;WPF;MVVM;ViewLocator;</PackageTags>
-        <Version>1.0.1</Version>
+        <Version>8.0.0</Version>
         <PackageIcon>icon.png</PackageIcon>
         <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
