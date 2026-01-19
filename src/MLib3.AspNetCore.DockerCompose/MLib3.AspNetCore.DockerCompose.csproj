@@ -5,11 +5,11 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <OutputType>Library</OutputType>
-        <Version>8.0.0</Version>
+        <Version>2.0.0</Version>
         <Title>MLib3.AspNetCore.DockerCompose</Title>
         <Authors>Andreas Naumann</Authors>
         <Description>Simple extensions to read docker compose secrets (in json format) into the configuration.</Description>
-        <Copyright>2025 @ Andreas Naumann</Copyright>
+        <Copyright>2026 @ Andreas Naumann</Copyright>
         <PackageIcon>icon.png</PackageIcon>
         <IsPackable>true</IsPackable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -17,7 +17,7 @@
         <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>MLib3;AspNetCore</PackageTags>
-        <PackageReleaseNotes>BugFix: Exception when there are files in the secrets that are not json. They were added to the configuration ans json. Now they are ignored.</PackageReleaseNotes>
+        <PackageReleaseNotes></PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

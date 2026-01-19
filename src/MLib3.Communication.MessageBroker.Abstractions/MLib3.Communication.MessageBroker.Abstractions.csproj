@@ -6,15 +6,16 @@
         <Nullable>enable</Nullable>
         <Title>MLib3.Communication.MessageBroker.Abstractions</Title>
         <Authors>Andreas Naumann</Authors>
-        <Copyright>2024 @ Andreas Naumann</Copyright>
+        <Copyright>2026 @ Andreas Naumann</Copyright>
         <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageIcon>icon.png</PackageIcon>
         <PackageProjectUrl>https://github.com/mrmorrandir/MLib3</PackageProjectUrl>
         <RootNamespace>MLib3.Communication.MessageBroker</RootNamespace>
-        <Version>8.0.0</Version>
-        <PackageReleaseNotes>Warnings and Infos now have an IDisposable return value to support automatic reset.</PackageReleaseNotes>
+        <Version>2.0.0</Version>
+        <PackageReleaseNotes></PackageReleaseNotes>
+        <PackageTags>MessageBroker;Notifications;Communication</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>
