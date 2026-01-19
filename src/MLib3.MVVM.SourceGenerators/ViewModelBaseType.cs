@@ -2,7 +2,7 @@
 
 namespace MLib3.MVVM.SourceGenerators;
 
-public readonly record struct ViewModelBaseType(string Namespace, string Name, ImmutableArray<string> ExposedProperties)
+internal readonly record struct ViewModelBaseType(string Namespace, string Name, ImmutableArray<string> ExposedProperties)
 {
     public string Namespace { get; } = Namespace;
     public string Name { get; } = Name;

@@ -16,4 +16,9 @@
       <ProjectReference Include="..\..\src\MLib3.MVVM\MLib3.MVVM.csproj" />
     </ItemGroup>
 
+    <PropertyGroup>
+        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+        <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)GeneratedFiles</CompilerGeneratedFilesOutputPath>
+    </PropertyGroup>
+
 </Project>
