@@ -5,27 +5,40 @@ name: Build and Test Pull Request
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches:  [ "main" ]
   workflow_dispatch:
 
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on:  ubuntu-latest
 
-    steps:
+    steps: 
     - uses: actions/checkout@v3
     
     - name:  Setup .NET
-      uses: actions/setup-dotnet@v4  # Update to v4
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.x
         
+    - name: Clear NuGet cache
+      run:  dotnet nuget locals all --clear
+        
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore --verbosity detailed
+      
+    - name:  Verify AwesomeAssertions package
+      run: |
+        echo "Checking if AwesomeAssertions was restored..."
+        find ~/. nuget/packages -name "AwesomeAssertions*" || echo "AwesomeAssertions not found in cache"
       
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore --verbosity detailed
       
+    - name: List test project output
+      run: |
+        echo "Listing MLib3.System.UnitTests bin folder..."
+        ls -la tests/MLib3.System.UnitTests/bin/Debug/net8.0/ || echo "Output directory not found"
+        
     - name: Test
-      run: dotnet test --verbosity normal
+      run: dotnet test --no-build --verbosity normal
