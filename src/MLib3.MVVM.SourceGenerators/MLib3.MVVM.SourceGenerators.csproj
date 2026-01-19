@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <IsPackable>true</IsPackable>
@@ -14,9 +14,9 @@
         <Title>MLib3.MVVM.SourceGenerators</Title>
         <Authors>Andreas Naumann</Authors>
         <Description>An incremental source generator which will generate a static ViewLocator class that lets you register DataTemplates (Views 2 ViewModels) into a ResourceDictionary of your choice (peferred that of the main application).</Description>
-        <Copyright>2024 @ Andreas Naumann</Copyright>
+        <Copyright>2026 @ Andreas Naumann</Copyright>
         <PackageTags>Roslyn;SourceGenerator;WPF;MVVM;ViewLocator;</PackageTags>
-        <Version>1.0.0-preview-20241022.1</Version>
+        <Version>2.0.0-preview-20260119.1</Version>
         <PackageIcon>icon.png</PackageIcon>
         <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
         <RepositoryType>git</RepositoryType>

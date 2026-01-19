@@ -1,19 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <RootNamespace>MLib3.MVVM</RootNamespace>
-        <Version>1.0.0-preview-20241022.3</Version>
+        <Version>2.0.0</Version>
         <Title>MLib3.MVVM.Abstractions</Title>
         <Authors>Andreas Naumann</Authors>
-        <Copyright>2024 @ Andreas Naumann</Copyright>
+        <Copyright>2026 @ Andreas Naumann</Copyright>
         <PackageProjectUrl>https://github.com/mrmorrandir/MLib3</PackageProjectUrl>
         <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageIcon>icon.png</PackageIcon>
+        <PackageTags>MVVM;CommunityToolkit;ViewModels;Models;Architecture</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>
