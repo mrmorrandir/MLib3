@@ -1,24 +1,20 @@
-MLib3.System
-=============
+# MLib3.System
 
 A small utility package providing system-focused helpers for the MLib3 family of libraries. Its primary purpose is to offer a standards-compliant, zero-allocation friendly Base32 encoding implementation (RFC 4648 without padding) together with a convenient dependency injection registration helper.
 
-Overview
---------
+## Overview
 
 - Implements RFC 4648 Base32 encoding without padding.
 - Includes both allocating and zero-allocation encoding APIs for performance-sensitive scenarios.
 - Provides a simple DI extension to register the Base32 converter in Microsoft.Extensions.DependencyInjection.
 
-Key features
-------------
+## Key features
 
 - RFC 4648 Base32 encoding (uppercase and lowercase alphabets).
 - Zero-allocation encoding into a provided destination buffer (suitable for high-throughput paths).
 - Small, focused public surface that is easy to audit and reuse across services.
 
-Public API (high level)
------------------------
+## Public API (high level)
 
 - `IBase32Converter` — Interface defining the encoding operations, including an allocating `Encode` method returning a `Result<string>` and a zero-allocation `TryEncode` method returning a `Result<int>`.
 
@@ -27,3 +23,33 @@ Public API (high level)
 - `Convert` (extension) — Convenience extension methods to encode byte arrays or spans directly to Base32 strings using the default converter implementation.
 
 - `DependencyInjection.AddBase32Converter` — Extension method to register the `IBase32Converter` implementation as a singleton with `IServiceCollection`.
+
+## Usage
+
+Simple usage of the extension method to encode a byte array to a Base32 string:
+```csharp
+using MLib3.System;
+
+var byteBuffer = new byte[16];
+Random.Shared.NextBytes(byteBuffer);
+
+var encoded = byteBuffer.ToBase32String();
+Console.WriteLine($"Base32 Encoded: {encoded}");
+```
+
+Using the dependency injection registration:
+```csharp
+using MLib3.System;
+using Microsoft.Extensions.DependencyInjection; 
+
+var services = new ServiceCollection();
+services.AddBase32Converter();  
+
+var serviceProvider = services.BuildServiceProvider();
+
+var base32Converter = serviceProvider.GetRequiredService<IBase32Converter>();
+var byteBuffer = new byte[16];
+Random.Shared.NextBytes(byteBuffer);
+var encoded = base32Converter.Encode(byteBuffer);
+Console.WriteLine($"Base32 Encoded: {encoded.Value}");
+```

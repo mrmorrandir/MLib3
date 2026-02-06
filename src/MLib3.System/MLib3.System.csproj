@@ -12,6 +12,7 @@
         <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
 
     <ItemGroup>
@@ -20,6 +21,11 @@
     </ItemGroup>
 
     <ItemGroup>
+        <None Include="..\..\assets\icon.png">
+          <Pack>True</Pack>
+          <PackagePath></PackagePath>
+          <Link>icon.png</Link>
+        </None>
         <None Include="README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
