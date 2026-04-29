@@ -14,19 +14,8 @@ namespace MLib3.MVVM;
 /// to provide validation error management functionality. It maintains internal error state for properties
 /// and raises notifications when errors are updated, supporting data validation in MVVM (Model-View-ViewModel) applications.
 /// </remarks>
-public partial class ViewModelTracked<TModel> : ViewModel<TModel>, IViewModelTracked where TModel : class
+public partial class ViewModelTracked<TModel> : ValidatableViewModel<TModel>, IViewModelTracked<TModel> where TModel : class
 {
-    /// <summary>
-    /// Holds validation error messages for properties in the view model.
-    /// </summary>
-    /// <remarks>
-    /// This dictionary is keyed by property names, with each key mapping to a list
-    /// of corresponding error messages. It is used internally to manage and track
-    /// data validation errors. Changes to this field trigger error notifications
-    /// and updates to the <c>HasErrors</c> property.
-    /// </remarks>
-    protected readonly Dictionary<string, List<string>> _errors = new();
-
     /// <summary>
     /// Indicates whether there are unsaved changes in the view model.
     /// </summary>
@@ -86,17 +75,6 @@ public partial class ViewModelTracked<TModel> : ViewModel<TModel>, IViewModelTra
     [ObservableProperty]
     private bool _isSelected;
 
-    /// <summary>
-    /// Gets a value indicating whether the object has any validation errors.
-    /// </summary>
-    /// <remarks>
-    /// This property returns <c>true</c> if there are validation errors for any properties
-    /// in the object; otherwise, it returns <c>false</c>. It is commonly used to determine
-    /// the overall validation state of the object when implementing
-    /// the <see cref="INotifyDataErrorInfo"/> interface.
-    /// </remarks>
-    public bool HasErrors => _errors.Count > 0;
-    
     public ViewModelTracked(TModel model) : base(model)
     {
         
@@ -110,74 +88,7 @@ public partial class ViewModelTracked<TModel> : ViewModel<TModel>, IViewModelTra
     /// (or all properties) have been updated. This is commonly used in the implementation of
     /// the <see cref="INotifyDataErrorInfo"/> interface for data validation scenarios.
     /// </remarks>
-    public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
-
-    /// <summary>
-    /// Retrieves the validation errors associated with a specific property or all properties.
-    /// </summary>
-    /// <param name="propertyName">The name of the property for which errors are being retrieved.
-    /// If null or empty, errors for all properties are returned.</param>
-    /// <returns>An enumerable collection of validation error messages.
-    /// If no errors exist, an empty collection is returned.</returns>
-    public IEnumerable GetErrors(string? propertyName)
-    {
-        if (string.IsNullOrEmpty(propertyName))
-            return _errors.SelectMany(kv => kv.Value);
-
-        return _errors.TryGetValue(propertyName, out var list) ? list : Enumerable.Empty<string>();
-    }
-
-    /// <summary>
-    /// Sets or updates the validation errors associated with a specific property.
-    /// Notifies listeners of changes to the errors and modifies the overall error state.
-    /// </summary>
-    /// <param name="propertyName">The name of the property for which errors are being set.</param>
-    /// <param name="errors">A collection of error messages to associate with the property.
-    /// Pass an empty array to clear errors for the property.</param>
-    public void SetErrors(string propertyName, params string[] errors)
-    {
-        var newList = errors?.Where(e => !string.IsNullOrWhiteSpace(e)).Distinct().ToList() ?? new List<string>();
-
-        // Nur ändern, wenn es echte Änderungen gibt (reduziert Flickern/Events)
-        if (_errors.TryGetValue(propertyName, out var existing))
-        {
-            if (existing.SequenceEqual(newList))
-                return;
-
-            if (newList.Count == 0)
-                _errors.Remove(propertyName);
-            else
-                _errors[propertyName] = newList;
-        }
-        else
-        {
-            if (newList.Count == 0)
-                return;
-
-            _errors[propertyName] = newList;
-        }
-
-        ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-        OnPropertyChanged(nameof(HasErrors));
-    }
-
-    /// <summary>
-    /// Clears all validation errors associated with a specific property.
-    /// Notifies listeners of changes to the errors and updates the overall error state.
-    /// </summary>
-    /// <param name="propertyName">The name of the property for which errors should be cleared.</param>
-    public void ClearErrors(string propertyName) => SetErrors(propertyName, Array.Empty<string>());
-
-    /// <summary>
-    /// Clears all validation errors across all properties.
-    /// Notifies listeners of changes to the errors and updates the overall error state.
-    /// </summary>
-    public void ClearErrors()
-    {
-        _errors.Clear();
-        OnPropertyChanged(nameof(HasErrors));
-        ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(null));
-    }
+    public override event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
     /// <summary>
     /// Updates the value of a tracked property, notifies listeners of the change,
