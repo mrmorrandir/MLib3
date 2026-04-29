@@ -33,6 +33,10 @@
         <PackagePath></PackagePath>
         <Link>icon.png</Link>
       </None>
+      <None Include="README.md">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
     </ItemGroup>
 
 </Project>
