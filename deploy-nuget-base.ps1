@@ -1,5 +1,5 @@
-# NuGet Package Build Base Script
-# This script builds NuGet packages with proper versioning, testing, and git tagging
+# NuGet Package Deployment Base Script
+# This script builds, tests, tags, and deploys NuGet packages with proper versioning
 # Use wrapper scripts instead of calling this directly
 
 param(
@@ -24,46 +24,43 @@ $ErrorActionPreference = "Stop"
 
 function Get-PackageNameFromProject {
     param([string]$ProjectPath)
-    
-    # Read .csproj file
-    [xml]$projectXml = Get-Content -Path $ProjectPath
-    
-    # Try to get PackageId first, then fall back to project file name
-    $packageId = $projectXml.Project.PropertyGroup.PackageId
-    
-    if ([string]::IsNullOrWhiteSpace($packageId)) {
-        # Use file name without extension
+
+    [xml]$projectXml = Get-Content -Raw -Path $ProjectPath
+
+    $node = $projectXml.SelectSingleNode("//PropertyGroup/PackageId")
+
+    if ($null -eq $node -or [string]::IsNullOrWhiteSpace($node.InnerText)) {
         $packageId = [System.IO.Path]::GetFileNameWithoutExtension($ProjectPath)
     }
-    
+    else {
+        $packageId = $node.InnerText.Trim()
+    }
+
     return $packageId
 }
 
 function Get-VersionFromProject {
     param([string]$ProjectPath)
-    
-    # Read .csproj file
-    [xml]$projectXml = Get-Content -Path $ProjectPath
-    
-    # Look for Version in PropertyGroup
-    $version = $projectXml.Project.PropertyGroup.Version
-    
-    if ([string]::IsNullOrWhiteSpace($version)) {
+
+    [xml]$projectXml = Get-Content -Raw -Path $ProjectPath
+
+    $node = $projectXml.SelectSingleNode("//PropertyGroup/Version")
+
+    if ($null -eq $node -or [string]::IsNullOrWhiteSpace($node.InnerText)) {
         Write-ColorOutput "❌ ERROR: No <Version> found in .csproj file" "Red"
         Write-ColorOutput "   Add <Version>1.0.0</Version> to your .csproj" "Yellow"
         exit 1
     }
-    
+
+    $version = $node.InnerText.Trim()
     return $version
 }
 
 function Test-SemanticVersion {
     param([string]$Version)
-    
-    # Validate semantic versioning format: MAJOR.MINOR.PATCH[-prerelease]
-    # Allow: 1.2.3 or 1.2.3-preview-20260206.1
+
     $pattern = '^\d+\.\d+\.\d+(-preview-\d{8}\.\d+)?$'
-    
+
     if ($Version -notmatch $pattern) {
         Write-ColorOutput "❌ ERROR: Invalid version format: $Version" "Red"
         Write-ColorOutput "   Valid formats:" "Yellow"
@@ -71,7 +68,7 @@ function Test-SemanticVersion {
         Write-ColorOutput "   - Prerelease: 1.2.3-preview-20260206.1" "Gray"
         exit 1
     }
-    
+
     return $true
 }
 
@@ -154,7 +151,7 @@ function Test-PackageExistsInRegistry {
 # ============================================================================
 
 Write-ColorOutput "================================================" "Cyan"
-Write-ColorOutput "NuGet Package Build Script" "Cyan"
+Write-ColorOutput "NuGet Package Deployment Script" "Cyan"
 Write-ColorOutput "================================================" "Cyan"
 Write-Host ""
 
@@ -168,6 +165,9 @@ if ([System.IO.Path]::GetExtension($ProjectPath) -ne ".csproj") {
     Write-ColorOutput "❌ ERROR: Not a .csproj file: $ProjectPath" "Red"
     exit 1
 }
+
+# Resolve to absolute path for reliable Split-Path operations
+$ProjectPath = (Resolve-Path $ProjectPath).Path
 
 Write-ColorOutput "📄 Project: $ProjectPath" "Gray"
 Write-Host ""
@@ -187,9 +187,9 @@ Test-SemanticVersion -Version $version | Out-Null
 $isPrerelease = Test-IsPrerelease -Version $version
 
 if ($isPrerelease) {
-    Write-ColorOutput "⚠️  Build Type: PRERELEASE" "Yellow"
+    Write-ColorOutput "⚠️  Deployment Type: PRERELEASE" "Yellow"
 } else {
-    Write-ColorOutput "✅ Build Type: STABLE RELEASE" "Green"
+    Write-ColorOutput "✅ Deployment Type: STABLE RELEASE" "Green"
 }
 
 Write-ColorOutput "📍 Registry: $Registry" "Cyan"
@@ -200,10 +200,10 @@ $componentName = Get-ComponentNameForGitTag -PackageName $packageName
 $gitTag = "$componentName-v$version"
 
 # ============================================================================
-# GIT CHECKS
+# DEPLOYMENT VALIDATIONS
 # ============================================================================
 
-Write-ColorOutput "Performing git validations..." "Yellow"
+Write-ColorOutput "Performing deployment validations..." "Yellow"
 Write-Host ""
 
 # 1. Check if on main branch
@@ -234,7 +234,7 @@ if (-not $SkipGitCheck) {
         Write-ColorOutput "" "White"
         git status
         Write-ColorOutput "" "White"
-        Write-ColorOutput "   Commit all changes before building release" "Yellow"
+        Write-ColorOutput "   Commit all changes before deployment" "Yellow"
         Write-ColorOutput "   Make sure your version bump is committed!" "Yellow"
         exit 1
     }
@@ -381,6 +381,12 @@ if (Test-Path $testsFolder) {
             $testProjName = Split-Path -Leaf (Split-Path -Parent $testProj)
             Write-ColorOutput "   Running tests: $testProjName..." "Cyan"
             
+            # Ensure the test project is built in Release configuration before running tests.
+            # The original script used --no-build which requires prebuilt test artifacts.
+            Write-ColorOutput "   Building test project: $testProjName (Release)..." "Gray"
+            dotnet build $testProj --configuration Release --verbosity minimal
+
+            Write-ColorOutput "   Running tests: $testProjName..." "Gray"
             dotnet test $testProj --configuration Release --no-build --verbosity minimal
             
             if ($LASTEXITCODE -ne 0) {
@@ -529,7 +535,7 @@ Write-Host ""
 # ============================================================================
 
 Write-ColorOutput "================================================" "Cyan"
-Write-ColorOutput "✅ RELEASE SUCCESSFUL!" "Green"
+Write-ColorOutput "✅ DEPLOYMENT SUCCESSFUL!" "Green"
 Write-ColorOutput "================================================" "Cyan"
 Write-Host ""
 
@@ -549,18 +555,18 @@ Write-Host ""
 Write-ColorOutput "================================================" "Cyan"
 
 if ($isPrerelease) {
-    Write-ColorOutput "Next Steps (Prerelease):" "Yellow"
+    Write-ColorOutput "Next Steps (Prerelease Deployment):" "Yellow"
     Write-Host ""
     Write-ColorOutput "  1. Test in consuming projects:" "White"
     Write-ColorOutput "     dotnet add package $packageName --version $version --source $Registry" "Gray"
     Write-ColorOutput "" "White"
     Write-ColorOutput "  2. Verify functionality thoroughly" "White"
     Write-ColorOutput "" "White"
-    Write-ColorOutput "  3. When ready, release stable version:" "White"
+    Write-ColorOutput "  3. When ready, deploy stable version:" "White"
     Write-ColorOutput "     - Update .csproj to stable version (e.g., ${version.Split('-')[0]})" "Gray"
-    Write-ColorOutput "     - Commit and run build script again" "Gray"
+    Write-ColorOutput "     - Commit and run deployment script again" "Gray"
 } else {
-    Write-ColorOutput "Next Steps (Stable Release):" "Yellow"
+    Write-ColorOutput "Next Steps (Stable Deployment):" "Yellow"
     Write-Host ""
     Write-ColorOutput "  1. Update consuming projects:" "White"
     Write-ColorOutput "     dotnet add package $packageName --version $version --source $Registry" "Gray"
