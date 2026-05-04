@@ -13,7 +13,7 @@ public class ProtocolSerializerTests
         
         var result = serializer.Serialize(protocol);
 
-        result.Should().BeSuccess();
+        result.IsSuccess.Should().BeTrue();
     }
     
     

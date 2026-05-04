@@ -18,7 +18,7 @@ public class ProtocolSerializerTests
         
         result.IsSuccess.Should().BeTrue();
         var validationResults = XmlSchemaValidatorV3.Validate(result.Value);
-        validationResults.Should().BeSuccess();
+        validationResults.IsSuccess.Should().BeTrue();
     }
 
     [Fact]
@@ -81,7 +81,7 @@ public class ProtocolSerializerTests
         
         result.IsSuccess.Should().BeTrue();
         var validationResults = XmlSchemaValidatorV2.Validate(result.Value);
-        validationResults.Should().BeSuccess();
+        validationResults.IsSuccess.Should().BeTrue();
     }
 
     [Fact]
