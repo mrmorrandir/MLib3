@@ -16,7 +16,7 @@ public class ProtocolDeserializerTests
         
         var result = deserializer.Deserialize(json);
 
-        result.Should().BeSuccess();
+        result.IsSuccess.Should().BeTrue();
     }
     
     private ServiceProvider Setup()

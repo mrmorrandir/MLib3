@@ -16,19 +16,19 @@
         <Description>An incremental source generator which will generate a static ViewLocator class that lets you register DataTemplates (Views 2 ViewModels) into a ResourceDictionary of your choice (peferred that of the main application).</Description>
         <Copyright>2026 @ Andreas Naumann</Copyright>
         <PackageTags>Roslyn;SourceGenerator;WPF;MVVM;ViewLocator;</PackageTags>
-        <Version>2.0.0-preview-20260119.1</Version>
+        <Version>2.0.0-preview-20260504.1</Version>
         <PackageIcon>icon.png</PackageIcon>
         <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4">
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="5.3.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.0"/>
-        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.3.0"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="5.3.0" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="5.3.0" />
     </ItemGroup>
 
     <ItemGroup>
