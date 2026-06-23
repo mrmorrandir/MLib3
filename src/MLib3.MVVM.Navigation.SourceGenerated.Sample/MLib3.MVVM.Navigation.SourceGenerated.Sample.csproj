@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <RootNamespace>MLib3.MVVM.Navigation.SourceGenerated.Sample</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\MLib3.MVVM.Navigation\MLib3.MVVM.Navigation.csproj" />
+        <ProjectReference Include="..\MLib3.MVVM\MLib3.MVVM.csproj" />
+        <ProjectReference Include="..\MLib3.MVVM.Navigation.Generator\MLib3.MVVM.Navigation.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    </ItemGroup>
+
+</Project>

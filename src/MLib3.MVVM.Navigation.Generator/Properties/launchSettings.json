@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "DebugRoslynSourceGenerator": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "../MLib3.MVVM.Navigation.SourceGenerated.Sample/MLib3.MVVM.Navigation.SourceGenerated.Sample.csproj"
+    }
+  }
+}

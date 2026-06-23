@@ -10,7 +10,7 @@ namespace MLib3.MVVM.Navigation;
 /// dependency injection to resolve ViewModels, which is particularly useful for handling 
 /// circular dependencies between ViewModels.
 /// </remarks>
-public interface INavigator : INavigator<IViewModel>
+public partial interface INavigator : INavigator<IViewModel>
 {
     /// <summary>
     /// Pushes a new ViewModel of type <typeparamref name="TViewModel"/> onto the navigation stack.

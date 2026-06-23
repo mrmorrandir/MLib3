@@ -9,7 +9,7 @@ namespace MLib3.MVVM.Navigation;
 /// This interface requires ViewModels to be provided explicitly for navigation operations.
 /// </remarks>
 /// <typeparam name="T">The base type of ViewModels managed by this navigator.</typeparam>
-public interface INavigator<T> where T : IViewModel
+public partial interface INavigator<T> where T : IViewModel
 {
     /// <summary>
     /// Gets an observable that notifies when the navigation has changed.

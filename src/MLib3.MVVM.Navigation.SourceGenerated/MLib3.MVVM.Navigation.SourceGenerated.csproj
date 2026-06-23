@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+
+        <Title>MLib3.MVVM.Navigation</Title>
+        <Authors>Andreas Naumann</Authors>
+        <Description>A library for view model based navigation in WPF applicaitons</Description>
+        <Copyright>2026 @ Andreas Naumann</Copyright>
+        <PackageIcon>icon.png</PackageIcon>
+        <PackageProjectUrl>https://github.com/mrmorrandir/MLib3</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Version>2.4.0</Version>
+        <PackageTags>MVVM;Navigation;ViewModels</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MLib3.MVVM.Navigation.Generator\MLib3.MVVM.Navigation.Generator.csproj" />
+      <ProjectReference Include="..\MLib3.MVVM.Navigation\MLib3.MVVM.Navigation.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\assets\icon.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+        <Link>icon.png</Link>
+      </None>
+    </ItemGroup>
+
+</Project>
