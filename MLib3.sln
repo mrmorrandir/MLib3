@@ -67,9 +67,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.MVVM.UnitTests", "tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.MVVM.Navigation.Generator", "src\MLib3.MVVM.Navigation.Generator\MLib3.MVVM.Navigation.Generator.csproj", "{007DC132-FDEC-46E9-B66C-D078611CD243}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.MVVM.Navigation.SourceGenerated.Sample", "src\MLib3.MVVM.Navigation.SourceGenerated.Sample\MLib3.MVVM.Navigation.SourceGenerated.Sample.csproj", "{E049A13C-560A-40F5-936D-A20132291621}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.MVVM.Navigation.Generator.Sample", "src\MLib3.MVVM.Navigation.Generator.Sample\MLib3.MVVM.Navigation.Generator.Sample.csproj", "{E049A13C-560A-40F5-936D-A20132291621}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.MVVM.Navigation.SourceGenerated.Tests", "tests\MLib3.MVVM.Navigation.SourceGenerated.Tests\MLib3.MVVM.Navigation.SourceGenerated.Tests.csproj", "{ADDE2266-6C28-4E00-94F8-F39204306DA1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.MVVM.Navigation.Generator.Tests", "tests\MLib3.MVVM.Navigation.Generator.Tests\MLib3.MVVM.Navigation.Generator.Tests.csproj", "{ADDE2266-6C28-4E00-94F8-F39204306DA1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.MVVM.Navigation.SourceGenerated", "src\MLib3.MVVM.Navigation.SourceGenerated\MLib3.MVVM.Navigation.SourceGenerated.csproj", "{BFC221CF-6FA2-42C7-A272-C1279CCC1FDE}"
 EndProject
