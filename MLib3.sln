@@ -73,6 +73,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.MVVM.Navigation.Gener
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.MVVM.Navigation.SourceGenerated", "src\MLib3.MVVM.Navigation.SourceGenerated\MLib3.MVVM.Navigation.SourceGenerated.csproj", "{BFC221CF-6FA2-42C7-A272-C1279CCC1FDE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.MVVM.Navigation.UnitTests", "tests\MLib3.MVVM.Navigation.UnitTests\MLib3.MVVM.Navigation.UnitTests.csproj", "{7A61E070-28B3-435B-B74F-C41B0BFDE9C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -455,6 +457,18 @@ Global
 		{BFC221CF-6FA2-42C7-A272-C1279CCC1FDE}.Release|x64.Build.0 = Release|Any CPU
 		{BFC221CF-6FA2-42C7-A272-C1279CCC1FDE}.Release|x86.ActiveCfg = Release|Any CPU
 		{BFC221CF-6FA2-42C7-A272-C1279CCC1FDE}.Release|x86.Build.0 = Release|Any CPU
+		{7A61E070-28B3-435B-B74F-C41B0BFDE9C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A61E070-28B3-435B-B74F-C41B0BFDE9C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A61E070-28B3-435B-B74F-C41B0BFDE9C2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7A61E070-28B3-435B-B74F-C41B0BFDE9C2}.Debug|x64.Build.0 = Debug|Any CPU
+		{7A61E070-28B3-435B-B74F-C41B0BFDE9C2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7A61E070-28B3-435B-B74F-C41B0BFDE9C2}.Debug|x86.Build.0 = Debug|Any CPU
+		{7A61E070-28B3-435B-B74F-C41B0BFDE9C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A61E070-28B3-435B-B74F-C41B0BFDE9C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A61E070-28B3-435B-B74F-C41B0BFDE9C2}.Release|x64.ActiveCfg = Release|Any CPU
+		{7A61E070-28B3-435B-B74F-C41B0BFDE9C2}.Release|x64.Build.0 = Release|Any CPU
+		{7A61E070-28B3-435B-B74F-C41B0BFDE9C2}.Release|x86.ActiveCfg = Release|Any CPU
+		{7A61E070-28B3-435B-B74F-C41B0BFDE9C2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -492,5 +506,6 @@ Global
 		{E049A13C-560A-40F5-936D-A20132291621} = {DCE20467-1952-4C22-B2A4-4A1145AF5B89}
 		{ADDE2266-6C28-4E00-94F8-F39204306DA1} = {7D70D635-7644-447C-A7FB-58293833BB8C}
 		{BFC221CF-6FA2-42C7-A272-C1279CCC1FDE} = {DCE20467-1952-4C22-B2A4-4A1145AF5B89}
+		{7A61E070-28B3-435B-B74F-C41B0BFDE9C2} = {7D70D635-7644-447C-A7FB-58293833BB8C}
 	EndGlobalSection
 EndGlobal
