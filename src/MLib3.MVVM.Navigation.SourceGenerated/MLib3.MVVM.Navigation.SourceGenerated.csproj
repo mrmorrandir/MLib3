@@ -1,8 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+
         <Title>MLib3.MVVM.Navigation</Title>
         <Authors>Andreas Naumann</Authors>
         <Description>A library for view model based navigation in WPF applicaitons</Description>
@@ -14,24 +15,8 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Version>2.4.0</Version>
         <PackageTags>MVVM;Navigation;ViewModels</PackageTags>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-        <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+        <TargetFrameworks>net10.0;net8.0</TargetFrameworks>
     </PropertyGroup>
-
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\MLib3.MVVM.Navigation.xml</DocumentationFile>
-    </PropertyGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\MLib3.MVVM.Abstractions\MLib3.MVVM.Abstractions.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="FluentResults" Version="4.0.0" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.9" />
-      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.7" />
-      <PackageReference Include="System.Reactive" Version="6.1.0" />
-    </ItemGroup>
 
     <ItemGroup>
       <None Include="..\..\assets\icon.png">
@@ -39,10 +24,14 @@
         <PackagePath></PackagePath>
         <Link>icon.png</Link>
       </None>
-      <None Include="README.md">
-        <Pack>True</Pack>
-        <PackagePath></PackagePath>
-      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MLib3.MVVM.Navigation" Version="2.4.0" />
+        <PackageReference Include="MLib3.MVVM.Navigation.Generator" 
+                          Version="2.4.0" 
+                          OutputItemType="Analyzer"
+                          ReferenceOutputAssembly="false" />
     </ItemGroup>
 
 </Project>

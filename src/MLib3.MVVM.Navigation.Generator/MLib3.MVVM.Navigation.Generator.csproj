@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <IsPackable>true</IsPackable>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
+
+        <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+        <IsRoslynComponent>true</IsRoslynComponent>
+        <PackageId>MLib3.MVVM.Navigation.Generator</PackageId>
+
+        <Title>MLib3.MVVM.Navigation.Generator</Title>
+        <Authors>Andreas Naumann</Authors>
+        <Description>A source generator library for view model based navigation in WPF applications, that creates NavigatorExtensions for existing ViewModels.</Description>
+        <Copyright>2026 @ Andreas Naumann</Copyright>
+        <PackageIcon>icon.png</PackageIcon>
+        <PackageProjectUrl>https://github.com/mrmorrandir/MLib3</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <!-- Build-Output is not included, because the source generator is not needed at runtime, only at compile time.-->
+        <!-- Therefore the output must go to the analyzers/dotnet/cs folder of the NuGet package, so that the compiler can find it. (see below)-->
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <Version>2.4.0</Version>
+        <PackageTags>MVVM;Navigation;ViewModels</PackageTags>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4">
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.0">
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+    
+    <!-- Analyzer-Ouptut must be in the analyzers/dotnet/cs folder of the NuGet package, 
+         so we need to include the output DLL in the package with the correct path.-->
+    <ItemGroup>
+        <None Include="$(OutputPath)\$(AssemblyName).dll"
+              Pack="true"
+              PackagePath="analyzers/dotnet/cs" />
+        <None Include="..\..\assets\icon.png">
+          <Pack>True</Pack>
+          <PackagePath></PackagePath>
+          <Link>icon.png</Link>
+        </None>
+    </ItemGroup>
+
+
+
+</Project>
