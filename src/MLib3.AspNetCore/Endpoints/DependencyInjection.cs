@@ -1,11 +1,11 @@
 ﻿using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.FileProviders;
+using MLib3.AspNetCore;
 
-namespace MLib3.AspNetCore;
+// ReSharper disable once CheckNamespace
+namespace Microsoft.Extensions.DependencyInjection;
 
-public static class DependencyInjection
+public static partial class DependencyInjection
 {
     /// <summary>
     /// Registers all implementations of the <see cref="IEndpoint"/> interface from the provided assemblies
