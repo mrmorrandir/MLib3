@@ -18,6 +18,10 @@
         <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\MLib3.MVVM.Navigation.xml</DocumentationFile>
+    </PropertyGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\MLib3.MVVM.Abstractions\MLib3.MVVM.Abstractions.csproj" />
     </ItemGroup>
