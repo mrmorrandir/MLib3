@@ -19,16 +19,19 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MLib3.MVVM.Navigation.Generator\MLib3.MVVM.Navigation.Generator.csproj" />
-      <ProjectReference Include="..\MLib3.MVVM.Navigation\MLib3.MVVM.Navigation.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <None Include="..\..\assets\icon.png">
         <Pack>True</Pack>
         <PackagePath></PackagePath>
         <Link>icon.png</Link>
       </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MLib3.MVVM.Navigation" Version="2.4.0" />
+        <PackageReference Include="MLib3.MVVM.Navigation.Generator" 
+                          Version="2.4.0" 
+                          OutputItemType="Analyzer"
+                          ReferenceOutputAssembly="false" />
     </ItemGroup>
 
 </Project>
