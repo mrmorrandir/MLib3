@@ -13,7 +13,7 @@
         <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>2.3.0</Version>
+        <Version>2.4.0</Version>
         <PackageTags>MVVM;Navigation;ViewModels</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
@@ -23,6 +23,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="FluentResults" Version="4.0.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.9" />
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.7" />
       <PackageReference Include="System.Reactive" Version="6.1.0" />
     </ItemGroup>
