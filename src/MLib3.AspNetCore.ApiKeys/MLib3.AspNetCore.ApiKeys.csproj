@@ -2,12 +2,25 @@
 
     <PropertyGroup>
         <TargetFramework>net10.0</TargetFramework>
-        <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <OutputType>Library</OutputType>
+        <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Version>1.0.0</Version>
+        <Title>MLib3.AspNetCore.ApiKeys</Title>
+        <Authors>Andreas Naumann</Authors>
+        <Description>A library providing ApiKey support for AspNetCore APIs (MinimalAPI).</Description>
+        <Copyright>2026 @ Andreas Naumann</Copyright>
+        <PackageProjectUrl>https://github.com/mrmorrandir/MLib3</PackageProjectUrl>
+        <PackageIcon>icon.png</PackageIcon>
+        <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>AspNetCore;MinimalAPI;API;FluentResults</PackageTags>
+        <OutputType>Library</OutputType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\MLib3.AspNetCore.ApiKeys.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -16,6 +29,11 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Include="..\..\assets\icon.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+        <Link>icon.png</Link>
+      </None>
       <None Include="README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
 
