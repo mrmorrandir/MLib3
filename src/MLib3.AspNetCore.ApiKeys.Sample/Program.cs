@@ -1,7 +1,8 @@
 using MLib3.AspNetCore.ApiKeys;
+using MLib3.AspNetCore.DockerCompose;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.AddDockerComposeSecrets();
 builder.Services
         .AddAuthentication()
         .AddApiKeyAuthentication(storeOptions =>
