@@ -4,10 +4,31 @@
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <IsPackable>true</IsPackable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Version>1.0.0</Version>
+        <Title>MLib3.AspNetCore.Clients</Title>
+        <Authors>Andreas Naumann</Authors>
+        <Description>A library providing helpfull classes for AspNetCore APIs clients (using the MLib3.AspNetCore library).</Description>
+        <Copyright>2026 @ Andreas Naumann</Copyright>
+        <PackageProjectUrl>https://github.com/mrmorrandir/MLib3</PackageProjectUrl>
+        <PackageIcon>icon.png</PackageIcon>
+        <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>AspNetCore;MinimalAPI;API;FluentResults;Clients</PackageTags>
+        <OutputType>Library</OutputType>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="FluentResults" Version="4.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\assets\icon.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+        <Link>icon.png</Link>
+      </None>
     </ItemGroup>
 
 </Project>

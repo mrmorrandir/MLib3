@@ -6,6 +6,7 @@
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Version>1.0.0</Version>
         <Title>MLib3.AspNetCore</Title>
         <Authors>Andreas Naumann</Authors>
         <Description>A library providing helpfull classes for AspNetCore APIs (MinimalAPI).</Description>
