@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <OutputType>Library</OutputType>
-        <Version>2.1.0</Version>
+        <Version>2.2.0</Version>
         <Title>MLib3.AspNetCore.DockerCompose</Title>
         <Authors>Andreas Naumann</Authors>
         <Description>Simple extensions to read docker compose secrets (in json format) into the configuration.</Description>
@@ -16,6 +16,7 @@
         <PackageProjectUrl>https://github.com/mrmorrandir/MLib3</PackageProjectUrl>
         <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>MLib3;AspNetCore</PackageTags>
         <PackageReleaseNotes></PackageReleaseNotes>
     </PropertyGroup>
@@ -26,6 +27,7 @@
             <PackagePath></PackagePath>
             <Link>icon.png</Link>
         </None>
+        <None Include="README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
 
     <ItemGroup>
