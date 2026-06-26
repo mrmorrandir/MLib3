@@ -69,4 +69,11 @@ public sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<ApiKeyAu
         Response.StatusCode = StatusCodes.Status401Unauthorized;
         return Task.CompletedTask;
     }
+
+    /// <inheritdoc />
+    protected override Task HandleForbiddenAsync(AuthenticationProperties properties)
+    {
+        Response.StatusCode = StatusCodes.Status403Forbidden;
+        return Task.CompletedTask;
+    }
 }

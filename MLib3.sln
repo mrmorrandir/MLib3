@@ -79,6 +79,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.AspNetCore.ApiKeys.Sa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.AspNetCore.DockerCompose.UnitTests", "tests\MLib3.AspNetCore.DockerCompose.UnitTests\MLib3.AspNetCore.DockerCompose.UnitTests.csproj", "{04373B26-E82C-4744-82FD-A8739A09902B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.AspNetCore.ApiKeys.UnitTests", "tests\MLib3.AspNetCore.ApiKeys.UnitTests\MLib3.AspNetCore.ApiKeys.UnitTests.csproj", "{640A5B16-3347-4807-B7A0-051C705D90F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -497,6 +499,18 @@ Global
 		{04373B26-E82C-4744-82FD-A8739A09902B}.Release|x64.Build.0 = Release|Any CPU
 		{04373B26-E82C-4744-82FD-A8739A09902B}.Release|x86.ActiveCfg = Release|Any CPU
 		{04373B26-E82C-4744-82FD-A8739A09902B}.Release|x86.Build.0 = Release|Any CPU
+		{640A5B16-3347-4807-B7A0-051C705D90F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{640A5B16-3347-4807-B7A0-051C705D90F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{640A5B16-3347-4807-B7A0-051C705D90F0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{640A5B16-3347-4807-B7A0-051C705D90F0}.Debug|x64.Build.0 = Debug|Any CPU
+		{640A5B16-3347-4807-B7A0-051C705D90F0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{640A5B16-3347-4807-B7A0-051C705D90F0}.Debug|x86.Build.0 = Debug|Any CPU
+		{640A5B16-3347-4807-B7A0-051C705D90F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{640A5B16-3347-4807-B7A0-051C705D90F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{640A5B16-3347-4807-B7A0-051C705D90F0}.Release|x64.ActiveCfg = Release|Any CPU
+		{640A5B16-3347-4807-B7A0-051C705D90F0}.Release|x64.Build.0 = Release|Any CPU
+		{640A5B16-3347-4807-B7A0-051C705D90F0}.Release|x86.ActiveCfg = Release|Any CPU
+		{640A5B16-3347-4807-B7A0-051C705D90F0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -537,5 +551,6 @@ Global
 		{98280DD6-775D-40CD-BE21-B5855BAFFC38} = {DCE20467-1952-4C22-B2A4-4A1145AF5B89}
 		{325D48A6-0DEE-49A9-B57F-48A81BA623CA} = {DCE20467-1952-4C22-B2A4-4A1145AF5B89}
 		{04373B26-E82C-4744-82FD-A8739A09902B} = {7D70D635-7644-447C-A7FB-58293833BB8C}
+		{640A5B16-3347-4807-B7A0-051C705D90F0} = {7D70D635-7644-447C-A7FB-58293833BB8C}
 	EndGlobalSection
 EndGlobal
