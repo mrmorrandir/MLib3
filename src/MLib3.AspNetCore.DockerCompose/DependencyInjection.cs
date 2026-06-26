@@ -1,9 +1,9 @@
-using System.Text.Json;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.IO.Abstractions;
 
 namespace MLib3.AspNetCore.DockerCompose;
 
@@ -83,46 +83,14 @@ public static class DependencyInjection
         string secretsPath = _defaultSecretsPath,
         Action<DockerComposeSecretLoadProblem>? logProblem = null)
     {
-        var directoryInfo = new DirectoryInfo(secretsPath);
-        if (!directoryInfo.Exists)
-            return configuration;
+        var loader = new DockerComposeSecretsConfigurationLoader(new FileSystem());
+        var problems = loader.AddDockerComposeSecrets(configuration, secretsPath);
 
-        var secretFiles = directoryInfo.GetFiles().OrderBy(x => x.Name).ToList();
-        foreach (var file in secretFiles)
-        {
-            try
-            {
-                using var stream = file.OpenRead();
-                using var doc = JsonDocument.Parse(stream);
-            }
-            catch (JsonException exception)
-            {
-                if (ShouldReportInvalidJsonSecret(file))
-                    logProblem?.Invoke(DockerComposeSecretLoadProblem.FromJsonException(file, exception));
-
-                continue;
-            }
-
-            configuration.AddJsonFile(file.FullName);
-        }
+        foreach (var problem in problems)
+            logProblem?.Invoke(problem);
 
         configuration.AddEnvironmentVariables();
         return configuration;
-    }
-
-    private static bool ShouldReportInvalidJsonSecret(FileInfo file)
-    {
-        if (file.Extension.Equals(".json", StringComparison.OrdinalIgnoreCase))
-            return true;
-
-        using var stream = file.OpenRead();
-        int current;
-        do
-        {
-            current = stream.ReadByte();
-        } while (current is ' ' or '\t' or '\r' or '\n');
-
-        return current is '{' or '[';
     }
 
     private static void AddDockerComposeSecretsProblemLogging(
@@ -159,25 +127,5 @@ public static class DependencyInjection
         }
 
         public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
-    }
-}
-
-public sealed record DockerComposeSecretLoadProblem(
-    string FileName,
-    string FilePath,
-    string Reason,
-    JsonException Exception)
-{
-    internal static DockerComposeSecretLoadProblem FromJsonException(FileInfo file, JsonException exception)
-    {
-        var location = exception.LineNumber is not null || exception.BytePositionInLine is not null
-            ? $" Line: {exception.LineNumber?.ToString() ?? "unknown"}, byte position in line: {exception.BytePositionInLine?.ToString() ?? "unknown"}."
-            : string.Empty;
-
-        return new DockerComposeSecretLoadProblem(
-            file.Name,
-            file.FullName,
-            $"{exception.Message}{location}",
-            exception);
     }
 }

@@ -77,6 +77,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.AspNetCore.ApiKeys", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.AspNetCore.ApiKeys.Sample", "src\MLib3.AspNetCore.ApiKeys.Sample\MLib3.AspNetCore.ApiKeys.Sample.csproj", "{325D48A6-0DEE-49A9-B57F-48A81BA623CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLib3.AspNetCore.DockerCompose.UnitTests", "tests\MLib3.AspNetCore.DockerCompose.UnitTests\MLib3.AspNetCore.DockerCompose.UnitTests.csproj", "{04373B26-E82C-4744-82FD-A8739A09902B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -483,6 +485,18 @@ Global
 		{325D48A6-0DEE-49A9-B57F-48A81BA623CA}.Release|x64.Build.0 = Release|Any CPU
 		{325D48A6-0DEE-49A9-B57F-48A81BA623CA}.Release|x86.ActiveCfg = Release|Any CPU
 		{325D48A6-0DEE-49A9-B57F-48A81BA623CA}.Release|x86.Build.0 = Release|Any CPU
+		{04373B26-E82C-4744-82FD-A8739A09902B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04373B26-E82C-4744-82FD-A8739A09902B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04373B26-E82C-4744-82FD-A8739A09902B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{04373B26-E82C-4744-82FD-A8739A09902B}.Debug|x64.Build.0 = Debug|Any CPU
+		{04373B26-E82C-4744-82FD-A8739A09902B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{04373B26-E82C-4744-82FD-A8739A09902B}.Debug|x86.Build.0 = Debug|Any CPU
+		{04373B26-E82C-4744-82FD-A8739A09902B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04373B26-E82C-4744-82FD-A8739A09902B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04373B26-E82C-4744-82FD-A8739A09902B}.Release|x64.ActiveCfg = Release|Any CPU
+		{04373B26-E82C-4744-82FD-A8739A09902B}.Release|x64.Build.0 = Release|Any CPU
+		{04373B26-E82C-4744-82FD-A8739A09902B}.Release|x86.ActiveCfg = Release|Any CPU
+		{04373B26-E82C-4744-82FD-A8739A09902B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -522,5 +536,6 @@ Global
 		{9E9E1D5E-A637-46BE-84D4-137CA33D180D} = {DCE20467-1952-4C22-B2A4-4A1145AF5B89}
 		{98280DD6-775D-40CD-BE21-B5855BAFFC38} = {DCE20467-1952-4C22-B2A4-4A1145AF5B89}
 		{325D48A6-0DEE-49A9-B57F-48A81BA623CA} = {DCE20467-1952-4C22-B2A4-4A1145AF5B89}
+		{04373B26-E82C-4744-82FD-A8739A09902B} = {7D70D635-7644-447C-A7FB-58293833BB8C}
 	EndGlobalSection
 EndGlobal
