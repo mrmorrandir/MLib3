@@ -7,7 +7,10 @@ namespace MLib3.AspNetCore.DockerCompose.UnitTests;
 
 public class DockerComposeSecretsConfigurationLoaderTests
 {
-    private const string SecretsPath = @"C:\run\secrets";
+    private static readonly string SecretsPath = Path.Combine(
+        Path.GetTempPath(),
+        "MLib3.AspNetCore.DockerCompose.UnitTests",
+        "secrets");
 
     [Fact]
     public void AddDockerComposeSecrets_WhenDirectoryDoesNotExist_ReturnsNoProblems()
