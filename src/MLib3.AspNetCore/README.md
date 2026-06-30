@@ -226,7 +226,7 @@ Implement `IApiLogHandler` to process captured API logs. A handler can write log
 another system, or apply application-specific filtering and enrichment.
 
 ```csharp
-using MLib3.AspNetCore.Logging;
+using MLib3.AspNetCore;
 
 public sealed class DatabaseApiLogHandler : IApiLogHandler
 {
@@ -247,6 +247,66 @@ builder.Services.AddApiLogHandler<DatabaseApiLogHandler>();
 Multiple handlers can be registered. They are called in registration order. If no handler is registered, the
 middleware still logs through `ILogger<ApiLoggingMiddleware>` and dispatching to handlers is a no-op. If a handler
 throws an exception, the exception is logged and the request pipeline continues.
+
+Handlers run during request processing. For slow database access or high traffic, asynchronous processing can be
+useful: the handler can enqueue `ApiLog` entries quickly, while a hosted background service persists them later.
+
+```csharp
+using System.Threading.Channels;
+using MLib3.AspNetCore;
+
+public sealed class QueuedApiLogHandler : IApiLogHandler
+{
+    private readonly ChannelWriter<ApiLog> _writer;
+
+    public QueuedApiLogHandler(ChannelWriter<ApiLog> writer)
+    {
+        _writer = writer;
+    }
+
+    public async Task HandleAsync(ApiLog log, CancellationToken cancellationToken = default)
+    {
+        await _writer.WriteAsync(log, cancellationToken);
+    }
+}
+
+public sealed class ApiLogBackgroundWorker : BackgroundService
+{
+    private readonly ChannelReader<ApiLog> _reader;
+    private readonly IServiceScopeFactory _scopeFactory;
+
+    public ApiLogBackgroundWorker(ChannelReader<ApiLog> reader, IServiceScopeFactory scopeFactory)
+    {
+        _reader = reader;
+        _scopeFactory = scopeFactory;
+    }
+
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        await foreach (var log in _reader.ReadAllAsync(stoppingToken))
+        {
+            using var scope = _scopeFactory.CreateScope();
+
+            // Resolve a scoped DbContext or repository here and persist the ApiLog.
+        }
+    }
+}
+```
+
+Register the queue, handler, and worker in the application:
+
+```csharp
+using System.Threading.Channels;
+using MLib3.AspNetCore;
+
+builder.Services.AddSingleton(Channel.CreateBounded<ApiLog>(1000));
+builder.Services.AddSingleton(sp => sp.GetRequiredService<Channel<ApiLog>>().Reader);
+builder.Services.AddSingleton(sp => sp.GetRequiredService<Channel<ApiLog>>().Writer);
+
+builder.Services.AddApiLoggingMiddleware();
+builder.Services.AddApiLogHandler<QueuedApiLogHandler>();
+builder.Services.AddHostedService<ApiLogBackgroundWorker>();
+```
 
 ## Integration with Mediator
 
