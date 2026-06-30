@@ -1,4 +1,4 @@
-﻿namespace MLib3.AspNetCore;
+﻿namespace MLib3.AspNetCore.Exceptions;
 
 /// <summary>
 /// Middleware for handling exceptions in the HTTP request pipeline.
@@ -15,12 +15,26 @@ public class ExceptionHandlingMiddleware
     private readonly ILogger<ExceptionHandlingMiddleware> _logger;
     private readonly RequestDelegate _next;
 
+    /// <summary>
+    /// Middleware for handling unhandled exceptions in the HTTP request pipeline.
+    /// </summary>
+    /// <remarks>
+    /// This middleware intercepts unhandled exceptions that occur during request processing,
+    /// logs detailed information about the exception, and sends a structured error response
+    /// to the client. It ensures a consistent and meaningful error-handling experience while
+    /// preventing the application from crashing on runtime exceptions.
+    /// </remarks>
     public ExceptionHandlingMiddleware(ILogger<ExceptionHandlingMiddleware> logger, RequestDelegate next)
     {
         _logger = logger;
         _next = next;
     }
-    
+
+    /// <summary>
+    /// Handles HTTP requests and catches unhandled exceptions that occur during the request pipeline processing.
+    /// </summary>
+    /// <param name="context">The HTTP context for the current request.</param>
+    /// <returns>A task that represents the completion of request processing. If an unhandled exception occurs, it logs the exception and constructs a standardized error response.</returns>
     public async Task InvokeAsync(HttpContext context)
     {
         try

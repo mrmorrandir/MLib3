@@ -3,7 +3,7 @@
   "profiles": {
     "DebugRoslynSourceGenerator": {
       "commandName": "DebugRoslynComponent",
-      "targetProject": "../MLib3.MVVM.Navigation.SourceGenerated.Sample/MLib3.MVVM.Navigation.SourceGenerated.Sample.csproj"
+      "targetProject": "../MLib3.MVVM.Navigation.Generator.Sample/MLib3.MVVM.Navigation.Generator.Sample.csproj"
     }
   }
 }
