@@ -27,11 +27,16 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="MLib3.MVVM.Navigation" Version="2.4.0" />
-        <PackageReference Include="MLib3.MVVM.Navigation.Generator" 
-                          Version="2.4.0" 
+        <ProjectReference Include="..\MLib3.MVVM.Navigation\MLib3.MVVM.Navigation.csproj" />
+        <ProjectReference Include="..\MLib3.MVVM.Navigation.Generator\MLib3.MVVM.Navigation.Generator.csproj"
                           OutputItemType="Analyzer"
                           ReferenceOutputAssembly="false" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\MLib3.MVVM.Navigation.Generator\bin\$(Configuration)\netstandard2.0\MLib3.MVVM.Navigation.Generator.dll"
+              Pack="true"
+              PackagePath="analyzers/dotnet/cs" />
     </ItemGroup>
 
 </Project>
