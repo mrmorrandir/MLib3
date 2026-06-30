@@ -1,4 +1,4 @@
-﻿using MLib3.AspNetCore.Logging;
+﻿using MLib3.AspNetCore;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;

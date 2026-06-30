@@ -1,4 +1,4 @@
-﻿namespace MLib3.AspNetCore.Exceptions;
+﻿namespace MLib3.AspNetCore;
 
 /// <summary>
 /// Middleware for handling exceptions in the HTTP request pipeline.

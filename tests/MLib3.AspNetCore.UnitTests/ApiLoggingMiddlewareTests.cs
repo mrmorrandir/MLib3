@@ -3,7 +3,6 @@ using AwesomeAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using MLib3.AspNetCore.Logging;
 
 namespace MLib3.AspNetCore.UnitTests;
 

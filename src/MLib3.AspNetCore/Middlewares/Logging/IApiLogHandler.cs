@@ -1,4 +1,4 @@
-namespace MLib3.AspNetCore.Logging;
+namespace MLib3.AspNetCore;
 
 /// <summary>
 /// Handles API log entries created by <see cref="ApiLoggingMiddleware"/>.

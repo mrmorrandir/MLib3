@@ -1,4 +1,4 @@
-﻿namespace MLib3.AspNetCore.Logging;
+﻿namespace MLib3.AspNetCore;
 
 /// <summary>
 /// A builder class for constructing and configuring instances of <see cref="ApiLoggingOptions"/>.
@@ -28,9 +28,9 @@ public class ApiLoggingOptionsBuilder
     /// </remarks>
     public ApiLoggingOptionsBuilder WithExcludePaths(params string[] excludedPaths)
     {
-        var paths = _options.ExcludedPaths?.ToList();
-        paths?.AddRange(excludedPaths);
-        _options.ExcludedPaths = paths?.ToArray();
+        var paths = _options.ExcludedPaths?.ToList() ?? [];
+        paths.AddRange(excludedPaths);
+        _options.ExcludedPaths = paths.ToArray();
         return this;
     }
 
@@ -47,9 +47,9 @@ public class ApiLoggingOptionsBuilder
     /// </remarks>
     public ApiLoggingOptionsBuilder WithExcludedFiles(params string[] excludedFiles)
     {
-        var files = _options.ExcludedFiles?.ToList();
-        files?.AddRange(excludedFiles);
-        _options.ExcludedFiles = files?.ToArray();
+        var files = _options.ExcludedFiles?.ToList() ?? [];
+        files.AddRange(excludedFiles);
+        _options.ExcludedFiles = files.ToArray();
         return this;
     }
 

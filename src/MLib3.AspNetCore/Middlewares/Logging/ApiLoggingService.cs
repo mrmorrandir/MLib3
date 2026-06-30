@@ -1,4 +1,4 @@
-namespace MLib3.AspNetCore.Logging;
+namespace MLib3.AspNetCore;
 
 /// <summary>
 /// Default implementation of <see cref="IApiLoggingService"/> that dispatches captured API logs to registered handlers.

@@ -1,4 +1,4 @@
-namespace MLib3.AspNetCore.Logging;
+namespace MLib3.AspNetCore;
 
 /// <summary>
 /// Represents a log entry for an API request and response.

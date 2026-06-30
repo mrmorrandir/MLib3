@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Options;
 
-namespace MLib3.AspNetCore.Logging;
+namespace MLib3.AspNetCore;
 
 /// <summary>
 /// Middleware for logging HTTP requests and responses within the application.

@@ -1,4 +1,4 @@
-﻿namespace MLib3.AspNetCore.Logging;
+﻿namespace MLib3.AspNetCore;
 
 /// <summary>
 /// Represents configuration options for logging specific to API requests.
