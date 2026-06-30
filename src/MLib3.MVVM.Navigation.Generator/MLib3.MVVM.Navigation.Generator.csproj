@@ -22,7 +22,7 @@
         <!-- Build-Output is not included, because the source generator is not needed at runtime, only at compile time.-->
         <!-- Therefore the output must go to the analyzers/dotnet/cs folder of the NuGet package, so that the compiler can find it. (see below)-->
         <IncludeBuildOutput>false</IncludeBuildOutput>
-        <Version>2.4.0</Version>
+        <Version>2.5.0</Version>
         <PackageTags>MVVM;Navigation;ViewModels</PackageTags>
     </PropertyGroup>
 
