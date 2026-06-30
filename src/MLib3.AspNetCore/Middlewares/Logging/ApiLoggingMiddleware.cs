@@ -18,6 +18,7 @@ public class ApiLoggingMiddleware : IMiddleware
     private readonly Regex[] _excludedFileRegexes;
     
     private readonly ILogger<ApiLoggingMiddleware> _logger;
+    private readonly IApiLoggingService _apiLoggingService;
 
     /// <summary>
     /// Middleware for logging HTTP requests and responses within the application.
@@ -27,13 +28,17 @@ public class ApiLoggingMiddleware : IMiddleware
     /// and outgoing responses for debugging and auditing purposes. It supports
     /// configuration to exclude specific paths from logging via the provided options.
     /// </remarks>
-    public ApiLoggingMiddleware(ILogger<ApiLoggingMiddleware> logger, IOptions<ApiLoggingOptions> options)
+    public ApiLoggingMiddleware(
+        ILogger<ApiLoggingMiddleware> logger,
+        IApiLoggingService apiLoggingService,
+        IOptions<ApiLoggingOptions> options)
     {
         _logger = logger;
-        _excludedPaths = options.Value.ExcludedPaths ?? Array.Empty<string>();
+        _apiLoggingService = apiLoggingService;
+        _excludedPaths = options.Value.ExcludedPaths ?? [];
         // Convert wildcard patterns to Regex
         // "hallo*.js" -> "^hallo.*\.js$"
-        _excludedFileRegexes = (options.Value.ExcludedFiles ?? Array.Empty<string>())
+        _excludedFileRegexes = (options.Value.ExcludedFiles ?? [])
             .Select(pattern => new Regex("^" + Regex.Escape(pattern).Replace("\\*", ".*") + "$", RegexOptions.IgnoreCase | RegexOptions.Compiled))
             .ToArray();
     }
@@ -101,6 +106,7 @@ public class ApiLoggingMiddleware : IMiddleware
         };
         
         _logger.LogInformation("API {Method} {Path} responded {StatusCode} in {Duration}ms - Request: {RequestJson} Response: {Response}", log.Method, log.Path, log.StatusCode, log.DurationMilliseconds, log.RequestJson, log.ResponseJson);
+        await _apiLoggingService.LogAsync(log, httpContext.RequestAborted);
 
         await responseBody.CopyToAsync(originalBodyStream);
     }

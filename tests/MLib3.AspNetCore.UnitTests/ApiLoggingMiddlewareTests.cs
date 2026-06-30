@@ -13,8 +13,10 @@ public class ApiLoggingMiddlewareTests
     public async Task InvokeAsync_WhenEnabled_LogsRequestAndResponseDetails()
     {
         var logger = new CapturingLogger<ApiLoggingMiddleware>();
+        var apiLoggingService = new CapturingApiLoggingService();
         var middleware = new ApiLoggingMiddleware(
             logger,
+            apiLoggingService,
             Options.Create(new ApiLoggingOptions()));
         var context = CreateContext("""{"name":"Ada","age":37}""", "/api/users", "?include=details");
         var originalResponseBody = context.Response.Body;
@@ -44,6 +46,16 @@ public class ApiLoggingMiddlewareTests
         entry.Properties["{OriginalFormat}"].Should().Be(
             "API {Method} {Path} responded {StatusCode} in {Duration}ms - Request: {RequestJson} Response: {Response}");
 
+        apiLoggingService.Logs.Should().ContainSingle();
+        var apiLog = apiLoggingService.Logs.Single();
+        apiLog.Method.Should().Be("POST");
+        apiLog.Path.Should().Be("/api/users");
+        apiLog.QueryString.Should().Be("?include=details");
+        apiLog.RequestJson.Should().Be("""{"name":"Ada","age":37}""");
+        apiLog.ResponseJson.Should().Be("""{"id":42,"created":true}""");
+        apiLog.StatusCode.Should().Be(StatusCodes.Status201Created);
+        apiLog.DurationMilliseconds.Should().BeGreaterThanOrEqualTo(0);
+
         originalResponseBody.Position = 0;
         var responseBody = await new StreamReader(originalResponseBody).ReadToEndAsync();
         responseBody.Should().Be("""{"id":42,"created":true}""");
@@ -53,8 +65,10 @@ public class ApiLoggingMiddlewareTests
     public async Task InvokeAsync_WhenLogLevelIsNone_DoesNotLog()
     {
         var logger = new CapturingLogger<ApiLoggingMiddleware>(LogLevel.None);
+        var apiLoggingService = new CapturingApiLoggingService();
         var middleware = new ApiLoggingMiddleware(
             logger,
+            apiLoggingService,
             Options.Create(new ApiLoggingOptions()));
         var context = CreateContext("", "/api/silent", "");
         context.Request.Method = HttpMethods.Get;
@@ -67,14 +81,17 @@ public class ApiLoggingMiddlewareTests
             });
 
         logger.Entries.Should().BeEmpty();
+        apiLoggingService.Logs.Should().BeEmpty();
     }
 
     [Fact]
     public async Task InvokeAsync_WhenPathIsExcluded_DoesNotLog()
     {
         var logger = new CapturingLogger<ApiLoggingMiddleware>();
+        var apiLoggingService = new CapturingApiLoggingService();
         var middleware = new ApiLoggingMiddleware(
             logger,
+            apiLoggingService,
             Options.Create(new ApiLoggingOptions
             {
                 ExcludedPaths = ["/api/internal"]
@@ -90,6 +107,7 @@ public class ApiLoggingMiddlewareTests
             });
 
         logger.Entries.Should().BeEmpty();
+        apiLoggingService.Logs.Should().BeEmpty();
 
         context.Response.Body.Position = 0;
         var responseBody = await new StreamReader(context.Response.Body).ReadToEndAsync();
@@ -101,8 +119,10 @@ public class ApiLoggingMiddlewareTests
     public async Task InvokeAsync_WhenFileIsExcluded_DoesNotLog()
     {
         var logger = new CapturingLogger<ApiLoggingMiddleware>();
+        var apiLoggingService = new CapturingApiLoggingService();
         var middleware = new ApiLoggingMiddleware(
             logger,
+            apiLoggingService,
             Options.Create(new ApiLoggingOptions
             {
                 ExcludedFiles = ["/assets/hallo*.JS"]
@@ -118,10 +138,22 @@ public class ApiLoggingMiddlewareTests
             });
 
         logger.Entries.Should().BeEmpty();
+        apiLoggingService.Logs.Should().BeEmpty();
 
         context.Response.Body.Position = 0;
         var responseBody = await new StreamReader(context.Response.Body).ReadToEndAsync();
         responseBody.Should().Be("Skipped file");
+    }
+
+    private sealed class CapturingApiLoggingService : IApiLoggingService
+    {
+        public List<ApiLog> Logs { get; } = [];
+
+        public Task LogAsync(ApiLog log, CancellationToken cancellationToken = default)
+        {
+            Logs.Add(log);
+            return Task.CompletedTask;
+        }
     }
 
     private static DefaultHttpContext CreateContext(string requestJson, string path, string queryString)

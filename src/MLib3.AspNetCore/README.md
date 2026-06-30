@@ -158,6 +158,96 @@ Example response:
 }
 ```
 
+#### ApiLoggingMiddleware
+
+`ApiLoggingMiddleware` captures API request and response details and logs them with `ILogger<ApiLoggingMiddleware>`.
+It can also dispatch the captured `ApiLog` entries to custom `IApiLogHandler` implementations so applications can
+enrich, forward, or persist API logs.
+
+Register and use the middleware during application startup:
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddApiLoggingMiddleware();
+
+var app = builder.Build();
+
+app.UseApiLoggingMiddleware();
+
+app.Run();
+```
+
+Captured `ApiLog` entries contain:
+
+- `Timestamp`
+- `Method`
+- `Path`
+- `QueryString`
+- `RequestJson`
+- `ResponseJson`
+- `StatusCode`
+- `DurationMilliseconds`
+
+##### Configuration
+
+The middleware can be configured through the `ApiLogging` configuration section.
+`ExcludedPaths` skips requests whose path starts with one of the configured values. Matching is case-insensitive.
+`ExcludedFiles` supports `*` wildcards and is also matched case-insensitively.
+
+```json
+{
+  "ApiLogging": {
+    "ExcludedPaths": [
+      "/health",
+      "/swagger"
+    ],
+    "ExcludedFiles": [
+      "/assets/*.js",
+      "/favicon.ico"
+    ]
+  }
+}
+```
+
+The same options can be configured in code:
+
+```csharp
+builder.Services.AddApiLoggingMiddleware(options =>
+{
+    options.WithExcludePaths("/health", "/swagger");
+    options.WithExcludedFiles("/assets/*.js", "/favicon.ico");
+});
+```
+
+##### Custom ApiLog Handlers
+
+Implement `IApiLogHandler` to process captured API logs. A handler can write logs to a database, forward them to
+another system, or apply application-specific filtering and enrichment.
+
+```csharp
+using MLib3.AspNetCore.Logging;
+
+public sealed class DatabaseApiLogHandler : IApiLogHandler
+{
+    public async Task HandleAsync(ApiLog log, CancellationToken cancellationToken = default)
+    {
+        // Persist or process the captured API log.
+    }
+}
+```
+
+Register the handler with the service collection:
+
+```csharp
+builder.Services.AddApiLoggingMiddleware();
+builder.Services.AddApiLogHandler<DatabaseApiLogHandler>();
+```
+
+Multiple handlers can be registered. They are called in registration order. If no handler is registered, the
+middleware still logs through `ILogger<ApiLoggingMiddleware>` and dispatching to handlers is a no-op. If a handler
+throws an exception, the exception is logged and the request pipeline continues.
+
 ## Integration with Mediator
 
 As mentioned in the code remarks, this library works exceptionally well with `Mediator.SourceGenerator` when commands and queries return `FluentResults`.

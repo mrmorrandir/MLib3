@@ -15,6 +15,7 @@
         <PackageIcon>icon.png</PackageIcon>
         <RepositoryUrl>https://github.com/mrmorrandir/MLib3</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>AspNetCore;MinimalAPI;API;FluentResults</PackageTags>
         <OutputType>Library</OutputType>
     </PropertyGroup>
@@ -25,7 +26,6 @@
 
     <ItemGroup>
       <PackageReference Include="FluentResults" Version="4.0.0" />
-      <PackageReference Include="System.Reactive" Version="6.1.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -34,6 +34,7 @@
         <PackagePath></PackagePath>
         <Link>icon.png</Link>
       </None>
+      <None Include="README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
 
 </Project>

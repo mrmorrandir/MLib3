@@ -24,6 +24,7 @@ public static partial class DependencyInjection
             .ValidateDataAnnotations()
             .ValidateOnStart();
         
+        services.AddScoped<IApiLoggingService, ApiLoggingService>();
         services.AddScoped<ApiLoggingMiddleware>();
         return services;
     }
@@ -44,11 +45,26 @@ public static partial class DependencyInjection
             .Configure(opts =>
             {
                 opts.ExcludedPaths = options.ExcludedPaths;
+                opts.ExcludedFiles = options.ExcludedFiles;
             })
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
+        services.AddScoped<IApiLoggingService, ApiLoggingService>();
         services.AddScoped<ApiLoggingMiddleware>();
+        return services;
+    }
+
+    /// <summary>
+    /// Registers an API log handler that receives captured <see cref="ApiLog"/> entries.
+    /// </summary>
+    /// <typeparam name="THandler">The handler implementation type.</typeparam>
+    /// <param name="services">The collection of service descriptors to which the handler will be added.</param>
+    /// <returns>The modified service collection with the handler registered.</returns>
+    public static IServiceCollection AddApiLogHandler<THandler>(this IServiceCollection services)
+        where THandler : class, IApiLogHandler
+    {
+        services.AddScoped<IApiLogHandler, THandler>();
         return services;
     }
 
