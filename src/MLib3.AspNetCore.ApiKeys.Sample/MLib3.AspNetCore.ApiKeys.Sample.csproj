@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MLib3.AspNetCore.ApiKeys\MLib3.AspNetCore.ApiKeys.csproj" />
+      <ProjectReference Include="..\MLib3.AspNetCore.DockerCompose\MLib3.AspNetCore.DockerCompose.csproj" />
+    </ItemGroup>
+
+</Project>
