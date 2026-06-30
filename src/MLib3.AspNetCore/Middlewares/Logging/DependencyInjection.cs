@@ -64,7 +64,36 @@ public static partial class DependencyInjection
     public static IServiceCollection AddApiLogHandler<THandler>(this IServiceCollection services)
         where THandler : class, IApiLogHandler
     {
-        services.AddScoped<IApiLogHandler, THandler>();
+        return services.AddApiLogHandler<THandler>(ServiceLifetime.Scoped);
+    }
+
+    /// <summary>
+    /// Registers an API log handler that receives captured <see cref="ApiLog"/> entries.
+    /// </summary>
+    /// <typeparam name="THandler">The handler implementation type.</typeparam>
+    /// <param name="services">The collection of service descriptors to which the handler will be added.</param>
+    /// <param name="lifetime">The lifetime used to register the handler.</param>
+    /// <returns>The modified service collection with the handler registered.</returns>
+    public static IServiceCollection AddApiLogHandler<THandler>(this IServiceCollection services, ServiceLifetime lifetime)
+        where THandler : class, IApiLogHandler
+    {
+        services.Add(new ServiceDescriptor(typeof(IApiLogHandler), typeof(THandler), lifetime));
+        return services;
+    }
+
+    /// <summary>
+    /// Registers an API log handler factory that receives captured <see cref="ApiLog"/> entries.
+    /// </summary>
+    /// <param name="services">The collection of service descriptors to which the handler will be added.</param>
+    /// <param name="implementationFactory">The factory used to create the handler implementation.</param>
+    /// <param name="lifetime">The lifetime used to register the handler. The default is scoped.</param>
+    /// <returns>The modified service collection with the handler registered.</returns>
+    public static IServiceCollection AddApiLogHandler(
+        this IServiceCollection services,
+        Func<IServiceProvider, IApiLogHandler> implementationFactory,
+        ServiceLifetime lifetime = ServiceLifetime.Scoped)
+    {
+        services.Add(new ServiceDescriptor(typeof(IApiLogHandler), implementationFactory, lifetime));
         return services;
     }
 

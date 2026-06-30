@@ -62,7 +62,44 @@ public class ApiLoggingDependencyInjectionTests
             .BeOfType<TestApiLogHandler>();
     }
 
+    [Fact]
+    public void AddApiLogHandler_WithLifetime_RegistersHandlerWithRequestedLifetime()
+    {
+        var services = new ServiceCollection();
+
+        services.AddApiLogHandler<TestApiLogHandler>(ServiceLifetime.Singleton);
+
+        services.Should().ContainSingle(descriptor =>
+            descriptor.ServiceType == typeof(IApiLogHandler)
+            && descriptor.ImplementationType == typeof(TestApiLogHandler)
+            && descriptor.Lifetime == ServiceLifetime.Singleton);
+    }
+
+    [Fact]
+    public void AddApiLogHandler_WithFactory_RegistersFactoryHandler()
+    {
+        var services = new ServiceCollection();
+
+        services.AddApiLogHandler(_ => new FactoryApiLogHandler("Factory"), ServiceLifetime.Transient);
+
+        services.Should().ContainSingle(descriptor =>
+            descriptor.ServiceType == typeof(IApiLogHandler)
+            && descriptor.ImplementationFactory != null
+            && descriptor.Lifetime == ServiceLifetime.Transient);
+
+        using var serviceProvider = services.BuildServiceProvider();
+        serviceProvider.GetRequiredService<IApiLogHandler>()
+            .Should()
+            .BeEquivalentTo(new FactoryApiLogHandler("Factory"));
+    }
+
     private sealed class TestApiLogHandler : IApiLogHandler
+    {
+        public Task HandleAsync(ApiLog log, CancellationToken cancellationToken = default) =>
+            Task.CompletedTask;
+    }
+
+    private sealed record FactoryApiLogHandler(string Name) : IApiLogHandler
     {
         public Task HandleAsync(ApiLog log, CancellationToken cancellationToken = default) =>
             Task.CompletedTask;

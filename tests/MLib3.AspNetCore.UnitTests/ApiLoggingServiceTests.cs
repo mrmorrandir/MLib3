@@ -67,7 +67,7 @@ public class ApiLoggingServiceTests
             new CapturedApiLog("Second", log));
 
         loggerProvider.Entries.Should().ContainSingle(entry =>
-            entry.CategoryName == "MLib3.AspNetCore.Logging.ApiLoggingService"
+            entry.CategoryName == "MLib3.AspNetCore.ApiLoggingService"
             && entry.LogLevel == LogLevel.Error
             && entry.Message == "API log handler MLib3.AspNetCore.UnitTests.ApiLoggingServiceTests+ThrowingApiLogHandler failed");
     }

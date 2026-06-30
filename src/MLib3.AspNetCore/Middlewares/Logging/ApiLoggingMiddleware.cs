@@ -77,37 +77,51 @@ public class ApiLoggingMiddleware : IMiddleware
         var requestBody = await new StreamReader(httpContext.Request.Body).ReadToEndAsync();
         httpContext.Request.Body.Position = 0;
 
+        // We need to give the httpContext.Response a new MemoryStream
+        // because the body is write-only (server to client) by default.
+        // Without the new MemoryStream we are not able to capture the response.
         var originalBodyStream = httpContext.Response.Body;
         using var responseBody = new MemoryStream();
         httpContext.Response.Body = responseBody;
         
         // Measure execution time
         var stopwatch = Stopwatch.StartNew();
-        // Execute the next middleware in the pipeline
-        await next(httpContext);
-        stopwatch.Stop();
-
-        // Read response body
-        httpContext.Response.Body.Seek(0, SeekOrigin.Begin);
-        var responseText = await new StreamReader(httpContext.Response.Body).ReadToEndAsync();
-        httpContext.Response.Body.Seek(0, SeekOrigin.Begin);
-        
-        // Log to database
-        var log = new ApiLog
+        try
         {
-            Timestamp = DateTime.UtcNow,
-            Method = httpContext.Request.Method,
-            Path = httpContext.Request.Path,
-            QueryString = httpContext.Request.QueryString.Value ?? "",
-            RequestJson = requestBody,
-            ResponseJson = responseText,
-            StatusCode = httpContext.Response.StatusCode,
-            DurationMilliseconds = stopwatch.ElapsedMilliseconds
-        };
-        
-        _logger.LogInformation("API {Method} {Path} responded {StatusCode} in {Duration}ms - Request: {RequestJson} Response: {Response}", log.Method, log.Path, log.StatusCode, log.DurationMilliseconds, log.RequestJson, log.ResponseJson);
-        await _apiLoggingService.LogAsync(log, httpContext.RequestAborted);
+            // Execute the next middleware in the pipeline
+            await next(httpContext);
+            stopwatch.Stop();
 
-        await responseBody.CopyToAsync(originalBodyStream);
+            // Read response body
+            responseBody.Seek(0, SeekOrigin.Begin);
+            var responseText = await new StreamReader(responseBody).ReadToEndAsync();
+            responseBody.Seek(0, SeekOrigin.Begin);
+
+            // Log to database
+            var log = new ApiLog
+            {
+                Timestamp = DateTime.UtcNow,
+                Method = httpContext.Request.Method,
+                Path = httpContext.Request.Path,
+                QueryString = httpContext.Request.QueryString.Value ?? "",
+                RequestJson = requestBody,
+                ResponseJson = responseText,
+                StatusCode = httpContext.Response.StatusCode,
+                DurationMilliseconds = stopwatch.ElapsedMilliseconds
+            };
+
+            _logger.LogInformation("API {Method} {Path} responded {StatusCode} in {Duration}ms - Request: {RequestJson} Response: {Response}", log.Method, log.Path, log.StatusCode, log.DurationMilliseconds, log.RequestJson, log.ResponseJson);
+            await _apiLoggingService.LogAsync(log, httpContext.RequestAborted);
+
+            await responseBody.CopyToAsync(originalBodyStream);
+        }
+        finally
+        {
+            // When running into an exception, we will return the 
+            // original stream so that a potential ExceptionHandlingMiddleware
+            // is able to write into a valid response stream
+            // (not the one we created, that might already be disposed)
+            httpContext.Response.Body = originalBodyStream;
+        }
     }
 }

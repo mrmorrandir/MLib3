@@ -55,6 +55,7 @@ public class ApiLoggingMiddlewareTests
         apiLog.StatusCode.Should().Be(StatusCodes.Status201Created);
         apiLog.DurationMilliseconds.Should().BeGreaterThanOrEqualTo(0);
 
+        context.Response.Body.Should().BeSameAs(originalResponseBody);
         originalResponseBody.Position = 0;
         var responseBody = await new StreamReader(originalResponseBody).ReadToEndAsync();
         responseBody.Should().Be("""{"id":42,"created":true}""");
@@ -142,6 +143,33 @@ public class ApiLoggingMiddlewareTests
         context.Response.Body.Position = 0;
         var responseBody = await new StreamReader(context.Response.Body).ReadToEndAsync();
         responseBody.Should().Be("Skipped file");
+    }
+
+    [Fact]
+    public async Task InvokeAsync_WhenNextThrows_RestoresOriginalResponseBodyAndRethrows()
+    {
+        var logger = new CapturingLogger<ApiLoggingMiddleware>();
+        var apiLoggingService = new CapturingApiLoggingService();
+        var middleware = new ApiLoggingMiddleware(
+            logger,
+            apiLoggingService,
+            Options.Create(new ApiLoggingOptions()));
+        var context = CreateContext("""{"name":"Ada"}""", "/api/users", "");
+        var originalResponseBody = context.Response.Body;
+
+        Func<Task> act = () => middleware.InvokeAsync(
+            context,
+            async httpContext =>
+            {
+                await httpContext.Response.WriteAsync("Partial response");
+                throw new InvalidOperationException("Endpoint failed.");
+            });
+
+        await act.Should().ThrowAsync<InvalidOperationException>()
+            .WithMessage("Endpoint failed.");
+        context.Response.Body.Should().BeSameAs(originalResponseBody);
+        logger.Entries.Should().BeEmpty();
+        apiLoggingService.Logs.Should().BeEmpty();
     }
 
     private sealed class CapturingApiLoggingService : IApiLoggingService
