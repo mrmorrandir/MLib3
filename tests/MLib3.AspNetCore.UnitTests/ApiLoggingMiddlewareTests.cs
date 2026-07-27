@@ -1,8 +1,10 @@
 using System.Text;
+using System.Text.Json;
 using AwesomeAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using MLib3.Logging;
 
 namespace MLib3.AspNetCore.UnitTests;
 
@@ -16,7 +18,9 @@ public class ApiLoggingMiddlewareTests
         var middleware = new ApiLoggingMiddleware(
             logger,
             apiLoggingService,
-            Options.Create(new ApiLoggingOptions()));
+            Options.Create(new ApiLoggingOptions()),
+            CreateSanitizer(),
+            Options.Create(new Microsoft.AspNetCore.Http.Json.JsonOptions()));
         var context = CreateContext("""{"name":"Ada","age":37}""", "/api/users", "?include=details");
         var originalResponseBody = context.Response.Body;
 
@@ -69,7 +73,9 @@ public class ApiLoggingMiddlewareTests
         var middleware = new ApiLoggingMiddleware(
             logger,
             apiLoggingService,
-            Options.Create(new ApiLoggingOptions()));
+            Options.Create(new ApiLoggingOptions()),
+            CreateSanitizer(),
+            Options.Create(new Microsoft.AspNetCore.Http.Json.JsonOptions()));
         var context = CreateContext("", "/api/silent", "");
         context.Request.Method = HttpMethods.Get;
 
@@ -95,7 +101,9 @@ public class ApiLoggingMiddlewareTests
             Options.Create(new ApiLoggingOptions
             {
                 ExcludedPaths = ["/api/internal"]
-            }));
+            }),
+            CreateSanitizer(),
+            Options.Create(new Microsoft.AspNetCore.Http.Json.JsonOptions()));
         var context = CreateContext("""{"secret":true}""", "/API/Internal/status", "");
 
         await middleware.InvokeAsync(
@@ -126,7 +134,9 @@ public class ApiLoggingMiddlewareTests
             Options.Create(new ApiLoggingOptions
             {
                 ExcludedFiles = ["/assets/hallo*.JS"]
-            }));
+            }),
+            CreateSanitizer(),
+            Options.Create(new Microsoft.AspNetCore.Http.Json.JsonOptions()));
         var context = CreateContext("", "/assets/Hallo-Welt.js", "");
         context.Request.Method = HttpMethods.Get;
 
@@ -153,7 +163,9 @@ public class ApiLoggingMiddlewareTests
         var middleware = new ApiLoggingMiddleware(
             logger,
             apiLoggingService,
-            Options.Create(new ApiLoggingOptions()));
+            Options.Create(new ApiLoggingOptions()),
+            CreateSanitizer(),
+            Options.Create(new Microsoft.AspNetCore.Http.Json.JsonOptions()));
         var context = CreateContext("""{"name":"Ada"}""", "/api/users", "");
         var originalResponseBody = context.Response.Body;
 
@@ -170,6 +182,94 @@ public class ApiLoggingMiddlewareTests
         context.Response.Body.Should().BeSameAs(originalResponseBody);
         logger.Entries.Should().BeEmpty();
         apiLoggingService.Logs.Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task InvokeAsync_ShouldSanitizeLogsAndPreserveHttpPayloads_WhenTypesHaveAttributes()
+    {
+        // Arrange
+        const string password = "middleware-password-unique-16";
+        const string token = "middleware-jwt-unique-16";
+        var logger = new CapturingLogger<ApiLoggingMiddleware>();
+        var apiLoggingService = new CapturingApiLoggingService();
+        var middleware = new ApiLoggingMiddleware(
+            logger,
+            apiLoggingService,
+            Options.Create(new ApiLoggingOptions()),
+            CreateSanitizer(),
+            Options.Create(new Microsoft.AspNetCore.Http.Json.JsonOptions()));
+        var requestJson = JsonSerializer.Serialize(new AuthRequest("Ada", password));
+        var context = CreateContext(requestJson, "/api/auth", "");
+        context.SetEndpoint(new Endpoint(
+            _ => Task.CompletedTask,
+            new EndpointMetadataCollection(
+                new LogPayloadTypesMetadata(typeof(AuthRequest), typeof(AuthResponse))),
+            "Authenticate"));
+        AuthRequest? boundRequest = null;
+
+        // Act
+        await middleware.InvokeAsync(
+            context,
+            async httpContext =>
+            {
+                boundRequest = await JsonSerializer.DeserializeAsync<AuthRequest>(httpContext.Request.Body);
+                httpContext.Response.ContentType = "application/json";
+                await httpContext.Response.WriteAsJsonAsync(
+                    new AuthResponse(token, DateTimeOffset.UnixEpoch));
+            });
+
+        // Assert
+        boundRequest.Should().Be(new AuthRequest("Ada", password));
+        var loggerText = string.Join(Environment.NewLine, logger.Entries.Select(entry => entry.Message));
+        loggerText.Should().Contain("Ada");
+        loggerText.Should().Contain("[REDACTED]");
+        loggerText.Should().NotContain(password);
+        loggerText.Should().NotContain(token);
+
+        var apiLog = apiLoggingService.Logs.Should().ContainSingle().Which;
+        apiLog.RequestJson.Should().NotContain(password);
+        apiLog.ResponseJson.Should().NotContain(token);
+        apiLog.RequestJson.Should().Contain("[REDACTED]");
+        apiLog.ResponseJson.Should().Contain("[REDACTED]");
+
+        context.Response.Body.Position = 0;
+        var actualResponse = await new StreamReader(context.Response.Body).ReadToEndAsync();
+        actualResponse.Should().Contain(token);
+    }
+
+    [Fact]
+    public async Task InvokeAsync_ShouldRedactDefenseInDepthNames_WhenEndpointTypeIsUnknown()
+    {
+        // Arrange
+        const string password = "unknown-password-unique-17";
+        var logger = new CapturingLogger<ApiLoggingMiddleware>();
+        var apiLoggingService = new CapturingApiLoggingService();
+        var middleware = new ApiLoggingMiddleware(
+            logger,
+            apiLoggingService,
+            Options.Create(new ApiLoggingOptions()),
+            CreateSanitizer(),
+            Options.Create(new Microsoft.AspNetCore.Http.Json.JsonOptions()));
+        var context = CreateContext($$"""{"name":"Ada","password":"{{password}}"}""", "/api/unknown", "");
+
+        // Act
+        await middleware.InvokeAsync(
+            context,
+            async httpContext =>
+            {
+                httpContext.Response.ContentType = "application/json";
+                await httpContext.Response.WriteAsync("""{"status":"ok"}""");
+            });
+
+        // Assert
+        var allLogs = string.Join(Environment.NewLine, logger.Entries.Select(entry => entry.Message));
+        allLogs.Should().NotContain(password);
+        apiLoggingService.Logs.Single().RequestJson.Should().NotContain(password);
+    }
+
+    private static LogPayloadSanitizer CreateSanitizer()
+    {
+        return new LogPayloadSanitizer(Options.Create(new LogPayloadSanitizerOptions()));
     }
 
     private sealed class CapturingApiLoggingService : IApiLoggingService
@@ -238,4 +338,12 @@ public class ApiLoggingMiddlewareTests
         LogLevel LogLevel,
         string Message,
         Dictionary<string, object?> Properties);
+
+    private sealed record AuthRequest(
+        string Username,
+        [property: LogRedact] string Password);
+
+    private sealed record AuthResponse(
+        [property: LogRedact] string Token,
+        DateTimeOffset ValidUntil);
 }

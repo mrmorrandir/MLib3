@@ -189,6 +189,83 @@ Captured `ApiLog` entries contain:
 - `StatusCode`
 - `DurationMilliseconds`
 
+##### Sensitive Logging Payloads
+
+The middleware sanitizes JSON request and response bodies before they are passed to
+`ILogger<ApiLoggingMiddleware>` or any `IApiLogHandler`. The original HTTP request and response bodies are not
+changed.
+
+Use `LogRedactAttribute` on a property to retain its JSON property name while replacing its value with
+`"[REDACTED]"`. A custom replacement can be passed to the attribute. Use `LogPayloadIgnoreAttribute` on a property
+to remove that property from the logging payload, or on a class or record to omit the complete object payload.
+These attributes only affect logging. They do not affect request binding, HTTP responses, or global
+`System.Text.Json` behavior.
+
+```csharp
+using MLib3.Logging;
+
+public sealed record AuthRequest(
+    string Username,
+    [property: LogRedact] string Password);
+
+public sealed record AuthResponse(
+    [property: LogRedact] string Token,
+    DateTimeOffset ValidUntil);
+```
+
+Redaction is recursive and applies to nested objects, collections, dictionaries, and known FluentResults payloads.
+If sanitization or JSON parsing fails, the middleware omits the affected payload and writes a technical warning
+without including its contents.
+
+##### How Payload Types Are Resolved
+
+Attributes can only be applied to an HTTP body when the middleware knows its C# DTO type. The middleware first uses
+explicit logging metadata and then uses standard ASP.NET Core endpoint metadata:
+
+- Minimal API request DTOs are normally available through `IAcceptsMetadata` for JSON body parameters.
+- Response DTOs are resolved through `IProducesResponseTypeMetadata`.
+- When several response types are declared, the type matching the actual HTTP status code is selected.
+
+Declare typed Minimal API responses with `Produces<TResponse>` so response attributes can be discovered:
+
+```csharp
+app.MapPost("/auth", HandleAuthentication)
+    .Produces<AuthResponse>(StatusCodes.Status200OK);
+```
+
+No logging-specific extension is normally needed when the request is a regular JSON body parameter and every
+response DTO is declared with `Produces<TResponse>`.
+
+##### Explicit Payload Type Metadata
+
+Use `LogPayloadEndpointConventionExtensions` when the standard endpoint metadata does not expose the real DTO type.
+This commonly occurs when an endpoint returns `IResult`, uses a custom result or serializer, or does not declare its
+response through `Produces<TResponse>`.
+
+Declare only the missing response type when request metadata is already available:
+
+```csharp
+app.MapPost("/auth", (AuthRequest request) =>
+        Results.Ok(new AuthResponse("real-token", DateTimeOffset.UtcNow)))
+    .WithLogPayloadResponseType<AuthResponse>();
+```
+
+Declare only a missing request type with `WithLogPayloadRequestType<TRequest>()`. If neither type can be determined
+reliably, declare both:
+
+```csharp
+app.MapPost("/auth", HandleAuthentication)
+    .WithLogPayloadTypes<AuthRequest, AuthResponse>();
+```
+
+Request-only and response-only metadata can also be added separately; the resolver combines both declarations.
+Explicit metadata has priority over automatically generated `Accepts` and `Produces` metadata.
+
+When no DTO type is available, the middleware still recursively redacts configured sensitive JSON property names
+such as `password`, `token`, and `authorization`, using case-insensitive matching. Attribute-based rules cannot be
+discovered in that fallback mode, so endpoints with other sensitive property names must provide explicit payload
+type metadata. Non-JSON bodies are omitted from payload logging.
+
 ##### Configuration
 
 The middleware can be configured through the `ApiLogging` configuration section.

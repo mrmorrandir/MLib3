@@ -19,6 +19,7 @@ public static partial class DependencyInjection
     /// <seealso cref="UseApiLoggingMiddleware(IApplicationBuilder)"/>
     public static IServiceCollection AddApiLoggingMiddleware(this IServiceCollection services)
     {
+        services.AddLogPayloadSanitizer();
         services.AddOptions<ApiLoggingOptions>()
             .BindConfiguration("ApiLogging")
             .ValidateDataAnnotations()
@@ -37,6 +38,7 @@ public static partial class DependencyInjection
     /// <returns>The modified service collection with the API logging middleware registered and configured.</returns>
     public static IServiceCollection AddApiLoggingMiddleware(this IServiceCollection services, Action<ApiLoggingOptionsBuilder> configureOptions)
     {
+        services.AddLogPayloadSanitizer();
         var builder = new ApiLoggingOptionsBuilder();
         configureOptions(builder);
         var options = builder.Build();

@@ -24,6 +24,7 @@ The project targets `net10.0` and references:
 - `FluentValidation`
 - `Mediator.Abstractions`
 - `Microsoft.EntityFrameworkCore`
+- `MLib3.Logging`
 
 Applications that use the Mediator behaviours must also configure Mediator in the consuming application. The
 `AddMediator` example below requires Mediator source-generator setup in that application.
@@ -60,12 +61,69 @@ builder.Services.AddScoped<IValidator<CreateProductCommand>, CreateProductComman
 
 ### LoggingBehaviour
 
-`LoggingBehaviour<TRequest, TResponse>` runs the next handler and logs the request and response.
+`LoggingBehaviour<TRequest, TResponse>` runs the next handler and logs sanitized JSON representations of the request
+and response. Register the shared sanitizer before resolving the behaviour:
+
+```csharp
+builder.Services.AddLogPayloadSanitizer();
+```
 
 - `TRequest` must implement `Mediator.IMessage`.
 - `TResponse` must implement `FluentResults.IResultBase`.
 - Failed responses are logged as warnings.
 - Successful responses are logged as information.
+- Request type, result status, and execution duration remain visible when a payload is excluded.
+
+#### Sensitive Logging Payloads
+
+Use `LogRedactAttribute` on properties whose names may remain visible while their values must be replaced. The
+default replacement is `"[REDACTED]"`; a custom replacement can be passed to the attribute.
+
+Use `LogPayloadIgnoreAttribute` on:
+
+- A property to remove that property from the logging payload.
+- A class or record to omit the complete object payload.
+
+```csharp
+using FluentResults;
+using Mediator;
+using MLib3.Logging;
+
+public sealed record AuthUserCommand(
+    string Username,
+    [property: LogRedact] string Password)
+    : ICommand<Result<AuthResult>>;
+
+public sealed record AuthResult(
+    [property: LogRedact] string Token,
+    DateTimeOffset ValidUntil);
+```
+
+The attributes affect only the representation created for logging. They do not modify the original request or
+response objects, change FluentResults, or alter global `System.Text.Json` behavior.
+
+Sanitization is recursive and supports records, regular classes, nullable values, collections, and dictionaries.
+For `Result<T>`, a successful `Value` is sanitized recursively. A failed result is processed without accessing
+`Value`. FluentResults errors, nested reasons, and `Error.Metadata` are also sanitized.
+
+The sanitizer additionally redacts configured sensitive property or dictionary-key names using case-insensitive
+matching. Its default defense-in-depth list includes names such as `password`, `token`, `accessToken`,
+`refreshToken`, `secret`, `clientSecret`, and `authorization`. Application-specific names can be added during
+registration:
+
+```csharp
+builder.Services.AddLogPayloadSanitizer(options =>
+{
+    options.SensitivePropertyNames.Add("apiKey");
+});
+```
+
+If a request or response cannot be sanitized or serialized safely, `LoggingBehaviour` does not fall back to the
+original object. It omits the affected payload and writes a technical warning without including payload contents.
+
+`LoggingBehaviour` now requires `ILogPayloadSanitizer` through constructor injection. Applications that construct
+the behaviour manually must provide it, and dependency-injection configurations must register it with
+`AddLogPayloadSanitizer()`.
 
 ### PerformanceBehaviour
 
