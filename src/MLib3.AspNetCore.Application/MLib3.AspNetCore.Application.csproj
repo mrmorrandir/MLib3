@@ -4,7 +4,7 @@
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <Version>1.0.0</Version>
+        <Version>2.0.0</Version>
         <Title>MLib3.AspNetCore.Application</Title>
         <Description>A library providing helpfull classes for AspNetCore APIs and their BusinessLogic (CleanArchitecture).</Description>
         <PackageProjectUrl>https://github.com/mrmorrandir/MLib3</PackageProjectUrl>
@@ -24,6 +24,10 @@
       <PackageReference Include="FluentValidation" Version="12.1.1" />
       <PackageReference Include="Mediator.Abstractions" Version="3.0.2" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.10" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MLib3.Logging\MLib3.Logging.csproj" />
     </ItemGroup>
 
     <ItemGroup>
