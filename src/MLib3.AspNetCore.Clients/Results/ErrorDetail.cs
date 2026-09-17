@@ -13,6 +13,7 @@ public class ErrorDetail
     /// <summary>
     /// The error message associated with the error detail.
     /// </summary>
+    [JsonPropertyName("message")]
     public string Message { get; set; } = "Error";
 
     /// <summary>
@@ -21,10 +22,12 @@ public class ErrorDetail
     /// <remarks>
     /// Each element in this collection is itself an instance of <see cref="ErrorDetail"/>.
     /// </remarks>
+    [JsonPropertyName("causedBy")]
     public List<ErrorDetail> CausedBy { get; set; } = new();
 
     /// <summary>
     /// Additional metadata associated with the error.
     /// </summary>
+    [JsonPropertyName("meta")]
     public List<ErrorMeta> Meta { get; set; } = new();
 }

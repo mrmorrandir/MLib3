@@ -1,1 +1,2 @@
-﻿global using FluentResults;
+﻿global using System.Text.Json.Serialization;
+global using FluentResults;

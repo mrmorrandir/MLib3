@@ -8,10 +8,12 @@ public class ErrorMeta
     /// <summary>
     /// The key of the metadata entry.
     /// </summary>
+    [JsonPropertyName("key")]
     public string Key { get; set; } = string.Empty;
 
     /// <summary>
     /// The value of the metadata entry.
     /// </summary>
+    [JsonPropertyName("value")]
     public string Value { get; set; } = string.Empty;
 }

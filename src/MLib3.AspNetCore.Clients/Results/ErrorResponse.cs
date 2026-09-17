@@ -13,5 +13,6 @@ public class ErrorResponse
     /// an <see cref="ErrorDetail"/> instance. It is used to encapsulate multiple
     /// related error messages or causes within the error response.
     /// </remarks>
+    [JsonPropertyName("errors")]
     public List<ErrorDetail> Errors { get; set; } = new();
 }
