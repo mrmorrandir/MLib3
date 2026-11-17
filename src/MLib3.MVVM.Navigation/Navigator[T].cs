@@ -18,7 +18,7 @@ namespace MLib3.MVVM.Navigation;
 /// </para>
 /// </remarks>
 /// <typeparam name="T">The base type of view models managed by this navigator.</typeparam>
-public partial class Navigator<T> : INotifyPropertyChanged, INavigator<T> where T : IViewModel
+public partial class Navigator<T> : INavigator<T> where T : IViewModel
 {
     private readonly ILogger<Navigator<T>> _logger;
     private readonly IServiceProvider _serviceProvider;

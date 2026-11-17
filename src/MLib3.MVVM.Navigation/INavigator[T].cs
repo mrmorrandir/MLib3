@@ -9,7 +9,7 @@ namespace MLib3.MVVM.Navigation;
 /// This interface requires ViewModels to be provided explicitly for navigation operations.
 /// </remarks>
 /// <typeparam name="T">The base type of ViewModels managed by this navigator.</typeparam>
-public partial interface INavigator<T> where T : IViewModel
+public partial interface INavigator<T> : INotifyPropertyChanged where T : IViewModel
 {
     /// <summary>
     /// Gets an observable that notifies when the navigation has changed.
@@ -30,11 +30,6 @@ public partial interface INavigator<T> where T : IViewModel
     /// Gets an observable that notifies when a ViewModel has been left (navigated away from).
     /// </summary>
     IObservable<T> Left { get; }
-
-    /// <summary>
-    /// Occurs when a property value changes.
-    /// </summary>
-    event PropertyChangedEventHandler PropertyChanged;
 
     /// <summary>
     /// Pushes the specified ViewModel onto the navigation stack.

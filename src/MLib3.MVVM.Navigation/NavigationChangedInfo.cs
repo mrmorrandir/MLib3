@@ -1,6 +1,6 @@
 namespace MLib3.MVVM.Navigation;
 
-public class NavigationChangedInfo<T> where T : IViewModel
+public class NavigationChangedInfo<T> : IEquatable<NavigationChangedInfo<T>> where T : IViewModel
 {
     public T? Before { get; }
     public T Now { get; }
@@ -9,6 +9,23 @@ public class NavigationChangedInfo<T> where T : IViewModel
     {
         Before = before;
         Now = now;
+    }
+
+    public bool Equals(NavigationChangedInfo<T>? other)
+    {
+        return other is not null
+            && EqualityComparer<T?>.Default.Equals(Before, other.Before)
+            && EqualityComparer<T>.Default.Equals(Now, other.Now);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is NavigationChangedInfo<T> other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Before, Now);
     }
     
     // implicit operator to return the Now property
